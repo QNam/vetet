@@ -1,0 +1,70 @@
+/* purgecss start ignore */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+/* purgecss end ignore */
+@import 'tailwindcss/utilities';
+
+@import url('https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap&subset=vietnamese');
+*:before,
+*:after {
+  @apply box-border m-0
+}
+
+* {
+    font-family: Cabin;
+}
+.el-loading-spinner {
+  display: flex;
+  justify-content: center;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}
+
+.layout-enter-active,
+.layout-leave-active {
+  transition: opacity 0.5s;
+}
+.layout-enter,
+.layout-leave-to {
+  opacity: 0;
+}
+
+.slide-bottom-enter-active,
+.slide-bottom-leave-active {
+  transition: opacity 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+.slide-bottom-enter,
+.slide-bottom-leave-to {
+  opacity: 0;
+  transform: translate3d(0, 15px, 0);
+}
+
+.block__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 16px;
+    border-left: 4px solid #FF4868;
+}
+
+.block__header h2 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 39px;
+    color: #383F47;
+}
+
+.block__header a {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: #FF4868;
+}
