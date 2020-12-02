@@ -1275,3 +1275,21 @@ listTrip: {
         }
     }
 }
+
+// let body = {
+//     "date": query.date,
+//     "sortSelections": [{
+//         "fieldName": "startTime",
+//         "ascDirection": true
+//     }],
+//     "startPoint": 'P0Jb1ue2eopww9z',
+//     "endPoint": 'P0Jb1ue2fb4oWsB',
+//     "startTimeLimit": 0,
+//     "endTimeLimit": 86400000,
+//     "companyId": 'TC08Z1qHHZBxlNLt',
+//     "count": 100,
+//     "timeZone": 7,
+//     "page": 0,
+//     "source": 1,
+//     "platform": 2
+// }

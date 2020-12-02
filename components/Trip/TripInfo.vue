@@ -1,25 +1,38 @@
 <template>
   <div class="tripInfo">
     <div class="tripInfo__sum">
-        <div class="tripInfo__sum__content">
-            <h3>17:00 - 12/11/2020</h3>
+        <div class="tripInfo__sum__content pr-1">
+            <h3>{{ tripSelected.startTimeText }} - {{ tripSelected.startDateText }}</h3>
             <p>{{ tripSelected.pointUp.name }} <span v-html="icons.arrowr"></span> {{ tripSelected.pointDown.name }}</p>
         </div>
     </div>    
     <div class="tripInfo__time">
         <h3>GIỜ KHỞI HÀNH</h3>
-        <p>17:00 (Giường)</p>
+        <p>{{ tripSelected.startTimeText }} ({{ tripSelected.vehicleTypeText }})</p>
     </div>
     <div class="tripInfo__point">
         <h3>ĐIỂM LÊN XE</h3>
         <template> 
-            <el-select v-if="allowPADAtWayPointUp" v-model="PADPointUpType" class="block w-full" placeholder="Điểm đón">
+            <el-select v-if="allowPADAtWayPointUp" 
+                        :value="pickAndDrop.pointUp" 
+                        @change="$store.commit('trip/SET_PICK_DROP_TYPE', { pointUp: $event })"
+                        class="block w-full" 
+                        placeholder="Điểm đón">
                 <el-option label="Tại bến" :value="1"></el-option>
                 <el-option label="Dọc đường" :value="2"></el-option>
             </el-select>
-            <el-input placeholder="Địa chỉ" class="mb-3" v-if="PADPointUpType == 2" type="textarea" :rows="2"> </el-input>
+            <el-input v-if="pickAndDrop.pointUp == 2" 
+                    :value="ticketInfo.pointUpAddress" 
+                    @change="$store.commit('trip/SET_TICKET_INFO', { pointUpAddress: $event })" 
+                    class="mb-3" 
+                    type="textarea" :rows="2" placeholder="Địa chỉ"> </el-input>
 
-            <el-select v-if="PADPointUpType == 1" class="block w-full" v-model="ticketInfo.pointUp" placeholder="Điểm đón">
+            <el-select v-if="pickAndDrop.pointUp == 1" 
+                    class="block w-full" 
+                    :value="ticketInfo.pointUp" 
+                    @change="changePointUp($event)" 
+                    value-key="id" 
+                    placeholder="Điểm đón">
                 <template v-if="tripSelected.pointUp.listTransshipmentPoint.length > 0">
                     <el-option v-for="(tsPoint, tsKey) in tripSelected.pointUp.listTransshipmentPoint" 
                         :key="tsKey"
@@ -36,13 +49,28 @@
     <div class="tripInfo__point">
         <h3>ĐIỂM XUỐNG XE</h3>
         <template>
-            <el-select v-if="allowPADAtWayPointDown" v-model="PADPointDownType" class="block w-full" placeholder="Điểm đón">
+            <el-select v-if="allowPADAtWayPointDown" 
+                    :value="pickAndDrop.pointDown" 
+                    @change="$store.commit('trip/SET_PICK_DROP_TYPE', { pointDown: $event })"
+                    class="block w-full" 
+                    placeholder="Điểm đón">
                 <el-option label="Tại bến" :value="1"></el-option>
                 <el-option label="Dọc đường" :value="2"></el-option>
             </el-select>
-            <el-input placeholder="Địa chỉ" v-if="PADPointDownType == 2" type="textarea" :rows="2"> </el-input>
 
-            <el-select v-if="PADPointDownType == 1" class="block w-full" v-model="ticketInfo.pointDown" placeholder="Điểm trả">
+            <el-input v-if="pickAndDrop.pointDown == 2" 
+                    :value="ticketInfo.pointDownAddress" 
+                    @change="$store.commit('trip/SET_TICKET_INFO', { pointDownAddress: $event })"  
+                    type="textarea" 
+                    :rows="2"
+                    placeholder="Địa chỉ"></el-input>
+
+            <el-select v-if="pickAndDrop.pointDown == 1" 
+                    class="block w-full" 
+                    :value="ticketInfo.pointDown"
+                    @change="changePointDown($event)"
+                    value-key="id" 
+                    placeholder="Điểm trả">
                 <template v-if="tripSelected.pointDown.listTransshipmentPoint.length > 0">
                     <el-option v-for="(tsPoint, tsKey) in tripSelected.pointDown.listTransshipmentPoint" 
                         :key="tsKey"
@@ -86,7 +114,8 @@ export default {
     computed: {
         ...mapState({
             tripSelected: state => state.trip.tripSelected,
-            ticketInfo: state => state.trip.ticketInfo
+            ticketInfo: state => state.trip.ticketInfo,
+            pickAndDrop: state => state.trip.pickAndDrop, 
         }),
 
         allowPADAtWayPointUp () {
@@ -99,6 +128,18 @@ export default {
             // return true
             if(!this.tripSelected.pointDown.allowPickingAndDroppingAtWayByPlatform) return false
             return this.tripSelected.pointDown.allowPickingAndDroppingAtWayByPlatform.indexOf(2) >= 0
+        }
+    },
+
+    methods: {
+        changePointUp(point) {
+            this.$store.commit('trip/SET_TICKET_INFO', { pointUp: point })
+            this.$store.dispatch('trip/calcPrice')
+        },
+
+        changePointDown(point) {
+            this.$store.commit('trip/SET_TICKET_INFO', { pointDown: point })
+            this.$store.dispatch('trip/calcPrice')
         }
     }
 }

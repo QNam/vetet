@@ -12,7 +12,7 @@
 
 <script>
 import icons from '../icon'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
     props: ['seat'],
@@ -22,8 +22,12 @@ export default {
         }
     },
     methods: {
+        ...mapActions ({
+            'calcPrice': 'trip/calcPrice'
+        }),
         selectSeat (seat) {
             this.$store.commit('trip/TOGGLE_SEAT_SELECTED', seat)
+            this.calcPrice()
         }
     },
     computed: {

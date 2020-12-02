@@ -1,21 +1,23 @@
 <template>
-  <div class="tripItem">
-        <div class="tripItem__name w-1/4">
+    <div class="tripItem">
+        <div class="tripItem__name w-5/12">
             <h3>{{ trip.pointUp.name }}</h3>
             <span v-html="icons.arrowr"></span>
             <h3>{{ trip.pointDown.name }}</h3>
         </div>
-      <div class="tripItem__time w-1/4">
-          <h3>{{ trip.startTimeText }} {{ "(" + trip.vehicleTypeText + ")" }}</h3>
-          <span>{{ trip.startDateText }}</span>
-      </div>
-      <div class="tripItem__price w-1/4">
-          <h3>180,000 d</h3>
-      </div>
-      <div class="tripItem__book w-1/4 flex justify-end">
-        <button @click="goToTrip">Đặt vé</button>
-      </div>
-  </div>
+        <div class="w-7/12 flex items-center flex-wrap overflow-hidden">
+            <div class="tripItem__time w-1/3">
+                <h3>{{ trip.startTimeText }} {{ "(" + trip.vehicleTypeText + ")" }}</h3>
+                <span>{{ trip.startDateText }}</span>
+            </div>
+            <div class="tripItem__price w-1/3">
+                <h3>{{ trip.routeInfo.displayPrice | number }}đ</h3>
+            </div>
+            <div class="tripItem__book w-1/3 flex justify-end">
+                <button @click="goToTrip">Đặt vé</button>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>

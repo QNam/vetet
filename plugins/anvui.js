@@ -1,4 +1,5 @@
 import enums from '../ulti/enum'
+// import http from '@nuxt/http'
 
 function msToTime(ms) {
     let time = ms / 3600000
@@ -48,10 +49,38 @@ function toDateString (str, split = "-", type) {
     return str3 + split + str2 + split + str1;
 }
 
-export default ({ app }, inject) => {
+function tripDTO (trip) {
+    let startTime = msToTime(trip.startTimeReality)
+    trip.startTimeText = `${startTime.hourString}:${startTime.minuteString}`
+    trip.vehicleTypeText = toVehicleTypeText(trip.vehicleType)
+    if(trip.startDateReality) {
+        trip.startDateText = toDateString(trip.startDateReality, "/")
+    } else {
+        if(trip.date) {
+            trip.startDateText = toDateString(trip.date, "/")
+        } else {
+            trip.startDateText = ""
+        }
+    }
+    
+
+    return trip
+}
+// async function getTrip (params) {
+//     http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
+//     let res = await http.get(`https://ticket-new-dot-dobody-anvui.appspot.com/trip/view?id=${params.tripId}`)
+//     let trip = await res.json()
+//     trip = trip.results.trip
+
+//     return trip
+// }
+
+export default ({ app, $http }, inject) => {
     inject('helper', {
         msToTime,
         toVehicleTypeText,
-        toDateString
+        toDateString,
+        tripDTO,
+        // getTrip
     })
 }

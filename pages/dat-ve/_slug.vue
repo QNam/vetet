@@ -68,31 +68,31 @@ It was popularised in the 1960s with the release of Letraset sheets containing L
                     <div class="payment" v-if="tabs.payment">
                         <div class="payment__header">
                             <h3>Thanh toán</h3>
-                            <span>Thời gian giữ chỗ còn lại: 19:59</span>
+                            <!-- <span>Thời gian giữ chỗ còn lại: 19:59</span> -->
                         </div>
                         <p>Vui lòng chọn một trong các phương thức thanh toán dưới đây</p>
 
                         <div class="payment__type">
                             <el-radio-group :value="ticketInfo.paymentType">
                                 <el-radio label="vnpay" @change="$store.commit('trip/SET_TICKET_INFO', {paymentType: 'vnpay'})">VNPAY</el-radio>
-                                <el-radio label="vnpayqr" @change="$store.commit('trip/SET_TICKET_INFO', {paymentType: 'vnpayqr'})">VNPAY QR</el-radio>
+                                <!-- <el-radio label="vnpayqr" @change="$store.commit('trip/SET_TICKET_INFO', {paymentType: 'vnpayqr'})">VNPAY QR</el-radio> -->
                             </el-radio-group>
                         </div>
                     </div>
-
 
                     <div class="tripDetail__price">
                         <div class="tripDetail__price__content">
                             <div>
                                 <h4><b>Ghế đã chọn:</b> <span v-for="(seat, key) in seatSelected" :key="key">{{ seat.seatId }}</span></h4>
-                                <h4><b>Tổng tiền:</b> <span>0đ</span></h4>
+                                <h4><b>Tổng tiền:</b> <span>{{ ticketInfo.totalPrice | number }}đ</span></h4>
                             </div>
                             <div v-if="tabs.seatMap">
+                                <!-- <button class="switchBack" @click="$route.push(/)">Quay lại</button> -->
                                 <button :class="{'disabled': ticketInfo.seatSelected.length == 0}" @click="switchTab('userInfo')">Tiếp tục</button> 
                             </div>
                             <div v-if="tabs.userInfo">
                                 <button class="switchBack" @click="switchTab('seatMap')">Quay lại</button>
-                                <button :class='{"disabled": validatePayment}' @click="switchTab('payment')">Tiếp tục</button> 
+                                <button :class='{"disabled": validateUserInfo}' @click="switchTab('payment')">Tiếp tục</button> 
                             </div>
                             <div v-if="tabs.payment">
                                 <button class="switchBack" @click="switchTab('userInfo')">Quay lại</button>
@@ -111,7 +111,7 @@ It was popularised in the 1960s with the release of Letraset sheets containing L
 import SeatMap from '../../components/Trip/SeatMap'
 import TripInfo from '../../components/Trip/TripInfo'
 import icons from '../../components/icon'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import dummy from '../../ulti/dummy'
 
 export default {
@@ -121,11 +121,12 @@ export default {
 
     async asyncData({ query, store, $http, $helper }) {
         const tripId = query.tripId
+        
         if(!store.state.trip.tripSelected) {
             $http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
             let res = await $http.get(`https://ticket-new-dot-dobody-anvui.appspot.com/trip/view?id=${tripId}`)
             let trip = await res.json()
-            trip = trip.results.trip
+            trip =  $helper.tripDTO(trip.results.trip)
             
             store.commit('trip/SET_TRIP_SELECTED', trip)
         }
@@ -157,15 +158,23 @@ export default {
         ...mapState({
             seatSelected: state => state.trip.ticketInfo.seatSelected,
             ticketInfo: state => state.trip.ticketInfo,
-            tripSelected: state => state.trip.tripSelected
+            tripSelected: state => state.trip.tripSelected,
+            pickAndDrop: state => state.trip.pickAndDrop
         }),
 
-        validatePayment () {
+        validateUserInfo () {
             return this.ticketInfo.userName == null || this.ticketInfo.userName == "" || this.ticketInfo.userPhone == null || this.ticketInfo.userPhone == "" 
         }
     },
 
+    // mounted () {
+    // },
+
     methods: {
+        ...mapActions ({
+            'calcPrice': 'trip/calcPrice'
+        }),
+
         switchTab (tab) {
             this.tabs.seatMap = false
             this.tabs.userInfo = false
@@ -174,11 +183,74 @@ export default {
             this.tabs[tab] = true
         },
 
+        validatePayment () {
+            if( this.seatSelected.length == 0 ) {
+                this.$notify.warning({
+                    message: 'Vui lòng chọn ít nhất 1 ghế !'
+                })
+
+                return false
+            }
+
+            if( this.ticketInfo.pointUp == "" || this.ticketInfo.pointUp == null ) {
+                this.$notify.warning({
+                    message: 'Vui lòng chọn điểm lên !'
+                })
+
+                return false
+            }
+
+            if( this.ticketInfo.pointDown == "" || this.ticketInfo.pointDown == null  ) {
+                this.$notify.warning({
+                    message: 'Vui lòng chọn điểm xuống !'
+                })
+
+                return false
+            }
+
+            if( this.ticketInfo.userName == "" ) {
+                this.$notify.warning({
+                    message: 'Vui lòng nhập họ tên !'
+                })
+
+                return false
+            }
+
+            if( this.ticketInfo.userPhone == "" ) {
+                this.$notify.warning({
+                    message: 'Vui lòng nhập số điện thoại !'
+                })
+
+                return false
+            }
+
+            return true
+        },
+
         async doPayment () {
+            if(!this.validatePayment()) {
+                return
+            }
+            console.log(this.validatePayment())
+            return
             let body = {
                 'tripId': this.tripSelected.tripId,
-                'platform': 2,
+                'platform': 1,
                 'informationsBySeats': []
+            }
+
+            let PUtransshipmentId = null
+            let PUtransshipmentPrice = 0
+            if ( typeof this.ticketInfo.pointUp.listTransshipmentPoint == 'undefined' ) {
+                PUtransshipmentId = this.ticketInfo.pointUp.id
+                PUtransshipmentPrice = this.ticketInfo.pointUp.transshipmentPrice
+            }
+
+            let PDtransshipmentId = null
+            let PDtransshipmentPrice = 0
+            if ( typeof this.ticketInfo.pointDown.listTransshipmentPoint == 'undefined' ) {
+                PDtransshipmentId = this.ticketInfo.pointDown.id
+                PDtransshipmentPrice = this.ticketInfo.pointDown.transshipmentPrice
             }
 
             body.informationsBySeats = this.ticketInfo.seatSelected.map(value => {
@@ -194,31 +266,32 @@ export default {
                     'agencyPrice': 40000,
                     'paidMoney': 0,
                     'pointUp': {
-                        'id': this.ticketInfo.pointUp.id,
-                        'name': this.ticketInfo.pointUp.name,
-                        'address': null,
-                        'province':  this.ticketInfo.pointUp.province,
-                        'transshipmentId': null,
-                        'district': this.ticketInfo.pointUp.district,
-                        'longitude': this.ticketInfo.pointUp.longitude,
-                        'latitude': this.ticketInfo.pointUp.latitude,
-                        'transshipmentPrice': 0,
+                        'id': this.tripSelected.pointUp.id,
+                        'name': this.tripSelected.pointUp.name,
+                        'address': this.pickAndDrop.pointUp == 2 ? this.ticketInfo.pointUpAddress  : null,
+                        'province':  this.tripSelected.pointUp.province,
+                        'transshipmentId': PUtransshipmentId,
+                        'district': this.tripSelected.pointUp.district,
+                        'longitude': this.tripSelected.pointUp.longitude,
+                        'latitude': this.tripSelected.pointUp.latitude,
+                        'transshipmentPrice': PUtransshipmentPrice,
                         'completedTransshipment': false
                     },
                     'pointDown': {
-                        'id': this.ticketInfo.pointDown.id,
-                        'name': this.ticketInfo.pointDown.name,
-                        'address': null,
-                        'province':  this.ticketInfo.pointDown.province,
-                        'transshipmentId': null,
-                        'district': this.ticketInfo.pointDown.district,
-                        'longitude': this.ticketInfo.pointDown.longitude,
-                        'latitude': this.ticketInfo.pointDown.latitude,
-                        'transshipmentPrice': 0,
+                        'id': this.tripSelected.pointDown.id,
+                        'name': this.tripSelected.pointDown.name,
+                        'address': this.pickAndDrop.pointDown == 2 ? this.ticketInfo.pointDownAddress  : null,
+                        'province':  this.tripSelected.pointDown.province,
+                        'transshipmentId': PDtransshipmentId,
+                        'district': this.tripSelected.pointDown.district,
+                        'longitude': this.tripSelected.pointDown.longitude,
+                        'latitude': this.tripSelected.pointDown.latitude,
+                        'transshipmentPrice': PDtransshipmentPrice,
                         'completedTransshipment': false
                     }
                 }
             });
+
             this.loading = true
             this.$http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
             try {
@@ -232,7 +305,7 @@ export default {
                     const ticketIds = tickets.map(value => {
                         return value.ticketId
                     })
-                    let res = await this.$http.get(`https://ticket-new-dot-dobody-anvui.appspot.com/vnp/pay?vnp_OrderInfo=${ticketIds}&packageName=web&bankcode=VIETCOMBANK&companyId=TC08Z1qHHZBxlNLt`)
+                    let res = await this.$http.get(`https://ticket-new-dot-dobody-anvui.appspot.com/vnp/pay?vnp_OrderInfo=${ticketIds}&packageName=web&companyId=TC08Z1qHHZBxlNLt`)
                     let vnpayPaymentInfo = await res.json()
                     this.loading = false
                     
@@ -254,7 +327,7 @@ export default {
                 console.log(e)
             }
             
-        }
+        },
     }
 }
 </script>

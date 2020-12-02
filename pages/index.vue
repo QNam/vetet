@@ -1,7 +1,15 @@
 <template>
   <div>
     <banner />
-    <route-hot />
+    <div class="promotion__wrap">
+        <promotion />
+    </div>
+    <div class="routeHot__wrap">
+      <route-hot />
+    </div>
+    <div class="partner__wrap">
+      <partner />
+    </div>
     <policy />
   </div>
 </template>
@@ -10,17 +18,26 @@
 import Banner from '../components/Banner'
 import RouteHot from '../components/block/RouteHot'
 import Policy from '../components/block/Policy'
+import Promotion from '../components/block/Promotion'
+import Partner from '../components/block/Partner'
 
 export default {
   transition: 'slide-bottom',
   components: {
     "banner": Banner,
     "route-hot": RouteHot,
-    "policy": Policy
+    "policy": Policy,
+    "promotion" : Promotion,
+    "partner": Partner
   },
   head: {
     title: "Vé tết"
   },
+  data () {
+    return {
+      
+    }
+  }
 }
 </script>
 
@@ -49,5 +66,13 @@ export default {
 }
 </style>
 <style scoped>
-
+.promotion__wrap {
+  margin-top: -58px;
+}
+.routeHot__wrap {
+  margin-bottom: 80px;
+}
+.partner__wrap {
+  margin-bottom: 80px;
+}
 </style>

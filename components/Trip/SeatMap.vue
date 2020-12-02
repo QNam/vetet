@@ -1,7 +1,7 @@
 <template>
-  <div class="seatMap" v-loading="loading">
+  <div class="seatMap w-full" v-loading="loading">
     <!-- <h3>Tầng 1</h3> -->
-    <div class="seatMap__content flex flex-wrap overflow-hidden" v-if="seatMapData">
+    <div class="seatMap__content flex flex-wrap overflow-hidden justify-center" v-if="seatMapData">
         <div class="w-1/2 seatMap__item" v-for="(floor, fkey) in seatMapData" :key="fkey">
             <h3>Tầng {{ fkey }}</h3>
             <table>

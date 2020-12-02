@@ -7,7 +7,7 @@
       </div>
       <div class="w-1/3 overflow-hidden flex justify-between items-center">
         <p class="routeItem__price mr-2">180.000đ</p>
-        <button  class="routeItem__selectdate">Chọn ngày</button>
+        <button  class="routeItem__selectdate"><span v-html="icons.calendar1"></span></button>
       </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
     font-weight: 600;
     font-size: 14px;
     color: #FF4868;
-    padding: 9px 16px;
+    padding: 9px 11px;
     white-space: nowrap;
 }
 </style>

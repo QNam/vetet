@@ -9,6 +9,4 @@ function number (num) {
     return result;
 }
 
-Vue.filter({
-    number
-})
+Vue.filter('number', number)
