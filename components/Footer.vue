@@ -88,7 +88,9 @@ footer {
   color: #383F47;
   margin-bottom: 8px;
 }
-
+.footer_partner {
+  margin-bottom: 24px;
+}
 .footer_partner h3 {
   font-style: normal;
   font-weight: normal;
