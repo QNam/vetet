@@ -1,5 +1,7 @@
 <template>
-    <div class="tripList infinite-list overflow-auto" v-infinite-scroll="loadMoreTrip">
+    <div class="tripList overflow-hidden">
+        <!-- infinite-list  -->
+        <!-- v-infinite-scroll="loadMoreTrip" -->
         <div class="tripList__header flex flex-wrap overflow-hidden">
             <div class="tripItem__name w-5/12">
                 <h3>Tuyến xe</h3>
@@ -10,12 +12,14 @@
             </div>
         </div>
         <template v-if="listTrip.length > 0">
-            <trip-item v-for="(trip, key) in listTrip" :key="key" :trip="trip" />
+            <transition-group  name="slide-bottom" mode="out-in">
+                <trip-item v-for="(trip, key) in listTrip" :key="key + 'unique' " :trip="trip" />
+            </transition-group>
         </template>
         <template v-else>
             <h2 class="text-center" style="font-size: 32px">Không tìm thấy chuyến !</h2>
         </template>
-        <!-- <p class="text-center loadMore">Xem thêm</p> -->
+        <p class="text-center cursor-pointer loadMore" v-if="allowLoadMore" :class="{'loading__dot': loading}" @click="loadMoreTrip"> {{ loading ? "Đang tải" : "Xem thêm"  }}</p>
     </div>
 </template>
 
@@ -26,7 +30,8 @@ import { mapState } from 'vuex'
 export default {
     data () {
         return {
-            loadMore: false
+            allowLoadMore: true,
+            loading: false
         }
     },
     components: {
@@ -41,11 +46,17 @@ export default {
 
     methods: {
         async loadMoreTrip () {
-            // this.loadMore = true
+            this.loading = true
             let nextPage = this.filterTrip.page + 1
+            let oldListTripTotal = this.listTrip.length
+
             this.$store.commit('trip/SET_FILTER_TRIP', {page: nextPage})
             await this.$store.dispatch('trip/getTrip')
-            // this.loadMore = false
+            this.loading = false
+
+            if( oldListTripTotal == this.listTrip.length  ) {
+                this.allowLoadMore = false
+            }
         }
     }
 }
@@ -57,6 +68,11 @@ export default {
     border-bottom: 1px solid #ECEDF1!important;
 }
 .loadMore {
-
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    color: #FF4868;
+    margin-top: 32px;
 }
 </style>

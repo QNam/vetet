@@ -31,7 +31,7 @@ export const state = () => ({
 
 export const mutations = {
     SET_LIST_TRIP (state, payload) {
-        state.listTrip = payload
+        state.listTrip.push(...payload)
     },
 
     SET_PICK_DROP_TYPE (state, payload) {
