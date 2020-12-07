@@ -32,7 +32,7 @@ export default {
 }
 
 .blockPromotion .VueCarousel-inner .VueCarousel-slide {
-  margin-right: 20px;
+  margin-right: 32px;
   /* background: linear-gradient(19.9deg, #FF4868 42.52%, rgba(255, 255, 255, 0) 88.98%); */
   /* opacity: 0.7; */
   filter: drop-shadow(0px 2px 12px rgba(0, 0, 0, 0.08));

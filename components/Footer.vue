@@ -2,7 +2,7 @@
   <footer>
     <div class="container mx-auto">
       <div class="footer_top flex flex-wrap overflow-hidden">
-        <div class="w-1/2 overflow-hidden sm:w-full">
+        <div class="w-1/2 overflow-hidden pr-3">
           <a href="" class="block footer__logo">
             <img src="~/assets/imgs/logo.svg" alt="">
           </a>
@@ -16,13 +16,20 @@
               <p>Hotline: 024.9999.6666</p>
             </div>
         </div>
-        <div class="footer_partner">
-          <h3>Đối tác</h3>
+        <div class="footer__contact w-1/2 overflow-hidden pl-3">
+          <h3>Đăng ký cung cấp vé Tết</h3>
           <div class="flex">
-            <img src="~assets/imgs/pn/vnpayqr.svg" alt="">
-            <img src="~assets/imgs/pn/zalopay.svg" alt="">
-            <img src="~assets/imgs/pn/vinid.svg" alt="">
+            <input type="text" style="flex-grow: 9;" placeholder="Số điện thoại hoặc email liên hệ">
+            <button style="flex-grow: 1;">Đăng ký</button>
           </div>
+        </div>
+      </div>
+      <div class="footer_partner">
+        <h3>Đối tác</h3>
+        <div class="flex">
+          <img src="~assets/imgs/pn/vnpayqr.svg" alt="">
+          <img src="~assets/imgs/pn/zalopay.svg" alt="">
+          <img src="~assets/imgs/pn/vinid.svg" alt="">
         </div>
       </div>
     </div>
@@ -93,5 +100,46 @@ footer {
 
 .footer_partner img {
   margin-right: 40px;
+}
+
+.footer__contact h3 {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  color: #383F47;
+  margin-bottom: 16px;
+}
+
+.footer__contact input {
+  background: #ECEDF1;
+  border-radius: 4px;
+  padding: 11px 16px;
+  height: 40px;
+  /* width: calc(100% - 8px - 100px); */
+  margin-right: 8px;
+}
+
+.footer__contact input::placeholder {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 18px;
+  color: #9399A9;
+}
+
+.footer__contact button {
+  height: 40px;
+  white-space: nowrap;
+  padding: 8px 24px;
+  background: #FFFFFF;
+  border: 2px solid #FFDAE1;
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FF4868;
 }
 </style>

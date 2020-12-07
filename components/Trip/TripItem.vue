@@ -51,6 +51,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    border-bottom: 1px solid #ECEDF1!important;
 }
 .tripItem__name {
     display: flex;

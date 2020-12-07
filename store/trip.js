@@ -2,8 +2,11 @@ export const state = () => ({
     filterTrip: {
         pointUp: null,
         pointDown: null,
-        date: null
+        date: null,
+        page: 0,
+        count: 30
     },
+    listTrip: [],
     tripSelected: null,
     mapTicketInSeat: {},
     pickAndDrop: {
@@ -27,6 +30,10 @@ export const state = () => ({
 })
 
 export const mutations = {
+    SET_LIST_TRIP (state, payload) {
+        state.listTrip = payload
+    },
+
     SET_PICK_DROP_TYPE (state, payload) {
         if(typeof payload.pointUp != 'undefined') {
             state.pickAndDrop.pointUp = payload.pointUp
@@ -53,6 +60,14 @@ export const mutations = {
         if(typeof payload.date != 'undefined') {
             state.filterTrip.date = payload.date
         }
+
+        if(typeof payload.page != 'undefined') {
+            state.filterTrip.page = payload.page
+        }
+
+        if(typeof payload.count != 'undefined') {
+            state.filterTrip.count = payload.count
+        }
     },
 
     SET_MAP_TICKET_IN_SEAT (state, payload) {
@@ -67,8 +82,11 @@ export const mutations = {
         // state.tripSelected = null
         // state.mapTicketInSeat = null
         state.ticketInfo.pointUp = null
+        state.ticketInfo.totalPrice = 0
         state.ticketInfo.pointDown = null
         state.ticketInfo.seatSelected = []
+        state.ticketInfo.pointUpAddress = null
+        state.ticketInfo.pointDownAddress = null
     },
 
     SET_TICKET_INFO (state, payload) {
@@ -117,6 +135,21 @@ export const mutations = {
 }
 
 export const actions = {
+    async getTrip ({state, commit}) {
+        let listTrip = []
+        // $http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
+        let url = encodeURI(`http://13.212.80.94/api/trip/getTrips?api_token=quynv.test&page=${state.filterTrip.page}&count=${state.filterTrip.count}&start_point=${state.filterTrip.pointUp}&end_point=${state.filterTrip.pointDown}&date=${state.filterTrip.date}`)
+        let res = await this.$http.get(url)
+        listTrip = await res.json()
+        listTrip = listTrip.data
+
+        listTrip = listTrip.map(trip => {
+            return this.$helper.tripDTO(trip)
+        })
+
+        commit('SET_LIST_TRIP', listTrip)
+    },
+
     validateCalcPrice ({state}) {
         if( state.ticketInfo.pointUp == "" || state.ticketInfo.pointUp == null ) {
             return false

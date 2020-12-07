@@ -32,7 +32,7 @@
                     :value="ticketInfo.pointUp" 
                     @change="changePointUp($event)" 
                     value-key="id" 
-                    placeholder="Điểm đón">
+                    placeholder="Chọn điểm lên xe">
                 <template v-if="tripSelected.pointUp.listTransshipmentPoint.length > 0">
                     <el-option v-for="(tsPoint, tsKey) in tripSelected.pointUp.listTransshipmentPoint" 
                         :key="tsKey"
@@ -70,7 +70,7 @@
                     :value="ticketInfo.pointDown"
                     @change="changePointDown($event)"
                     value-key="id" 
-                    placeholder="Điểm trả">
+                    placeholder="Chọn điểm xuống xe">
                 <template v-if="tripSelected.pointDown.listTransshipmentPoint.length > 0">
                     <el-option v-for="(tsPoint, tsKey) in tripSelected.pointDown.listTransshipmentPoint" 
                         :key="tsKey"

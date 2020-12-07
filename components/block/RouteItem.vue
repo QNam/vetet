@@ -7,7 +7,7 @@
       </div>
       <div class="w-1/3 overflow-hidden flex justify-between items-center">
         <p class="routeItem__price mr-2">180.000đ</p>
-        <button  class="routeItem__selectdate"><span v-html="icons.calendar1"></span></button>
+        <button  class="routeItem__selectdate"  v-html="icons.calendar1"></button>
       </div>
   </div>
 </template>
@@ -25,6 +25,13 @@ export default {
 </script>
 
 <style scoped>
+.routeItem h4 {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  color: #383F47;
+}
 .routeItem__price {
     font-style: normal;
     font-weight: bold;
@@ -42,8 +49,13 @@ export default {
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
+    width: 40px;
+    height: 40px;
     color: #FF4868;
-    padding: 9px 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding: 9px 11px; */
     white-space: nowrap;
 }
 </style>

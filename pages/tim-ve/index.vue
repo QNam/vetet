@@ -7,7 +7,7 @@
                     <trip-filter />
                 </div>
                 <div class="w-3/4 overflow-hidden pl-3">
-                    <trip-list :listTrip="listTrip" />
+                    <trip-list />
                 </div>
 
             </div>
@@ -33,7 +33,7 @@ export default {
         }
     },
 
-    async asyncData({ query, store, route, $http, $helper }) {
+    async fetch ({ query, store, route, $http, $helper }) {
         if(!store.state.trip.filterTrip.pointUp && query.pointUp) {
             store.commit('trip/SET_FILTER_TRIP', {pointUp: query.pointUp})
         }
@@ -44,25 +44,7 @@ export default {
             store.commit('trip/SET_FILTER_TRIP', {date: query.date})
         }
 
-        let listTrip = []
-        let params = store.state.trip.filterTrip
-
-        try {
-            // $http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
-            let url = encodeURI(`http://13.212.80.94/api/trip/getTrips?api_token=quynv.test&page=0&count=30&start_point=${params.pointUp}&end_point=${params.pointDown}&date=${params.date}`)
-            let res = await $http.get(url)
-            listTrip = await res.json()
-            listTrip = listTrip.data
-
-            listTrip = listTrip.map(trip => {
-                return $helper.tripDTO(trip)
-            })
-        } catch (e) {
-            console.log(e)
-        }
-
-        // let listTrip = dummy.listTrip.data.trips
-        return { listTrip }
+        await store.dispatch('trip/getTrip')
     },
 }
 </script>
