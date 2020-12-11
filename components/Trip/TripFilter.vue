@@ -48,6 +48,8 @@
                 <el-checkbox class="block">Sau 18:00</el-checkbox>
             </div>
         </div>
+
+        <button class="tripFilter__search">Tìm chuyến</button>
     </div>
 </template>
 
@@ -184,5 +186,16 @@ export default {
     line-height: 24px;
     color: #383F47;
     margin-bottom: 24px;
+}
+.tripFilter__search {
+    background: #FFDAE1;
+    /* border: 2px solid #FFDAE1; */
+    box-sizing: border-box;
+    border-radius: 4px;
+    padding: 9px 16px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: #FF4868;
 }
 </style>

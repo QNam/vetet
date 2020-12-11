@@ -112,24 +112,22 @@ import SeatMap from '../../components/Trip/SeatMap'
 import TripInfo from '../../components/Trip/TripInfo'
 import icons from '../../components/icon'
 import { mapState, mapActions } from 'vuex'
-import dummy from '../../ulti/dummy'
 
 export default {
     head: {
-        title: "Vé xe tết chuyến Sài Gòn Hà Nội"
+        title: "Đặt vé tết"
     },
 
     async asyncData({ query, store, $http, $helper }) {
         const tripId = query.tripId
-        
-        if(!store.state.trip.tripSelected) {
+
+        // if(!store.state.trip.tripSelected) {
             $http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
             let res = await $http.get(`https://ticket-new-dot-dobody-anvui.appspot.com/trip/view?id=${tripId}`)
             let trip = await res.json()
             trip =  $helper.tripDTO(trip.results.trip)
-            
             store.commit('trip/SET_TRIP_SELECTED', trip)
-        }
+        // }
     },
 
     components: {

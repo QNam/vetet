@@ -88,7 +88,6 @@
 
 <script>
 import icons from '../icon'
-import dummy from '../../ulti/dummy'
 import { mapState } from 'vuex'
 
 export default {
@@ -101,7 +100,6 @@ export default {
     },
 
     mounted () {
-
         if( this.tripSelected.pointUp.listTransshipmentPoint.length == 0 ) {
             this.$store.commit('trip/SET_TICKET_INFO', { pointUp: this.tripSelected.pointUp })
         }

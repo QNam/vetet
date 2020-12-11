@@ -62,10 +62,10 @@ export default {
         }
     },
 
-    destroyed () {
-        this.$store.commit('trip/SET_EMPTY_LIST_TRIP')
-        this.$store.commit('trip/SET_TRIP_SELECTED', null)
-    }
+    // destroyed () {
+    //     this.$store.commit('trip/SET_EMPTY_LIST_TRIP')
+    //     this.$store.commit('trip/SET_TRIP_SELECTED', null)
+    // }
 }
 </script>
 
