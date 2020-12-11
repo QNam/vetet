@@ -1,102 +1,104 @@
 <template>
   <div class="tripDetail" v-loading="loading">
       <div class="container mx-auto">
-          <div class="flex flex-wrap overflow-hidden">
+          <div class="flex flex-wrap overflow-hidden mr--15px">
 
-                <div class="w-1/3 overflow-hidden pr-3">
+                <div class="w-1/3 overflow-hidden px-15px">
                     <trip-info />
                 </div>
-                <div class="tripDetail__content w-2/3 overflow-hidden pl-3">
-                    <div class="seatMap__wrap" v-if="tabs.seatMap">
-                        <div class="seatMap__header">
-                            <h3>Chọn ghế</h3>
-                            <div class="seatMap__note">
-                                <h4>
-                                    <b v-html="icons.seat"></b>
-                                    <span>Ghế trống</span>
-                                </h4>
-                                <h4>
-                                    <b v-html="icons.seat" class="seatItem__selected"></b>
-                                    <span>Đang chọn</span>
-                                </h4>
-                                <h4>
-                                    <b v-html="icons.seat" class="seatItem__booked"></b>
-                                    <span>Đã đặt</span>
-                                </h4>
+                <div class="w-2/3 overflow-hidden px-15px">
+                    <div class="tripDetail__content">    
+                        <div class="seatMap__wrap" v-if="tabs.seatMap">
+                            <div class="seatMap__header">
+                                <h3>Chọn ghế</h3>
+                                <div class="seatMap__note">
+                                    <h4>
+                                        <b v-html="icons.seat"></b>
+                                        <span>Ghế trống</span>
+                                    </h4>
+                                    <h4>
+                                        <b v-html="icons.seat" class="seatItem__selected"></b>
+                                        <span>Đang chọn</span>
+                                    </h4>
+                                    <h4>
+                                        <b v-html="icons.seat" class="seatItem__booked"></b>
+                                        <span>Đã đặt</span>
+                                    </h4>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-wrap overflow-hidden">
+                                <seat-map />
                             </div>
                         </div>
-                        
-                        <div class="flex flex-wrap overflow-hidden">
-                            <seat-map />
-                        </div>
-                    </div>
 
-                    <div class="flex flex-wrap overflow-hidden" v-if="tabs.userInfo">
-                        <div class="w-1/2 overflow-hidden pr-3">
-                            <div class="trip__userInfo">
-                                <h3>Thông tin khách hàng</h3>
-                                <div class="trip__userInfo__input">
-                                    <label for="">Tên khách hàng <span class="text-red-500">*</span></label>
-                                    <input type="text" :value="ticketInfo.userName" @keyup="$store.commit('trip/SET_TICKET_INFO', {userName: $event.target.value})">
+                        <div class="flex flex-wrap overflow-hidden" v-if="tabs.userInfo">
+                            <div class="w-1/2 overflow-hidden pr-3">
+                                <div class="trip__userInfo">
+                                    <h3>Thông tin khách hàng</h3>
+                                    <div class="trip__userInfo__input">
+                                        <label for="">Tên khách hàng <span class="text-red-500">*</span></label>
+                                        <input type="text" :value="ticketInfo.userName" @keyup="$store.commit('trip/SET_TICKET_INFO', {userName: $event.target.value})">
+                                    </div>
+                                    <div class="trip__userInfo__input">
+                                        <label for="">Số điện thoại <span class="text-red-500">*</span></label>
+                                        <input type="number" :value="ticketInfo.userPhone" @keyup="$store.commit('trip/SET_TICKET_INFO', {userPhone: $event.target.value})">
+                                    </div>
+                                    <div class="trip__userInfo__input">
+                                        <label for="">Email</label>
+                                        <input type="text"  :value="ticketInfo.userEmail" @keyup="$store.commit('trip/SET_TICKET_INFO', {userEmail: $event.target.value})">
+                                    </div>
+                                    <div class="trip__userInfo__input">
+                                        <label for="">Ghi chú</label>
+                                        <textarea :value="ticketInfo.userNote" @keyup="$store.commit('trip/SET_TICKET_INFO', {userNote: $event.target.value})"></textarea>
+                                    </div>
+                                    <div class="trip__userInfo__input">
+                                        <el-checkbox :value="ticketInfo.agreePolicy" @change="$store.commit('trip/SET_TICKET_INFO', {agreePolicy: $event})">Đồng ý với <span>Điều khoản đặt vé</span> của vetet.vn</el-checkbox>
+                                    </div>
                                 </div>
-                                <div class="trip__userInfo__input">
-                                    <label for="">Số điện thoại <span class="text-red-500">*</span></label>
-                                    <input type="number" :value="ticketInfo.userPhone" @keyup="$store.commit('trip/SET_TICKET_INFO', {userPhone: $event.target.value})">
-                                </div>
-                                <div class="trip__userInfo__input">
-                                    <label for="">Email</label>
-                                    <input type="text"  :value="ticketInfo.userEmail" @keyup="$store.commit('trip/SET_TICKET_INFO', {userEmail: $event.target.value})">
-                                </div>
-                                <div class="trip__userInfo__input">
-                                    <label for="">Ghi chú</label>
-                                    <textarea :value="ticketInfo.userNote" @keyup="$store.commit('trip/SET_TICKET_INFO', {userNote: $event.target.value})"></textarea>
-                                </div>
-                                <div class="trip__userInfo__input">
-                                    <el-checkbox>Đồng ý với Điều khoản đặt vé của vetet.vn</el-checkbox>
+                            </div>
+                            <div class="w-1/2 overflow-hidden pl-3 pr-3">
+                                <div class="trip__policy">
+                                    <h3>Điều khoản & Lưu ý</h3>
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="w-1/2 overflow-hidden pl-3 pr-3">
-                            <div class="trip__policy">
-                                <h3>Điều khoản & Lưu ý</h3>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="payment" v-if="tabs.payment">
-                        <div class="payment__header">
-                            <h3>Thanh toán</h3>
-                            <!-- <span>Thời gian giữ chỗ còn lại: 19:59</span> -->
-                        </div>
-                        <p>Vui lòng chọn một trong các phương thức thanh toán dưới đây</p>
+                        <div class="payment" v-if="tabs.payment">
+                            <div class="payment__header">
+                                <h3>Thanh toán</h3>
+                                <!-- <span>Thời gian giữ chỗ còn lại: 19:59</span> -->
+                            </div>
+                            <p>Vui lòng chọn một trong các phương thức thanh toán dưới đây</p>
 
-                        <div class="payment__type">
-                            <el-radio-group :value="ticketInfo.paymentType">
-                                <el-radio label="vnpay" @change="$store.commit('trip/SET_TICKET_INFO', {paymentType: 'vnpay'})">VNPAY</el-radio>
-                                <!-- <el-radio label="vnpayqr" @change="$store.commit('trip/SET_TICKET_INFO', {paymentType: 'vnpayqr'})">VNPAY QR</el-radio> -->
-                            </el-radio-group>
+                            <div class="payment__type">
+                                <el-radio-group :value="ticketInfo.paymentType">
+                                    <el-radio label="vnpay" @change="$store.commit('trip/SET_TICKET_INFO', {paymentType: 'vnpay'})">VNPAY</el-radio>
+                                    <!-- <el-radio label="vnpayqr" @change="$store.commit('trip/SET_TICKET_INFO', {paymentType: 'vnpayqr'})">VNPAY QR</el-radio> -->
+                                </el-radio-group>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="tripDetail__price">
-                        <div class="tripDetail__price__content">
-                            <div>
-                                <h4><b>Ghế đã chọn:</b> <span v-for="(seat, key) in seatSelected" :key="key">{{ seat.seatId }}</span></h4>
-                                <h4><b>Tổng tiền:</b> <span>{{ ticketInfo.totalPrice | number }}đ</span></h4>
-                            </div>
-                            <div v-if="tabs.seatMap">
-                                <!-- <button class="switchBack" @click="$route.push(/)">Quay lại</button> -->
-                                <button :class="{'disabled': ticketInfo.seatSelected.length == 0}" @click="switchTab('userInfo')">Tiếp tục</button> 
-                            </div>
-                            <div v-if="tabs.userInfo">
-                                <button class="switchBack" @click="switchTab('seatMap')">Quay lại</button>
-                                <button :class='{"disabled": validateUserInfo}' @click="switchTab('payment')">Tiếp tục</button> 
-                            </div>
-                            <div v-if="tabs.payment">
-                                <button class="switchBack" @click="switchTab('userInfo')">Quay lại</button>
-                                <button @click="doPayment()">Tiến hành thanh toán</button> 
+                        <div class="tripDetail__price">
+                            <div class="tripDetail__price__content">
+                                <div>
+                                    <h4><b>Ghế đã chọn:</b> <span v-for="(seat, key) in seatSelected" :key="key">{{ seat.seatId }}</span></h4>
+                                    <h4><b>Tổng tiền:</b> <span>{{ ticketInfo.totalPrice | number }}đ</span></h4>
+                                </div>
+                                <div v-if="tabs.seatMap">
+                                    <!-- <button class="switchBack" @click="$route.push(/)">Quay lại</button> -->
+                                    <button :class="{'disabled': ticketInfo.seatSelected.length == 0}" @click="switchTab('userInfo')">Tiếp tục</button> 
+                                </div>
+                                <div v-if="tabs.userInfo">
+                                    <button class="switchBack" @click="switchTab('seatMap')">Quay lại</button>
+                                    <button :class='{"disabled": validateUserInfo}' @click="switchTab('payment')">Tiếp tục</button> 
+                                </div>
+                                <div v-if="tabs.payment">
+                                    <button class="switchBack" @click="switchTab('userInfo')">Quay lại</button>
+                                    <button @click="doPayment()">Tiến hành thanh toán</button> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -121,13 +123,13 @@ export default {
     async asyncData({ query, store, $http, $helper }) {
         const tripId = query.tripId
 
-        // if(!store.state.trip.tripSelected) {
+        if(!store.state.trip.tripSelected) {
             $http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
             let res = await $http.get(`https://ticket-new-dot-dobody-anvui.appspot.com/trip/view?id=${tripId}`)
             let trip = await res.json()
             trip =  $helper.tripDTO(trip.results.trip)
             store.commit('trip/SET_TRIP_SELECTED', trip)
-        // }
+        }
     },
 
     components: {
@@ -159,27 +161,6 @@ export default {
             tripSelected: state => state.trip.tripSelected,
             pickAndDrop: state => state.trip.pickAndDrop
         }),
-
-        validateUserInfo () {
-            return this.ticketInfo.userName == null || this.ticketInfo.userName == "" || this.ticketInfo.userPhone == null || this.ticketInfo.userPhone == "" 
-        }
-    },
-
-    // mounted () {
-    // },
-
-    methods: {
-        ...mapActions ({
-            'calcPrice': 'trip/calcPrice'
-        }),
-
-        switchTab (tab) {
-            this.tabs.seatMap = false
-            this.tabs.userInfo = false
-            this.tabs.payment = false
-
-            this.tabs[tab] = true
-        },
 
         validatePayment () {
             if( this.seatSelected.length == 0 ) {
@@ -222,11 +203,40 @@ export default {
                 return false
             }
 
+            if( !this.ticketInfo.agreePolicy ) {
+                this.$notify.warning({
+                    message: 'Vui lòng đồng ý với Điều khoản đặt vé của vetet.vn !'
+                })
+
+                return false
+            }
+
             return true
         },
 
+        validateUserInfo () {
+            return this.ticketInfo.userName == null || this.ticketInfo.userName == "" || this.ticketInfo.userPhone == null || this.ticketInfo.userPhone == "" || this.ticketInfo.agreePolicy == false
+        }
+    },
+
+    // mounted () {
+    // },
+
+    methods: {
+        ...mapActions ({
+            'calcPrice': 'trip/calcPrice'
+        }),
+
+        switchTab (tab) {
+            this.tabs.seatMap = false
+            this.tabs.userInfo = false
+            this.tabs.payment = false
+
+            this.tabs[tab] = true
+        },
+
         async doPayment () {
-            if(!this.validatePayment()) {
+            if(!this.validatePayment) {
                 return
             }
 
@@ -301,7 +311,7 @@ export default {
                     const ticketIds = tickets.map(value => {
                         return value.ticketId
                     })
-                    let res = await this.$http.get(`https://ticket-new-dot-dobody-anvui.appspot.com/vnp/pay?vnp_OrderInfo=${ticketIds}&packageName=web&companyId=TC08Z1qHHZBxlNLt`)
+                    let res = await this.$http.get(`https://ticket-dot-dobody-anvui.appspot.com/vnp/pay?vnp_OrderInfo=${ticketIds}&packageName=web&companyId=TC08Z1qHHZBxlNLt`)
                     let vnpayPaymentInfo = await res.json()
                     this.loading = false
                     
@@ -366,6 +376,23 @@ export default {
     fill: #ECEDF1
 }
 
+.trip__userInfo__input .el-checkbox.is-checked .el-checkbox__label {
+    color: unset;
+}
+
+.trip__userInfo__input .el-checkbox__label span {
+    color: #FF4868;
+}
+
+.trip__userInfo__input .el-checkbox__inner {
+    border-color: #646D84!important;
+    background-color: #ffffff!important;
+}
+
+.trip__userInfo__input  .el-checkbox.is-checked .el-checkbox__inner,
+.trip__userInfo__input  .el-checkbox.is-checked .el-checkbox__inner::after {
+    border-color: #FF4868!important;
+}
 </style>
 <style scoped>
 .tripDetail button.disabled {
@@ -422,7 +449,6 @@ export default {
 
     box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
     border-radius: 4px 4px 0px 0px;
-
 }
 .seatMap__header {
     display: flex;
@@ -471,7 +497,7 @@ export default {
     margin-top: 16px;
     padding: 16px 0px;
     background: #FFFFFF;
-    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.08);
     border-radius: 0px 0px 4px 4px;
 
 }
@@ -610,5 +636,19 @@ export default {
     font-size: 14px;
     line-height: 24px;
     color: #646D84;
+}
+
+.px-15px {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.mr--15px {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.payment {
+    padding: 24px;
 }
 </style>

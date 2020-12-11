@@ -4,7 +4,9 @@ export const state = () => ({
         pointDown: null,
         date: null,
         page: 0,
-        count: 30
+        count: 30,
+        loadingTrip: false,
+        loadingMore: false
     },
     listTrip: [],
     tripSelected: null,
@@ -25,7 +27,8 @@ export const state = () => ({
         userAddress: null,
         userNote: null,
         paymentType: 'vnpay',
-        totalPrice: 0
+        totalPrice: 0,
+        agreePolicy: true
     }
 })
 
@@ -72,6 +75,15 @@ export const mutations = {
         if(typeof payload.count != 'undefined') {
             state.filterTrip.count = payload.count
         }
+
+        if(typeof payload.loadingTrip != 'undefined') {
+            state.filterTrip.loadingTrip = payload.loadingTrip
+        }
+
+        if(typeof payload.loadingMore != 'undefined') {
+            state.filterTrip.loadingMore = payload.loadingMore
+        }
+        
     },
 
     SET_MAP_TICKET_IN_SEAT (state, payload) {
@@ -124,6 +136,9 @@ export const mutations = {
         }
         if (typeof payload.totalPrice != 'undefined') {
             state.ticketInfo.totalPrice = payload.totalPrice
+        }
+        if (typeof payload.agreePolicy != 'undefined') {
+            state.ticketInfo.agreePolicy = payload.agreePolicy
         }
     },
     

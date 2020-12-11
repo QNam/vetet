@@ -3,7 +3,9 @@
         <div class="tripFilter__point">
             <h2>BỘ LỌC</h2>
             <div class="tripFilter__input flex items-center">
-                <el-select :value="filterTrip.pointUp" filterable placeholder="Điểm xuất phát">
+                <el-select :value="filterTrip.pointUp" 
+                    @change="$store.commit('trip/SET_FILTER_TRIP', {pointUp: $event})" 
+                    filterable placeholder="Điểm xuất phát">
                     <el-option
                         v-for="province in provinces"
                         :key="province.id"
@@ -15,13 +17,15 @@
             </div>
 
             <div class="tripFilter__input flex items-center">
-                <el-select :value="filterTrip.pointDown" filterable placeholder="Điểm đến">
-                <el-option
-                    v-for="province in provinces"
-                    :key="province.id"
-                    :label="province.provinceName"
-                    :value="province.provinceName">
-                </el-option>
+                <el-select :value="filterTrip.pointDown" 
+                    @change="$store.commit('trip/SET_FILTER_TRIP', {pointDown: $event})"
+                    filterable placeholder="Điểm đến">
+                    <el-option
+                        v-for="province in provinces"
+                        :key="province.id"
+                        :label="province.provinceName"
+                        :value="province.provinceName">
+                    </el-option>
                 </el-select>
                 <span v-html="icons.search"></span>
             </div>
@@ -30,6 +34,7 @@
                 <el-date-picker
                     ref="date"
                     :value="filterTrip.date"
+                    @change="$store.commit('trip/SET_FILTER_TRIP', {date: $event})"
                     type="date"
                     format="dd-MM-yyyy"
                     value-format="yyyyMMdd"
@@ -39,7 +44,7 @@
             </div>
         </div>
 
-        <div class="tripFilter__time">
+        <!-- <div class="tripFilter__time">
             <h2>Khởi hành</h2>
             <div>   
                 <el-checkbox class="block">Trước 06:00</el-checkbox>
@@ -47,9 +52,9 @@
                 <el-checkbox class="block">Từ 12:00 - 18:00</el-checkbox>
                 <el-checkbox class="block">Sau 18:00</el-checkbox>
             </div>
-        </div>
+        </div> -->
 
-        <button class="tripFilter__search">Tìm chuyến</button>
+        <button class="tripFilter__search" @click="searchTrip">Tìm chuyến</button>
     </div>
 </template>
 
@@ -70,6 +75,37 @@ export default {
         ...mapState({
             filterTrip: state => state.trip.filterTrip
         })
+    },
+
+    methods: {
+        validate () {
+            if(!this.filterTrip.pointUp) {
+                this.$notify.warning({
+                message: 'Vui lòng chọn điểm lên !'
+                })
+
+                return false
+            }
+
+            if(!this.filterTrip.pointDown) {
+                this.$notify.warning({
+                message: 'Vui lòng chọn điểm xuống !'
+                })
+
+                return false
+            }
+
+            return true
+        },
+        async searchTrip () {
+            if(!this.validate()) return 
+
+            this.$store.commit('trip/SET_FILTER_TRIP', {loadingTrip: true})
+            this.$store.commit('trip/SET_FILTER_TRIP', {page: 0})
+            this.$store.commit('trip/SET_EMPTY_LIST_TRIP')
+            await this.$store.dispatch('trip/getTrip')
+            this.$store.commit('trip/SET_FILTER_TRIP', {loadingTrip: false})
+        }
     }
 }
 </script>
@@ -183,7 +219,7 @@ export default {
     font-style: normal;
     font-weight: 600;
     font-size: 24px;
-    line-height: 24px;
+    /* line-height: 24px; */
     color: #383F47;
     margin-bottom: 24px;
 }

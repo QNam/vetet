@@ -167,10 +167,18 @@ export default {
 /* .tripInfo {
 
 } */
+.tripInfo {
+    box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    padding-bottom: 16px;
+}
+.tripInfo__time {
+    padding: 0px 16px;
+}
 
 .tripInfo__sum {
     padding: 16px 0px;
-    background: #FFDAE1;
+    background: rgba(255, 218, 225, 0.4);
     border-radius: 4px 4px 0px 0px;
     margin-bottom: 16px;
 }
@@ -206,7 +214,8 @@ export default {
     margin-bottom: 33px;
 }
 .tripInfo__point {
-    margin-bottom: 33px;
+    margin-top: 33px;
+    padding: 0px 16px;
 }
 .tripInfo__point h3,
 .tripInfo__time h3 {
