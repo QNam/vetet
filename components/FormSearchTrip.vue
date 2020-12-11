@@ -144,6 +144,12 @@ export default {
 </script>
 
 <style>
+.searchTrip__input .el-select {
+  width: 100%;
+}
+.searchTrip__input .el-select .el-select__caret{
+  display: none;
+}
 .searchTrip__input input.el-input__inner{
   border-color: transparent!important;
   padding: 0px;

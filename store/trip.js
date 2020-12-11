@@ -34,6 +34,10 @@ export const mutations = {
         state.listTrip.push(...payload)
     },
 
+    SET_EMPTY_LIST_TRIP (state) {
+        state.listTrip = []
+    },
+
     SET_PICK_DROP_TYPE (state, payload) {
         if(typeof payload.pointUp != 'undefined') {
             state.pickAndDrop.pointUp = payload.pointUp
@@ -138,7 +142,7 @@ export const actions = {
     async getTrip ({state, commit}) {
         let listTrip = []
         // $http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
-        let url = encodeURI(`http://13.212.80.94/api/trip/getTrips?api_token=quynv.test&page=${state.filterTrip.page}&count=${state.filterTrip.count}&start_point=${state.filterTrip.pointUp}&end_point=${state.filterTrip.pointDown}&date=${state.filterTrip.date}`)
+        let url = encodeURI(`http://apiv2.sanve.com.vn/api/trip/getTrips?api_token=quynv.test&page=${state.filterTrip.page}&count=${state.filterTrip.count}&start_point=${state.filterTrip.pointUp}&end_point=${state.filterTrip.pointDown}&date=${state.filterTrip.date}`)
         let res = await this.$http.get(url)
         listTrip = await res.json()
         listTrip = listTrip.data

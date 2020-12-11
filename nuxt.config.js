@@ -4,7 +4,7 @@ export default {
     title: 'vetet',
     meta: [
       { charset: 'utf-8' },
-      // { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
@@ -28,6 +28,7 @@ export default {
   plugins: [
     '@/plugins/element-ui.js',
     { src: '@/plugins/vue-carousel.js', mode: 'client' },
+    { src: '@/plugins/vue-burger-menu', ssr: false },
     '@/plugins/anvui.js',
     '@/plugins/filters.js',
   ],
@@ -44,6 +45,10 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     '@nuxt/http',
+    [
+      '@nuxtjs/device',
+      { defaultUserAgent: 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Mobile Safari/537.36' }
+    ]
   ],
 
   // http: {

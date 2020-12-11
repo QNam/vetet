@@ -17,24 +17,14 @@
 
 <script>
 
-import TripFilter from '../components/Trip/TripFilter'
-import TripList from '../components/Trip/TripList' 
-import dummy from '../ulti/dummy' 
+import TripFilter from '../../../components/Trip/TripFilter'
+import TripList from '../../../components/Trip/TripList' 
 
 export default {
     components: {
         "trip-filter": TripFilter,
         "trip-list": TripList,
     },
-    head: {
-        title: "Vé xe từ Hà Nội đi Sài Gòn"
-    },
-    async asyncData({ store, $http }) {
-        let filterTripParam = store.state.trip.filterTrip
-        const listTrip = dummy.listTrip.data.trips
-        
-        return { listTrip }
-    }
 }
 </script>
 

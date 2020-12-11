@@ -1,31 +1,26 @@
 <template>
-    <section class="listTrip">
-        <div class="container mx-auto">
-            <div class="flex flex-wrap overflow-hidden">
-
-                <div class="w-1/4 overflow-hidden pr-3">
-                    <trip-filter />
-                </div>
-                <div class="w-3/4 overflow-hidden pl-3">
-                    <trip-list />
-                </div>
-
-            </div>
-        </div>
-    </section>
+  <div>
+    <component v-bind:is="component"></component>
+  </div>
 </template>
 
 <script>
-
-import TripFilter from '../../components/Trip/TripFilter'
-import TripList from '../../components/Trip/TripList' 
-import dummy from '../../ulti/dummy' 
+import SearTripIndexMobile from '../../_pages/mobile/tim-ve/index'
+import SearTripIndexDefault from '../../_pages/default/tim-ve/index'
 
 export default {
-    components: {
-        "trip-filter": TripFilter,
-        "trip-list": TripList,
-    },
+  layout: (ctx) => ctx.isMobile ? 'mobile' : 'default',
+  transition: 'slide-bottom',
+  components: {
+    SearTripIndexMobile,
+    SearTripIndexDefault
+  },
+  beforeCreate() {
+    this.component = SearTripIndexDefault
+    if (this.$device.isMobile) {
+      this.component = SearTripIndexMobile
+    }
+  },
 
     head() {
         return {
@@ -43,15 +38,7 @@ export default {
         if(!store.state.trip.filterTrip.date && query.date) {
             store.commit('trip/SET_FILTER_TRIP', {date: query.date})
         }
-
         await store.dispatch('trip/getTrip')
     },
 }
 </script>
-
-<style scoped>
-.listTrip {
-    padding-top: 40px;
-    padding-bottom: 80px;
-}
-</style>
