@@ -162,6 +162,27 @@ export default {
             pickAndDrop: state => state.trip.pickAndDrop
         }),
 
+        validateUserInfo () {
+            return this.ticketInfo.userName == null || this.ticketInfo.userName == "" || this.ticketInfo.userPhone == null || this.ticketInfo.userPhone == "" || this.ticketInfo.agreePolicy == false
+        }
+    },
+
+    // mounted () {
+    // },
+
+    methods: {
+        ...mapActions ({
+            'calcPrice': 'trip/calcPrice'
+        }),
+
+        switchTab (tab) {
+            this.tabs.seatMap = false
+            this.tabs.userInfo = false
+            this.tabs.payment = false
+
+            this.tabs[tab] = true
+        },
+
         validatePayment () {
             if( this.seatSelected.length == 0 ) {
                 this.$notify.warning({
@@ -214,29 +235,8 @@ export default {
             return true
         },
 
-        validateUserInfo () {
-            return this.ticketInfo.userName == null || this.ticketInfo.userName == "" || this.ticketInfo.userPhone == null || this.ticketInfo.userPhone == "" || this.ticketInfo.agreePolicy == false
-        }
-    },
-
-    // mounted () {
-    // },
-
-    methods: {
-        ...mapActions ({
-            'calcPrice': 'trip/calcPrice'
-        }),
-
-        switchTab (tab) {
-            this.tabs.seatMap = false
-            this.tabs.userInfo = false
-            this.tabs.payment = false
-
-            this.tabs[tab] = true
-        },
-
         async doPayment () {
-            if(!this.validatePayment) {
+            if(!this.validatePayment()) {
                 return
             }
 
