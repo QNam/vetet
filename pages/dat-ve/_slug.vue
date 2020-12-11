@@ -229,8 +229,7 @@ export default {
             if(!this.validatePayment()) {
                 return
             }
-            console.log(this.validatePayment())
-            return
+
             let body = {
                 'tripId': this.tripSelected.tripId,
                 'platform': 1,
@@ -297,7 +296,6 @@ export default {
 
                 let tickets = await res.json()
                 tickets = tickets.results.listTicket
-                console.log(tickets)
                 
                 if(this.ticketInfo.paymentType == 'vnpay') {
                     const ticketIds = tickets.map(value => {
