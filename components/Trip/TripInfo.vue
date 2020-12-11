@@ -147,6 +147,10 @@ export default {
 .tripInfo__point .el-select {
     margin-bottom: 16px;
 }
+
+.tripInfo__point .el-select .el-select__caret {
+    color: #FF4868;
+}
 .tripInfo__point .el-input__inner {
     background: #FFFFFF;
     height: 40px;

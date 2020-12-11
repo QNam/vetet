@@ -4,15 +4,14 @@
         <div class="navbar__wrap">
           <div class="navbar_left">
             <ul>
-              <li class="navbar__logo"><a href="/" class="inline-block"><img src="~/assets/imgs/logo.svg" alt=""></a></li>
+              <li class="navbar__logo"><a href="/"><img src="~/assets/imgs/logo.svg" alt=""></a></li>
               <li><NuxtLink to="/">Trang chủ</NuxtLink></li>
               <li><NuxtLink to="/tin-tuc">Tin tức</NuxtLink></li>
             </ul>
           </div>
           <div class="navbar_right">
             <ul>
-              <li><a href="">Đăng nhập</a></li>
-              <li class="mr-0"><a href="" class="navbar__register">Đăng ký tài khoản</a></li>
+              <li class="navbar__register"><NuxtLink to="/tin-tuc">Tra cứu thông tin vé</NuxtLink></li>
             </ul>
           </div>
         </div>
@@ -75,13 +74,24 @@ export default {
   transition: .3s ease-in-out;
 }
 
+.navbar_left ul li a {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border-bottom: 4px solid transparent;
+}
+
+.navbar_left ul li:not(.navbar__logo):hover a{
+  border-bottom-color: #FF4868;
+}
+
 .navbar_left ul li.navbar__logo {
   margin-right: 76px;
 }
 
-.navbar_left ul li:not(.navbar__logo):hover {
-  border-bottom: 4px solid #FF4868;
-}
+.navbar_left ul li .nuxt-link-exact-active{
+  border-bottom-color: #FF4868;
+} 
 
 .navbar_left ul li a {
   font-style: normal;

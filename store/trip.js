@@ -28,7 +28,12 @@ export const state = () => ({
         userNote: null,
         paymentType: 'vnpay',
         totalPrice: 0,
-        agreePolicy: true
+        agreePolicy: true,
+        overTime: {
+            minute: "08",
+            second: "00",
+            mns: 8 * 60 * 10000
+        }
     }
 })
 
@@ -139,6 +144,10 @@ export const mutations = {
         }
         if (typeof payload.agreePolicy != 'undefined') {
             state.ticketInfo.agreePolicy = payload.agreePolicy
+        }
+
+        if (typeof payload.overTime != 'undefined') {
+            state.ticketInfo.overTime = payload.overTime
         }
     },
     

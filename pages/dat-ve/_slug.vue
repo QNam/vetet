@@ -69,7 +69,7 @@
                         <div class="payment" v-if="tabs.payment">
                             <div class="payment__header">
                                 <h3>Thanh toán</h3>
-                                <!-- <span>Thời gian giữ chỗ còn lại: 19:59</span> -->
+                                <span>Thời gian giữ chỗ còn lại: {{ticketInfo.overTime.minute }}:{{ ticketInfo.overTime.second }}</span>
                             </div>
                             <p>Vui lòng chọn một trong các phương thức thanh toán dưới đây</p>
 
@@ -175,6 +175,28 @@ export default {
             'calcPrice': 'trip/calcPrice'
         }),
 
+        countDown (time) {
+            setInterval(() => {
+                let minute = Math.floor(time / 60000)
+                minute = minute > 9 ? minute.toString() : '0' + minute
+
+                let second = Math.floor( ((time / 60000) - minute ) * 60 )
+                second = second > 9 ? second.toString() : '0' + second
+                time = time - 1000
+
+                this.$store.commit('trip/SET_TICKET_INFO', { overTime: {
+                    minute,
+                    second,
+                    mns: time
+                }})
+
+                if(time == 0) {
+                    clearInterval()
+                }
+            }, 1000);
+
+        },
+
         switchTab (tab) {
             this.tabs.seatMap = false
             this.tabs.userInfo = false
@@ -240,9 +262,11 @@ export default {
                 return
             }
 
+            const ticketOverTime = (new Date()).getTime() + 480000
             let body = {
                 'tripId': this.tripSelected.tripId,
                 'platform': 1,
+                'overTime': ticketOverTime,
                 'informationsBySeats': []
             }
 
@@ -307,6 +331,8 @@ export default {
                 let tickets = await res.json()
                 tickets = tickets.results.listTicket
                 
+                this.countDown(480000)
+
                 if(this.ticketInfo.paymentType == 'vnpay') {
                     const ticketIds = tickets.map(value => {
                         return value.ticketId
@@ -319,8 +345,7 @@ export default {
                         message: 'Đặt vé thành công !'
                     })
 
-                    this.$store.commit('trip/SET_DEFAULT_TICKET_INFO')
-                    console.log(vnpayPaymentInfo)
+                    // this.$store.commit('trip/SET_DEFAULT_TICKET_INFO')
                     window.open(vnpayPaymentInfo.results.data.paymentUrl, '_blank');
                 }
 

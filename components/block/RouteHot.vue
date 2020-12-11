@@ -28,7 +28,7 @@ export default {
     },
 
     mounted () {
-        // this.getRouteHot()
+        this.getRouteHot()
     },
 
     methods: {
