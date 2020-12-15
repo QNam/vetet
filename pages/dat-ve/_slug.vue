@@ -69,7 +69,7 @@
                         <div class="payment" v-if="tabs.payment">
                             <div class="payment__header">
                                 <h3>Thanh toán</h3>
-                                <span>Thời gian giữ chỗ còn lại: {{ticketInfo.overTime.minute }}:{{ ticketInfo.overTime.second }}</span>
+                                <span v-if="ticketInfo.paymentCompleted">Thời gian giữ chỗ còn lại: {{ticketInfo.overTime.minute }}:{{ ticketInfo.overTime.second }}</span>
                             </div>
                             <p>Vui lòng chọn một trong các phương thức thanh toán dưới đây</p>
 
@@ -345,6 +345,7 @@ export default {
                         message: 'Đặt vé thành công !'
                     })
 
+                    this.$store.commit('trip/SET_TICKET_INFO', {paymentCompleted: true})
                     // this.$store.commit('trip/SET_DEFAULT_TICKET_INFO')
                     window.open(vnpayPaymentInfo.results.data.paymentUrl, '_blank');
                 }

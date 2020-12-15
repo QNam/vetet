@@ -46,6 +46,29 @@ export default {
     text_justify: `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.33333 9.33334H25.3333V11.3333H5.33333V9.33334Z" fill="#383F47"/>
     <path d="M5.33333 15.3333H25.3333V17.3333H5.33333V15.3333Z" fill="#383F47"/>
     <path d="M5.33333 21.3333H25.3333V23.3333H5.33333V21.3333Z" fill="#383F47"/>
-    </svg>`
+    </svg>`,
+    prev: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="20" r="20" fill="#FF4868"/>
+    <g clip-path="url(#clip0)">
+    <path d="M28.7604 18.9062V21.0938H15.2708L21.4688 27.3438L19.9062 28.9062L11 20L19.9062 11.0938L21.4688 12.6562L15.2708 18.9062H28.7604Z" fill="white"/>
+    </g>
+    <defs>
+    <clipPath id="clip0">
+    <rect width="17.9167" height="20" fill="white" transform="translate(11 10)"/>
+    </clipPath>
+    </defs>
+    </svg>`,
+    next: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="20" cy="20" r="20" fill="#FF4868"/>
+    <g clip-path="url(#clip0)">
+    <path d="M19.9062 11.0938L28.7604 20L19.9062 28.9062L18.3438 27.3438L24.5417 21.0938H11V18.9062H24.5417L18.3438 12.6562L19.9062 11.0938Z" fill="white"/>
+    </g>
+    <defs>
+    <clipPath id="clip0">
+    <rect width="17.9167" height="20" fill="white" transform="translate(11 10)"/>
+    </clipPath>
+    </defs>
+    </svg>
+    `
 
 }

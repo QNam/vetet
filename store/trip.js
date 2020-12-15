@@ -9,6 +9,11 @@ export const state = () => ({
         loadingMore: false
     },
     listTrip: [],
+    ticketViewed: {
+        phone: null,
+        ticketCode: null,
+        data: null
+    },
     tripSelected: null,
     mapTicketInSeat: {},
     pickAndDrop: {
@@ -33,11 +38,25 @@ export const state = () => ({
             minute: "08",
             second: "00",
             mns: 8 * 60 * 10000
-        }
+        },
+        paymentCompleted: false
     }
 })
 
 export const mutations = {
+    SET_TICKET_VIEWED (state, payload) {
+        if(typeof payload.phone != 'undefined') {
+            state.ticketViewed.phone = payload.phone
+        }
+
+        if(typeof payload.ticketCode != 'undefined') {
+            state.ticketViewed.ticketCode = payload.ticketCode
+        }
+
+        if(typeof payload.data != 'undefined') {
+            state.ticketViewed.data = payload.data
+        }
+    },
     SET_LIST_TRIP (state, payload) {
         state.listTrip.push(...payload)
     },
@@ -100,14 +119,21 @@ export const mutations = {
     },
 
     SET_DEFAULT_TICKET_INFO (state) {
-        // state.tripSelected = null
-        // state.mapTicketInSeat = null
+        state.tripSelected = null
+        state.mapTicketInSeat = null
+
         state.ticketInfo.pointUp = null
         state.ticketInfo.totalPrice = 0
         state.ticketInfo.pointDown = null
         state.ticketInfo.seatSelected = []
         state.ticketInfo.pointUpAddress = null
         state.ticketInfo.pointDownAddress = null
+        state.ticketInfo.overTime = {
+            minute: "08",
+            second: "00",
+            mns: 8 * 60 * 10000
+        }
+        state.ticketInfo.paymentCompleted = false
     },
 
     SET_TICKET_INFO (state, payload) {
@@ -148,6 +174,9 @@ export const mutations = {
 
         if (typeof payload.overTime != 'undefined') {
             state.ticketInfo.overTime = payload.overTime
+        }
+        if (typeof payload.paymentCompleted != 'undefined') {
+            state.ticketInfo.paymentCompleted = payload.paymentCompleted
         }
     },
     

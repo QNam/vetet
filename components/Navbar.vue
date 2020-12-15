@@ -11,21 +11,114 @@
           </div>
           <div class="navbar_right">
             <ul>
-              <li class="navbar__register"><NuxtLink to="/tin-tuc">Tra cứu thông tin vé</NuxtLink></li>
+              <li class="navbar__register cursor-pointer" @click="onModalSearchTicket = !onModalSearchTicket">Tra cứu thông tin vé</li>
             </ul>
           </div>
         </div>
       </div>
+
+      <el-dialog
+        class="searchTicket"
+        title="Tra cứu thông tin vé"
+        :visible.sync="onModalSearchTicket"
+        width="45%">
+        <div class="searchTicket__form">
+          <p>Nhập mã vé để tra cứu thông tin</p>
+          <div class="flex flex-wrap">
+            <el-input :value="ticketViewed.phone" @input="$store.commit('trip/SET_TICKET_VIEWED', {phone: $event})" class="w-2/5 pr-2" placeholder="Mã vé"></el-input>
+            <el-input :value="ticketViewed.ticketCode" @input="$store.commit('trip/SET_TICKET_VIEWED', {ticketCode: $event})" class="w-2/5 pr-2" placeholder="Số điện thoại"></el-input>
+            <button  class="w-1/5" @click="getTicketInfo">Tra cứu vé</button>
+          </div>
+        </div>
+    </el-dialog>
   </section>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  head: {
-    title: 'Tin tức',
+  data () {
+    return {
+      onModalSearchTicket: false
+    }
+  },
+
+  computed: {
+    ...mapState({
+      ticketViewed: state => state.trip.ticketViewed
+    })
+  },
+
+  methods: {
+    async getTicketInfo () {
+      let params = {
+        'ticketCode': this.ticketViewed.phone,
+        'phoneNumber': this.ticketViewed.ticketCode
+      }
+
+      let res = await this.$http.post('https://ticket-new-dot-dobody-anvui.appspot.com/ticket/check', params)
+      let ticketInfo = await res.json() 
+    }
   }
 }
 </script>
+
+<style>
+.searchTicket .el-dialog{
+  padding: 24px;
+}
+
+.searchTicket .el-dialog .el-dialog__header {
+  padding: 0px!important;
+  margin-bottom: 16px;
+}
+
+.searchTicket .el-dialog .el-dialog__body {
+  padding: 0px!important;
+}
+
+.searchTicket__form>p{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  color: #646D84;
+  margin-bottom: 8px;
+}
+
+.searchTicket__form input {
+  height: 40px;
+  background: #F9FAFC;
+  border: 1px solid #ECEDF1;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #383F47;
+}
+
+.searchTicket__form button {
+  background: #FF4868;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  color: #FFFFFF;
+}
+
+.searchTicket .el-dialog .el-dialog__title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #383F47;
+}
+</style>
 
 <style scoped>
 .navbar {

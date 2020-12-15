@@ -5,7 +5,7 @@
         <span class="block searchTrip__icon cursor-pointer mr-12px" v-html="icons.bus"></span>
         <el-select ref="pointUp" 
           :value="filterTrip.pointUp" 
-          @change="$store.commit('trip/SET_FILTER_TRIP', {pointUp: $event}); $refs.pointDown.focus()" 
+          @change="$store.commit('trip/SET_FILTER_TRIP', {pointUp: $event});" 
           filterable placeholder="Nơi đi">
           <!-- <el-option-group>
             <el-option :label="filterTripHistory.pointUp" :value="filterTripHistory.pointUp"></el-option>
