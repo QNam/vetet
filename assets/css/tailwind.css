@@ -1,11 +1,8 @@
-/* purgecss start ignore */
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-/* purgecss end ignore */
-
-@import 'tailwindcss/utilities';
-
 @import url('https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap&subset=vietnamese');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 *:before,
 *:after {
   @apply box-border m-0
