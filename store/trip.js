@@ -13,6 +13,8 @@ export const state = () => ({
     ticketViewed: {
         phone: null,
         ticketCode: null,
+        totalMoney: 0,
+        searchSuccess: null,
         data: null
     },
     tripSelected: null,
@@ -45,6 +47,14 @@ export const state = () => ({
 })
 
 export const mutations = {
+    RESET_TICKET_VIEWED (state) {
+        state.ticketViewed.phone = null
+        state.ticketViewed.ticketCode = null
+        state.ticketViewed.totalMoney = 0
+        state.ticketViewed.searchSuccess = null
+        state.ticketViewed.data = null
+    },
+
     SET_TICKET_VIEWED (state, payload) {
         if(typeof payload.phone != 'undefined') {
             state.ticketViewed.phone = payload.phone
@@ -57,7 +67,16 @@ export const mutations = {
         if(typeof payload.data != 'undefined') {
             state.ticketViewed.data = payload.data
         }
+
+        if(typeof payload.totalMoney != 'undefined') {
+            state.ticketViewed.totalMoney = payload.totalMoney
+        }
+
+        if(typeof payload.searchSuccess != 'undefined') {
+            state.ticketViewed.searchSuccess = payload.searchSuccess
+        }
     },
+
     SET_LIST_TRIP (state, payload) {
         state.listTrip.push(...payload)
     },

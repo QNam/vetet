@@ -153,16 +153,18 @@
 }
 
 .searchTicket .el-dialog{
-  padding: 24px;
+  padding: 0px;
 }
 
 .searchTicket .el-dialog .el-dialog__header {
   padding: 0px!important;
   margin-bottom: 16px;
+  padding: 24px 24px 0px 24px!important;
+
 }
 
 .searchTicket .el-dialog .el-dialog__body {
-  padding: 0px!important;
+  padding: 24px!important;
 }
 
 .searchTicket__form>p{
