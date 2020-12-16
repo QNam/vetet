@@ -1,5 +1,5 @@
 <template>
-    <div class="tripList overflow-hidden" v-loading="filterTrip.loadingTrip">
+    <div class="tripList overflow-hidden" v-loading="filterTrip.loadingTrip" style="min-height: 200px">
         <!-- infinite-list  -->
         <!-- v-infinite-scroll="loadMoreTrip" -->
         <template v-if="listTrip.length > 0">
@@ -20,7 +20,7 @@
             <p class="text-center cursor-pointer loadMore" v-if="allowLoadMore" :class="{'loading__dot': filterTrip.loadingMore, 'pointer-events-none': filterTrip.loadingMore}" @click="loadMoreTrip"> {{ filterTrip.loadingMore ? "Đang tải" : "Xem thêm"  }}</p>
         </template>
         <template v-else>
-            <h2 class="text-center" style="font-size: 32px">Không tìm thấy chuyến !</h2>
+            <h2 class="text-center" style="font-size: 32px" v-if="!filterTrip.loadingTrip">Không tìm thấy chuyến !</h2>
         </template>
     </div>
 </template>

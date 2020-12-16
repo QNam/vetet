@@ -6,7 +6,8 @@ export const state = () => ({
         page: 0,
         count: 30,
         loadingTrip: false,
-        loadingMore: false
+        loadingMore: false,
+        routeId: null
     },
     listTrip: [],
     ticketViewed: {
@@ -98,6 +99,10 @@ export const mutations = {
 
         if(typeof payload.count != 'undefined') {
             state.filterTrip.count = payload.count
+        }
+
+        if(typeof payload.routeId != 'undefined') {
+            state.filterTrip.routeId = payload.routeId
         }
 
         if(typeof payload.loadingTrip != 'undefined') {
@@ -195,8 +200,26 @@ export const actions = {
     async getTrip ({state, commit}) {
         let listTrip = []
         // $http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
-        let url = encodeURI(`https://apiv2.sanve.com.vn/api/trip/getTrips?api_token=quynv.test&page=${state.filterTrip.page}&count=${state.filterTrip.count}&start_point=${state.filterTrip.pointUp}&end_point=${state.filterTrip.pointDown}&date=${state.filterTrip.date}`)
-        let res = await this.$http.get(url)
+        // let url = encodeURI(`https://apiv2.sanve.com.vn/api/trip/getTrips?api_token=quynv.test&page=${state.filterTrip.page}&count=${state.filterTrip.count}&start_point=${state.filterTrip.pointUp}&end_point=${state.filterTrip.pointDown}&date=${state.filterTrip.date}`)
+        let url = `https://apiv2.sanve.com.vn/api/trip/getTrips?api_token=quynv.test&page=${state.filterTrip.page}&count=${state.filterTrip.count}`
+        if(state.filterTrip.pointUp) {
+            url += `&start_point=${state.filterTrip.pointUp}`
+        }
+
+        if(state.filterTrip.pointDown) {
+            url += `&end_point=${state.filterTrip.pointDown}`
+        }
+        
+        if(state.filterTrip.date) {
+            url += `&date=${state.filterTrip.date}`    
+        }
+
+        if(state.filterTrip.routeId) {
+            url += `&route_id=${state.filterTrip.routeId}`    
+        }
+        
+
+        let res = await this.$http.get(encodeURI(url))
         listTrip = await res.json()
         listTrip = listTrip.data
 

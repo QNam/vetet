@@ -35,6 +35,9 @@ export default {
         if(!store.state.trip.filterTrip.pointDown && query.pointDown) {
             store.commit('trip/SET_FILTER_TRIP', {pointDown: query.pointDown})
         }
+        if(!store.state.trip.filterTrip.routeId && query.route_id) {
+            store.commit('trip/SET_FILTER_TRIP', {routeId: query.route_id})
+        }
         if(!store.state.trip.filterTrip.date && query.date) {
             store.commit('trip/SET_FILTER_TRIP', {date: query.date})
         }

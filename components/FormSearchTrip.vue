@@ -137,7 +137,13 @@ export default {
     setFilterTrip () {
 
       if(!this.validate()) return 
-      this.$router.push({path: "/tim-ve", query: this.filterTrip})
+      let query = {
+        pointUp: this.filterTrip.pointUp,
+        pointDown: this.filterTrip.pointDown,
+        date: this.filterTrip.date,
+      }
+
+      this.$router.push({path: "/tim-ve", query})
     }
   }
 }

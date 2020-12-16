@@ -1,13 +1,25 @@
 <template>
   <div class="routeItem flex justify-between items-center flex-wrap overflow-hidden">
       <div class="w-2/3 overflow-hidden flex flex-wrap justify-between items-center pr-2">
-        <h4 class="w-1/3">Hà Nội</h4>
-        <h5 class="w-1/3" v-html="icons.arrowr"></h5>
-        <h4 class="w-1/3">Nghệ An</h4>
+        <h4>{{ route.route_name }}</h4>
       </div>
-      <div class="w-1/3 overflow-hidden flex justify-between items-center">
-        <p class="routeItem__price mr-2">180.000đ</p>
-        <button  class="routeItem__selectdate"  v-html="icons.calendar1"></button>
+      <div class="w-1/3 overflow-hidden cursor-pointer flex justify-between items-center">
+        <p class="routeItem__price mr-2" v-if="route.display_price != null">{{ route.display_price }}đ</p>
+        <p class="routeItem__price mr-2 invisible" v-else>{{ route.display_price }}đ</p>
+        <button
+          @click="$refs.date.focus()"
+          class="routeItem__selectdate z-10"  
+          v-html="icons.calendar1"></button>
+        <el-date-picker
+          class="absolute pointer-events-none"
+          ref="date"
+          type="dates"
+          @change="searchTripByRoute"
+          v-model="date"
+          format="dd-MM-yyyy"
+          value-format="yyyyMMdd"
+          placeholder="Chọn ngày">
+      </el-date-picker>
       </div>
   </div>
 </template>
@@ -16,14 +28,37 @@
 import icons from '../icon'
 
 export default {
+    props: ["route"],
     data () {
         return {
-            icons: icons
+            icons: icons,
+            date: null
         }
+    },
+    methods: {
+      searchTripByRoute() {
+        let query = {
+          date: this.date,
+          route_id: this.route.route_id
+        }
+        // this.$store.commit('trip/SET_FILTER_TRIP', {pointUp: null})
+        // this.$store.commit('trip/SET_FILTER_TRIP', {pointDown: null})
+
+        this.$router.push({path: "/tim-ve", query})
+      }
     }
 }
 </script>
 
+<style>
+.routeItem .el-input__inner {
+  opacity: 0;
+}
+
+.routeItem .el-input__prefix {
+  display: none;
+}
+</style>
 <style scoped>
 .routeItem h4 {
   font-style: normal;
