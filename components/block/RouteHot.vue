@@ -33,7 +33,7 @@ export default {
 
     methods: {
         async getRouteHot () {
-            let res = await this.$http.get('http://apiv2.sanve.com.vn/api/route/list?api_token=quynv.test&count=12&name=Hà Nội')
+            let res = await this.$http.get('https://apiv2.sanve.com.vn/api/route/list?api_token=quynv.test&count=12&name=Hà Nội')
             let listRouteAsJson = await res.json()
         }
     }
