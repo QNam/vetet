@@ -64,61 +64,6 @@ export default {
 }
 </script>
 
-<style>
-.searchTicket .el-dialog{
-  padding: 24px;
-}
-
-.searchTicket .el-dialog .el-dialog__header {
-  padding: 0px!important;
-  margin-bottom: 16px;
-}
-
-.searchTicket .el-dialog .el-dialog__body {
-  padding: 0px!important;
-}
-
-.searchTicket__form>p{
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 19px;
-  color: #646D84;
-  margin-bottom: 8px;
-}
-
-.searchTicket__form input {
-  height: 40px;
-  background: #F9FAFC;
-  border: 1px solid #ECEDF1;
-  box-sizing: border-box;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 24px;
-  color: #383F47;
-}
-
-.searchTicket__form button {
-  background: #FF4868;
-  border-radius: 4px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 24px;
-  color: #FFFFFF;
-}
-
-.searchTicket .el-dialog .el-dialog__title {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 29px;
-  color: #383F47;
-}
-</style>
 
 <style scoped>
 .navbar {

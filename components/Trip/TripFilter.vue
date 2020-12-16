@@ -34,7 +34,7 @@
                 <el-date-picker
                     ref="date"
                     :value="filterTrip.date"
-                    @change="$store.commit('trip/SET_FILTER_TRIP', {date: $event})"
+                    @input="$store.commit('trip/SET_FILTER_TRIP', {date: $event})"
                     type="date"
                     format="dd-MM-yyyy"
                     value-format="yyyyMMdd"
@@ -109,74 +109,6 @@ export default {
     }
 }
 </script>
-
-<style>
-.tripFilter__input {
-    background: #FFFFFF;
-    border: 2px solid #ECEDF1;
-    box-sizing: border-box;
-    border-radius: 4px;
-    padding-left: 16px;
-}
-.tripFilter__input svg {
-    width: 20px!important;
-    height: 20px!important;
-}
-.tripFilter__input input {
-    height: 48px;
-    border: none!important;
-    padding-left: 0px!important;
-}
-.tripFilter__input .el-input__prefix,
-.tripFilter__input .el-input__suffix-inner {
-    display: none;
-}
-.tripFilter__input input::placeholder {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    color: #B0B5C1;
-}
-
-.tripFilter__time .el-checkbox__label {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 22px;
-    letter-spacing: -0.41px;
-    color: #383F47;
-    padding-left: 11px;
-}
-
-.tripFilter__time span.el-checkbox__inner {
-    width: 18px;
-    height: 18px;
-    border-color: #383F47;
-}
-
-.tripFilter__time .el-checkbox {
-    margin-bottom: 18px;
-}
-.tripFilter__time .el-checkbox__input.is-focus .el-checkbox__inner {
-    border-color: #383F47!important;
-}
-
-.tripFilter__time .el-checkbox__input.is-checked .el-checkbox__inner {
-    background-color: #fff!important;
-    border-color: #FF4868!important;
-}
-
-.tripFilter__time .el-checkbox__input.is-checked+.el-checkbox__label {
-    color: #383F47;
-}
-
-.tripFilter__time .el-checkbox__input.is-checked .el-checkbox__inner::after {
-    border-color: #FF4868;
-    top: 3px;
-    left: 6px;
-}
-</style>
 
 
 <style scoped>

@@ -30,29 +30,7 @@ export default {
 </script>
 
 <style>
-.navbar .bm-burger-button {
-    cursor: pointer;
-    height: 32px;
-    left: 16px;
-    position: absolute;
-    top: 21px;
-    width: 32px;
-}
 
-.navbar .line-style {
-    height: 10%;
-    left: 0;
-    position: absolute;
-    right: 0;
-}
-
-.navbar .line-style:nth-child(2) {
-  top: 30%!important;
-}
-
-.navbar .line-style:nth-child(3) {
-  top: 70%!important;
-}
 
 </style>
 <style scoped>

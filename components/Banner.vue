@@ -20,15 +20,6 @@ export default {
 }
 </script>
 
-<style>
-.banner__content .searchTrip{
-    background-color: #fff;
-    padding: 12px 18px;
-    display: inline-flex!important;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-    border-radius: 4px 0px 0px 4px;
-}
-</style>
 <style scoped>
 .banner {
     position: relative;

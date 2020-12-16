@@ -143,31 +143,7 @@ export default {
 }
 </script>
 
-<style>
-.searchTrip__input .el-select {
-  width: 100%;
-}
-.searchTrip__input .el-select .el-select__caret{
-  display: none;
-}
-.searchTrip__input input.el-input__inner{
-  border-color: transparent!important;
-  padding: 0px;
-}
 
-.searchTrip__input input.el-input__inner::placeholder {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 24px;
-  color: #B0B5C1;
-}
-.searchTrip__icon svg{
-  width: 24px!important;
-  height: 26px!important;
-}
-
-</style>
 <style scoped>
 .mr-12px {
   margin-right: 16px;

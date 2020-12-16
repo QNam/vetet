@@ -133,51 +133,7 @@ export default {
 </script>
 
 <style>
-.msearchTrip__input .el-select {
-    width: 100%!important;
-}
 
-.msearchTrip__input {
-    padding: 15px 20px;
-    background: #FFFFFF;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    height: 48px;
-    margin-bottom: 8px;
-}
-.msearchTrip__input .el-date-editor,
-.msearchTrip__input .el-input .el-input__inner,
-.msearchTrip__input .el-input.is-focus .el-input__inner {
-    border-color: transparent;
-}
-
-.msearchTrip__input .el-icon-date,
-.msearchTrip__input .el-select__caret {
-    display: none;
-}
-
-.msearchTrip__input .el-input input{
-    padding-left: 0px;
-}
-.msearchTrip__submit {
-    margin-top: 16px;
-}
-.msearchTrip__submit button {
-    background: #FF4868;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
-    border-radius: 4px;
-    height: 56px;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 24px;
-    text-align: center;
-    color: #FFFFFF;
-    width: 100%;
-    padding: 0px 16px;
-}
 </style>
 
 <style scoped>

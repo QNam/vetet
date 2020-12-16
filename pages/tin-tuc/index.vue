@@ -120,23 +120,7 @@ export default {
 </script>
 
 <style>
-.newsPage__new .VueCarousel-slide {
-    margin-right: 32px;
-}
-.newsPage__new .VueCarousel-slide img {
-    height: 198px!important;
-    object-fit: cover;
-    width: 100%;
-}
-.newsPage__new .VueCarousel-navigation-button {
-    top: 22%;
-}
 
-.newsPage__new .VueCarousel-navigation-button.VueCarousel-navigation-prev { left: 47px; }
-.newsPage__new .VueCarousel-navigation-button.VueCarousel-navigation-next { right: 47px; }
-.newsPage__new .VueCarousel-navigation-button:focus {
-    outline: none;
-}
 </style>
 <style scoped>
 .newsPage__new {

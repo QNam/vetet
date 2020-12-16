@@ -149,30 +149,6 @@ export default {
 }
 </script>
 
-<style>
-.tripInfo__point .el-select {
-    margin-bottom: 16px;
-}
-
-.tripInfo__point .el-select .el-select__caret {
-    color: #FF4868;
-}
-.tripInfo__point .el-input__inner {
-    background: #FFFFFF;
-    height: 40px;
-    border: 1px solid #ECEDF1;
-    box-sizing: border-box;
-    border-radius: 4px;
-}
-
-.tripInfo__point .el-input__inner::placeholder {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    color: #383F47;
-}
-</style>
 <style scoped>
 /* .tripInfo {
 

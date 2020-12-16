@@ -98,25 +98,5 @@ export default {
 </style>
 
 <style>
-.mPolicy .el-tabs__header{
-    display: none;
-}
 
-.mPolicy .el-select {
-    width: 100%;
-    margin-bottom: 16px;
-    border-color: #ECEDF1;
-}
-
-.mPolicy .el-select input {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 24px;
-    color: #383F47;
-}
-
-.mPolicy .el-select .el-select__caret::before {
-    color: #FF4868;
-}
 </style>

@@ -44,13 +44,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.seatItem.seatSelected svg [fill]{
-    fill: #FF4868!important;
-}
-
-.seatItem.seatBooked svg [fill] {
-    fill: #ECEDF1
-}
-</style>

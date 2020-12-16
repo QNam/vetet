@@ -40,11 +40,7 @@ export default {
 }
 </script>
 
-<style>
-.tripItem__name span svg {
-    height: 16px!important;
-}
-</style>
+
 <style scoped>
 .tripItem {
     padding: 8px 16px;
