@@ -321,7 +321,7 @@ top: 70%!important;
 }
 
 .seatItem.seatBooked svg [fill] {
-  fill: #ECEDF1
+  fill: #ECEDF1!important
 }
 
 .tripFilter__input {

@@ -12,9 +12,15 @@ export default {
   layout: (ctx) => ctx.isMobile ? 'mobile' : 'default',
   transition: 'slide-bottom',
   head() {
-    return {
-      title: "Vé tết"
+    let head = {
+      title: "Vé tết",
+      meta: []
     }
+
+    if(this.$device.isMobile) {
+      head.meta.push({ name: 'viewport', content: 'width=device-width, initial-scale=1' })
+    }
+    return head
   },
   components: {
     // Index: () => {

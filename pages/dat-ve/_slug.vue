@@ -336,7 +336,7 @@ export default {
                     const ticketIds = tickets.map(value => {
                         return value.ticketId
                     })
-                    let res = await this.$http.get(`https://ticket-dot-dobody-anvui.appspot.com/vnp/pay?vnp_OrderInfo=${ticketIds}&packageName=web&companyId=TC08Z1qHHZBxlNLt`)
+                    let res = await this.$http.get(`https://ticket-dot-dobody-anvui.appspot.com/vnp/pay?vnp_OrderInfo=${ticketIds.join('-')}&packageName=web&companyId=TC08Z1qHHZBxlNLt`)
                     let vnpayPaymentInfo = await res.json()
                     this.loading = false
                     

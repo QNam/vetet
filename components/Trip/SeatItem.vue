@@ -1,5 +1,5 @@
 <template>
-    <div class="seatItem cursor-pointer" :title="seat.seaatId" 
+    <div class="seatItem cursor-pointer" :title="seat.seaatId" v-if="mapTicketInSeat" 
         :class="{ 'seatSelected': isSelected,
             'seatBooked': mapTicketInSeat[`${seat.floor}${seat.row}${seat.column}`] }">
 

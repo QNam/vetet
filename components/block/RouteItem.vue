@@ -4,8 +4,8 @@
         <h4>{{ route.route_name }}</h4>
       </div>
       <div class="w-1/3 overflow-hidden cursor-pointer flex justify-between items-center">
-        <p class="routeItem__price mr-2" v-if="route.display_price != null">{{ route.display_price }}đ</p>
-        <p class="routeItem__price mr-2 invisible" v-else>{{ route.display_price }}đ</p>
+        <p class="routeItem__price mr-2" v-if="route.display_price != null">{{ route.display_price | number }}đ</p>
+        <p class="routeItem__price mr-2 invisible" v-else>{{ route.display_price }} đ</p>
         <button
           @click="$refs.date.focus()"
           class="routeItem__selectdate z-10"  
@@ -13,7 +13,7 @@
         <el-date-picker
           class="absolute pointer-events-none"
           ref="date"
-          type="dates"
+          type="date"
           @change="searchTripByRoute"
           v-model="date"
           format="dd-MM-yyyy"
@@ -39,10 +39,10 @@ export default {
       searchTripByRoute() {
         let query = {
           date: this.date,
-          route_id: this.route.route_id
+          // route_id: this.route.route_id
         }
-        // this.$store.commit('trip/SET_FILTER_TRIP', {pointUp: null})
-        // this.$store.commit('trip/SET_FILTER_TRIP', {pointDown: null})
+        this.$store.commit('trip/SET_FILTER_TRIP', {pointUp: this.route.start_point_name})
+        this.$store.commit('trip/SET_FILTER_TRIP', {pointDown: this.route.end_point_name})
 
         this.$router.push({path: "/tim-ve", query})
       }

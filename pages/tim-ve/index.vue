@@ -43,5 +43,9 @@ export default {
         }
         await store.dispatch('trip/getTrip')
     },
+
+    destroyed() {
+      this.$store.commit('trip/SET_EMPTY_LIST_TRIP')
+    }
 }
 </script>
