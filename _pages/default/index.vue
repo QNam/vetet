@@ -7,6 +7,33 @@
     <div class="routeHot__wrap">
       <route-hot />
     </div>
+    <div class="shortIntro">
+      <div class="container mx-auto">
+        <div class="flex flex-wrap overflow-hidden" style="margin-left: -15px; margin-right: -15px;">
+          <div class="w-1/3" style="padding-left: 15px; padding-right: 15px;">
+            <div class="shortIntro__item">
+              <div v-html="icons.bus1" class="shortIntro__item__icon"></div>
+              <h3>HÃNG XE UY TÍN</h3>
+              <p>Chỉ cung cấp vé của các hãng xe uy tín trên thị trường</p>
+            </div>
+          </div>
+          <div class="w-1/3" style="padding-left: 15px; padding-right: 15px;">
+            <div class="shortIntro__item">
+              <div v-html="icons.ticket" class="shortIntro__item__icon"></div>
+              <h3>GIÁ VÉ BÌNH ỔN</h3>
+              <p>Giá vé xe được cam kết không tăng giá so với ngày thường cùng các chương trình khuyến mãi hấp dẫn</p>
+            </div>
+          </div>
+          <div class="w-1/3" style="padding-left: 15px; padding-right: 15px;">
+            <div class="shortIntro__item">
+              <div v-html="icons.sale" class="shortIntro__item__icon"></div>
+              <h3>ĐẢM BẢO CHẤT LƯỢNG</h3>
+              <p>Vé xe được mua qua Vetet.vn được nhà xe đảm bảo về chất lượng dịch vụ</p>
+            </div>
+          </div>  
+        </div>
+      </div>
+    </div>
     <div class="partner__wrap">
       <partner />
     </div>
@@ -20,6 +47,7 @@ import RouteHot from '../../components/block/RouteHot'
 import Policy from '../../components/block/Policy'
 import Promotion from '../../components/block/Promotion'
 import Partner from '../../components/block/Partner'
+import icons from '../../components/icon'
 
 export default {
   components: {
@@ -31,7 +59,7 @@ export default {
   },
   data () {
     return {
-      
+      icons
     }
   }
 }
@@ -70,5 +98,49 @@ export default {
 }
 .partner__wrap {
   margin-bottom: 80px;
+}
+
+.shortIntro {
+  padding: 80px 0px;
+  background-image: url('~@/assets/imgs/banner/background1.png');
+  background-color: #FFDAE1;
+  margin-bottom: 80px;
+}
+
+.shortIntro__item {
+
+} 
+
+.shortIntro__item h3 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #646D84;
+  margin-bottom: 4px;
+}
+
+.shortIntro__item p {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 29px;
+  color: #646D84;
+}
+
+.shortIntro__item__icon {
+  height: 80px;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border-radius: 50%;
+  margin-bottom: 24px;
+  border: 1px dashed #FF4868;
+  box-sizing: border-box;
+  /* shadow/background */
+
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
 }
 </style>

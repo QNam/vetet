@@ -1,6 +1,6 @@
 <template>
   <div class="banner">
-    <img src="~/assets/imgs/banner/banner1.png" alt="">
+    <img src="~/assets/imgs/banner/banner.jpg" alt="">
     <div class="banner__content">
         <div class="container mx-auto">
             <h1>Bình ổn giá vé về quê ăn tết AN VUI !</h1>

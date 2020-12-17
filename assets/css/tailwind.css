@@ -129,6 +129,10 @@
   border-radius: 4px 0px 0px 4px;
 }
 
+.searchTrip__input .el-date-editor .el-icon-circle-close,
+.searchTrip__input .el-date-editor .el-input__prefix {
+  display: none;
+}
 .searchTrip__input .el-select {
   width: 100%;
 }
