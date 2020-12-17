@@ -45,6 +45,10 @@ export default {
         }),
 
         seatMapData () {
+            if (!this.tripSelected) {
+                return
+            }
+
             let seatMap = this.tripSelected.seatMap
             let seatData = {};
 

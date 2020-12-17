@@ -1,7 +1,7 @@
 <template>
-  <div class="tripDetail" v-loading="loading">
-      <div class="container mx-auto">
-          <div class="flex flex-wrap overflow-hidden mr--15px">
+<div class="tripDetail" v-loading="loading">
+    <div class="container mx-auto">
+        <div class="flex flex-wrap overflow-hidden mr--15px">
 
                 <div class="w-1/3 overflow-hidden px-15px">
                     <trip-info />
@@ -105,6 +105,11 @@
 
             </div>
     </div>
+
+    <!-- <el-dialog :visible.sync="modalVnpay" width="70%">
+        <iframe src="https://sandbox.vnpayment.vn/apis/docs/huong-dan-tich-hop/" class="w-full" style="height: 500px" frameborder="0"></iframe>
+    </el-dialog> -->
+
 </div>
 </template>
 
@@ -113,6 +118,9 @@ import SeatMap from '../../components/Trip/SeatMap'
 import TripInfo from '../../components/Trip/TripInfo'
 import icons from '../../components/icon'
 import { mapState, mapActions } from 'vuex'
+import firebase from "firebase/app";
+import 'firebase/firestore'
+import 'firebase/auth'
 
 export default {
     head: {
@@ -123,7 +131,7 @@ export default {
         const tripId = query.tripId
 
         if(!store.state.trip.tripSelected) {
-            $http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
+            $http.setHeader('DOBODY6969', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkIjp7InVpZCI6IkFETTBKWTF1Y3FkM0JZTWoxIiwiZnVsbE5hbWUiOiJBZG1pbiBWZSBUZXQifSwidiI6MCwiaWF0IjoxNjA1ODU4NDc5fQ.k5r8MbJZGNQSyNe42ZNa3cCoMblWXSUyLpHgNMkTXXY')
             let res = await $http.get(`https://ticket-new-dot-dobody-anvui.appspot.com/trip/view?id=${tripId}`)
             let trip = await res.json()
             trip =  $helper.tripDTO(trip.results.trip)
@@ -141,6 +149,8 @@ export default {
         return {
             icons: icons,
             loading: false,
+            modalVnpay: false,
+            tripCollection: null,
             tabs: {
                 seatMap: true,
                 userInfo: false,
@@ -166,13 +176,48 @@ export default {
         }
     },
 
-    // mounted () {
-    // },
+    mounted () {
+        this.initConfigFireBase()
+    },
 
     methods: {
         ...mapActions ({
             'calcPrice': 'trip/calcPrice'
         }),
+
+        initConfigFireBase () {
+            const config = {
+                apiKey: "AIzaSyBWI3rqm3ZqMQHBxFJxG_ma7Vm8h3CFeP4",
+                authDomain: "anvui-firestore.firebaseapp.com",
+                databaseURL: "https://anvui-firestore.firebaseio.com",
+                projectId: "anvui-firestore",
+                storageBucket: "anvui-firestore.appspot.com",
+                messagingSenderId: "978123247240",
+                appId: "1:978123247240:web:957b7e55b784e9d1d6593d"
+            }
+
+            if (!firebase.apps.length) {
+                firebase.initializeApp(config)
+            }
+            let firestore = firebase.firestore()
+            if(!firebase.auth.currentUser){
+                firebase.auth().signInWithEmailAndPassword('quocnam@anvui.vn', 'nam@anvui@1')
+                .then((firebaseUser) => {
+                    console.log('connected realtime firebase');
+                    this.tripCollection = firestore.collection(`trip`)
+                    // this.tripCollection.doc(`${this.tripSelected.tripId}`).collection('ticketsInfo').doc('TK0Jz1unYZNq16n2').onSnapshot(function(doc) {
+                    //     var source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+                    //     console.log(source, " data: ", doc.data());
+                    // });
+                })
+                .catch(function (error) {
+                    console.log(error)
+                    console.log('connect firebase error');
+                });
+            } else {
+                this.tripCollection = firestore.collection('trip')
+            }
+        },
 
         countDown (time) {
             setInterval(() => {
@@ -257,6 +302,22 @@ export default {
             return true
         },
 
+        listenTicketBooked (ticketId) {
+            if(this.tripCollection) {
+                this.tripCollection.doc(`${this.tripSelected.tripId}`).collection('ticketsInfo').doc(ticketId).onSnapshot((doc) => {
+                    let ticket = doc.data()
+                    if ( ticket.paidMoney == ticket.agencyPrice ) {
+                        let query = {
+                            phoneNumber: ticket.phoneNumber, 
+                            ticketCode: ticket.ticketCode
+                        } 
+
+                        this.$router.push({path: "/thanh-toan-thanh-cong", query })
+                    }
+                });
+            }
+        },
+
         async doPayment () {
             if(!this.validatePayment()) {
                 return
@@ -324,7 +385,7 @@ export default {
             });
 
             this.loading = true
-            this.$http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
+            this.$http.setHeader('DOBODY6969', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkIjp7InVpZCI6IkFETTBKWTF1Y3FkM0JZTWoxIiwiZnVsbE5hbWUiOiJBZG1pbiBWZSBUZXQifSwidiI6MCwiaWF0IjoxNjA1ODU4NDc5fQ.k5r8MbJZGNQSyNe42ZNa3cCoMblWXSUyLpHgNMkTXXY')
             try {
                 let res = await this.$http.post('https://ticket-new-dot-dobody-anvui.appspot.com/ticket/book',body)
 
@@ -348,6 +409,8 @@ export default {
                     this.$store.commit('trip/SET_TICKET_INFO', {paymentCompleted: true})
                     // this.$store.commit('trip/SET_DEFAULT_TICKET_INFO')
                     window.open(vnpayPaymentInfo.results.data.paymentUrl, '_blank');
+
+                    this.listenTicketBooked(ticketIds[0])
                 }
 
             } catch (e) {

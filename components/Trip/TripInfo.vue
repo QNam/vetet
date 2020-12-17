@@ -1,5 +1,5 @@
 <template>
-  <div class="tripInfo">
+  <div class="tripInfo" v-if="tripSelected">
     <div class="tripInfo__sum">
         <div class="tripInfo__sum__content pr-1">
             <h3>{{ tripSelected.startTimeText }} - {{ tripSelected.startDateText }}</h3>
@@ -106,11 +106,11 @@ export default {
     },
 
     mounted () {
-        if( this.tripSelected.pointUp.listTransshipmentPoint.length == 0 ) {
+        if( this.tripSelected && this.tripSelected.pointUp.listTransshipmentPoint.length == 0 ) {
             this.$store.commit('trip/SET_TICKET_INFO', { pointUp: this.tripSelected.pointUp })
         }
 
-        if( this.tripSelected.pointDown.listTransshipmentPoint.length == 0 ) {
+        if( this.tripSelected && this.tripSelected.pointDown.listTransshipmentPoint.length == 0 ) {
             this.$store.commit('trip/SET_TICKET_INFO',  { pointDown: this.tripSelected.pointDown })
         }
     },

@@ -29,6 +29,7 @@ export default {
     { src: '@/plugins/vue-carousel.js', mode: 'client' },
     { src: '@/plugins/vue-burger-menu', ssr: false },
     '@/plugins/anvui.js',
+    // '@/plugins/firebase.js',
     '@/plugins/filters.js',
   ],
 
@@ -46,11 +47,28 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     '@nuxt/http',
+    // '@nuxtjs/firebase',
     [
       '@nuxtjs/device',
       { defaultUserAgent: 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Mobile Safari/537.36' }
     ]
   ],
+
+  // firebase: {
+  //   config: {
+  //     apiKey: "AIzaSyBWI3rqm3ZqMQHBxFJxG_ma7Vm8h3CFeP4",
+  //     authDomain: "anvui-firestore.firebaseapp.com",
+  //     databaseURL: "https://anvui-firestore.firebaseio.com",
+  //     projectId: "anvui-firestore",
+  //     storageBucket: "anvui-firestore.appspot.com",
+  //     messagingSenderId: "978123247240",
+  //     appId: "1:978123247240:web:957b7e55b784e9d1d6593d"
+  //   },
+  //   services: {
+  //     auth: true,
+  //     firestore: true,
+  //   }
+  // },
 
   // http: {
   //   proxyHeaders: false
