@@ -61,6 +61,11 @@ export default {
 }
 </script>
 
+<style>
+.policy__content .el-tabs--card>.el-tabs__header .el-tabs__nav {
+  border: none;
+}
+</style>
 <style scoped>
 .policy .block__header {
   margin-bottom: 32px;

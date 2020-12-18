@@ -1,6 +1,6 @@
 <template>
   <div class="banner">
-    <img src="~/assets/imgs/banner/banner.jpg" alt="">
+    <img src="~/assets/imgs/banner/banner.jpg" alt="" class="mx-auto">
     <div class="banner__content">
         <div class="container mx-auto">
             <h1>Bình ổn giá vé về quê ăn tết AN VUI !</h1>
@@ -23,6 +23,7 @@ export default {
 <style scoped>
 .banner {
     position: relative;
+    min-height: 635px;
 }
 .banner__content {
     position: absolute;
