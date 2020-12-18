@@ -8,13 +8,28 @@
           <h3>Mã vé: {{ ticketInfo['data'][0]['ticketCode'] }}</h3>
           <div class="ticketInfo__content__item">
               <h3>THÔNG TIN CHUYẾN ĐI</h3>
-              <div class="flex items-center fex-wrap mb-2">
-                  <span class="w-1/5">Điểm đi</span>
-                  <b class="w-4/5">{{ ticketInfo['data'][0]['pointUp']['name'] }}</b>
-              </div>
-              <div class="flex items-center fex-wrap mb-2">
-                  <span class="w-1/5">Điểm đến</span>
-                  <b class="w-4/5">{{ ticketInfo['data'][0]['pointDown']['name'] }}</b>
+              <!-- <p>17:00 - 12/11/2020</p> -->
+              <div class="flex flex-wrap overflex-hidden mb-2" style="margin-right: -15px; margin-left: -15px;">
+                  <div class="w-1/2" style="padding-right: 15px; padding-left: 15px; ">
+                    <div class="flex items-center fex-wrap mb-2">
+                        <span class="w-1/5">Điểm đi</span>
+                        <b class="w-4/5">{{ ticketInfo['data'][0]['pointUp']['name'] }}</b>
+                    </div>
+                    <div class="flex items-center fex-wrap mb-2">
+                        <span class="w-1/5">Địa chỉ</span>
+                        <b class="w-4/5">{{ ticketInfo['data'][0]['pointUp']['address'] }}</b>
+                    </div>
+                  </div>
+                  <div class="w-1/2" style="padding-right: 15px; padding-left: 15px; ">
+                    <div class="flex items-center fex-wrap mb-2">
+                        <span class="w-1/5">Điểm đến</span>
+                        <b class="w-4/5">{{ ticketInfo['data'][0]['pointDown']['name'] }}</b>
+                    </div>
+                    <div class="flex items-center fex-wrap mb-2">
+                        <span class="w-1/5">Địa chỉ</span>
+                        <b class="w-4/5">{{ ticketInfo['data'][0]['pointDown']['address'] }}</b>
+                    </div>
+                  </div>
               </div>
           </div>
 
@@ -127,6 +142,14 @@ export default {
 .ticketInfo__content__item {
     margin-bottom: 16px;
     padding: 16px;
+}
+.ticketInfo__content__item>p {
+    margin-bottom: 8px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    color: #383F47;
 }
 .ticketInfo__content__item>h3 {
     font-style: normal;

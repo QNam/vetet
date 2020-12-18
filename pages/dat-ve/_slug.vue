@@ -8,7 +8,7 @@
                 </div>
                 <div class="w-2/3 overflow-hidden px-15px">
                     <div class="tripDetail__content">    
-                        <div class="seatMap__wrap" v-if="tabs.seatMap">
+                        <div class="seatMap__wrap" v-if="tabs.seatMap" style="box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);">
                             <div class="seatMap__header">
                                 <h3>Chọn ghế</h3>
                                 <div class="seatMap__note">
@@ -32,7 +32,7 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-wrap overflow-hidden" v-if="tabs.userInfo">
+                        <div class="flex flex-wrap overflow-hidden" v-if="tabs.userInfo"  style="box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);">
                             <div class="w-1/2 overflow-hidden pr-3">
                                 <div class="trip__userInfo">
                                     <h3>Thông tin khách hàng</h3>
@@ -65,7 +65,7 @@
                             </div>
                         </div>
 
-                        <div class="payment" v-if="tabs.payment">
+                        <div class="payment" v-if="tabs.payment"  style="box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);">
                             <div class="payment__header">
                                 <h3>Thanh toán</h3>
                                 <span v-if="ticketInfo.paymentCompleted">Thời gian giữ chỗ còn lại: {{ticketInfo.overTime.minute }}:{{ ticketInfo.overTime.second }}</span>
@@ -80,7 +80,7 @@
                             </div>
                         </div>
 
-                        <div class="tripDetail__price">
+                        <div class="tripDetail__price"  style="box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);">
                             <div class="tripDetail__price__content">
                                 <div>
                                     <h4><b>Ghế đã chọn:</b> <span v-for="(seat, key) in seatSelected" :key="key">{{ seat.seatId }}</span></h4>
