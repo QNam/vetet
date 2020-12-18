@@ -34,6 +34,7 @@
                 <el-date-picker
                     ref="date"
                     :value="filterTrip.date"
+                    :picker-options="datePickerOptions"
                     @input="$store.commit('trip/SET_FILTER_TRIP', {date: $event})"
                     type="date"
                     format="dd-MM-yyyy"
@@ -54,7 +55,7 @@
             </div>
         </div> -->
 
-        <button class="tripFilter__search" @click="searchTrip">Tìm chuyến</button>
+        <button class="tripFilter__search" @click="searchTrip">VỀ NHÀ ĂN TẾT!</button>
     </div>
 </template>
 
@@ -69,6 +70,14 @@ export default {
         return {
             icons: icons,
             provinces: provinces,
+            datePickerOptions: {
+                disabledDate (date) {
+                    let today = new Date()
+                    let yesterday = new Date()
+                    yesterday.setDate( today.getDate() - 1 ) 
+                    return date < yesterday
+                }
+            },
         }
     },
     computed: {

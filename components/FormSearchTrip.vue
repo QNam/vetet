@@ -44,6 +44,7 @@
         <span class="block searchTrip__icon cursor-pointer mr-12px" v-html="icons.calendar"></span>
         <el-date-picker
           ref="date"
+          :picker-options="datePickerOptions"
           :value="filterTrip.date" 
           @input="$store.commit('trip/SET_FILTER_TRIP', {date: $event})"
           type="date"
@@ -70,7 +71,15 @@ export default {
     return {
       icons: icons,
       provinces: provinces,
-      filterTripHistory: {}
+      filterTripHistory: {},
+      datePickerOptions: {
+          disabledDate (date) {
+              let today = new Date()
+              let yesterday = new Date()
+              yesterday.setDate( today.getDate() - 1 ) 
+              return date < yesterday
+          }
+      },
     }
   },
   

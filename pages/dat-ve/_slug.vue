@@ -351,6 +351,7 @@ export default {
                     'isAdult': true,
                     'fullName': this.ticketInfo.userName,
                     'phoneNumber': this.ticketInfo.userPhone,
+                    'email': this.ticketInfo.userEmail,
                     'note': this.ticketInfo.userNote,
                     'sendSMS': false,
                     'paymentType': 1,
