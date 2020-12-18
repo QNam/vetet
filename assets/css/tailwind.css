@@ -10,6 +10,7 @@
 
 * {
     font-family: Cabin;
+    /* box-sizing: border-box; */
 }
 .el-loading-spinner {
   display: flex;

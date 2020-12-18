@@ -1,12 +1,12 @@
 <template>
 <div class="tripDetail" v-loading="loading">
     <div class="container mx-auto">
-        <div class="flex flex-wrap overflow-hidden mr--15px">
+        <div class="flex flex-wrap mr--15px">
 
-                <div class="w-1/3 overflow-hidden px-15px">
+                <div class="w-1/3 px-15px">
                     <trip-info />
                 </div>
-                <div class="w-2/3 overflow-hidden px-15px">
+                <div class="w-2/3 px-15px">
                     <div class="tripDetail__content">    
                         <div class="seatMap__wrap" v-if="tabs.seatMap" style="box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);">
                             <div class="seatMap__header">
@@ -27,13 +27,13 @@
                                 </div>
                             </div>
                             
-                            <div class="flex flex-wrap overflow-hidden">
+                            <div class="flex flex-wrap">
                                 <seat-map />
                             </div>
                         </div>
 
-                        <div class="flex flex-wrap overflow-hidden" v-if="tabs.userInfo"  style="box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);">
-                            <div class="w-1/2 overflow-hidden pr-3">
+                        <div class="flex flex-wrap" v-if="tabs.userInfo"  style="box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);">
+                            <div class="w-1/2 pr-3">
                                 <div class="trip__userInfo">
                                     <h3>Thông tin khách hàng</h3>
                                     <div class="trip__userInfo__input">
@@ -57,7 +57,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-1/2 overflow-hidden pl-3 pr-3">
+                            <div class="w-1/2 pl-3 pr-3">
                                 <div class="trip__policy">
                                     <h3>Điều khoản & Lưu ý</h3>
                                     <p>- Vui lòng xuất trình thông tin vé trước khi lên xe. Thông tin vé sẽ được gửi tới email và số điện thoại của Quý khách.</p>
@@ -68,7 +68,7 @@
                         <div class="payment" v-if="tabs.payment"  style="box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);">
                             <div class="payment__header">
                                 <h3>Thanh toán</h3>
-                                <span v-if="ticketInfo.paymentCompleted">Thời gian giữ chỗ còn lại: {{ticketInfo.overTime.minute }}:{{ ticketInfo.overTime.second }}</span>
+                                <span v-if="ticketInfo.bookingCompleted">Thời gian giữ chỗ còn lại: {{ticketInfo.overTime.minute }}:{{ ticketInfo.overTime.second }}</span>
                             </div>
                             <p>Vui lòng chọn một trong các phương thức thanh toán dưới đây</p>
 
@@ -94,9 +94,12 @@
                                     <button class="switchBack" @click="switchTab('seatMap')">Quay lại</button>
                                     <button :class='{"disabled": validateUserInfo}' @click="switchTab('payment')">Tiếp tục</button> 
                                 </div>
-                                <div v-if="tabs.payment">
+                                <div v-if="tabs.payment" class="flex">
                                     <button class="switchBack" @click="switchTab('userInfo')">Quay lại</button>
-                                    <button @click="doPayment()">Tiến hành thanh toán</button> 
+                                    <a :href="ticketInfo.vnPayUrl" target="_BLANK" class="block" v-if="ticketInfo.vnPayUrl">
+                                        <button>Tiến hành thanh toán</button> 
+                                    </a>
+                                    <button v-else @click="doPayment()">Tiến hành thanh toán</button>
                                 </div>
                             </div>
                         </div>
@@ -407,7 +410,8 @@ export default {
                         message: 'Đặt vé thành công !'
                     })
 
-                    this.$store.commit('trip/SET_TICKET_INFO', {paymentCompleted: true})
+                    this.$store.commit('trip/SET_TICKET_INFO', {bookingCompleted: true})
+                    this.$store.commit('trip/SET_TICKET_INFO', {vnPayUrl: vnpayPaymentInfo.results.data.paymentUrl})
                     // this.$store.commit('trip/SET_DEFAULT_TICKET_INFO')
                     window.open(vnpayPaymentInfo.results.data.paymentUrl, '_blank');
 

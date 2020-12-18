@@ -15,6 +15,7 @@
           ref="date"
           type="date"
           @change="searchTripByRoute"
+          :picker-options="datePickerOptions"
           v-model="date"
           format="dd-MM-yyyy"
           value-format="yyyyMMdd"
@@ -32,7 +33,15 @@ export default {
     data () {
         return {
             icons: icons,
-            date: null
+            date: null,
+            datePickerOptions: {
+                disabledDate (date) {
+                    let today = new Date()
+                    let yesterday = new Date()
+                    yesterday.setDate( today.getDate() - 1 ) 
+                    return date < yesterday
+                }
+            },
         }
     },
     methods: {

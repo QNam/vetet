@@ -42,7 +42,8 @@ export const state = () => ({
             second: "00",
             mns: 8 * 60 * 10000
         },
-        paymentCompleted: false
+        bookingCompleted: false,
+        vnPayUrl: null
     }
 })
 
@@ -157,7 +158,8 @@ export const mutations = {
             second: "00",
             mns: 8 * 60 * 10000
         }
-        state.ticketInfo.paymentCompleted = false
+        state.ticketInfo.bookingCompleted = false
+        state.ticketInfo.vnPayUrl = null
     },
 
     SET_TICKET_INFO (state, payload) {
@@ -166,6 +168,10 @@ export const mutations = {
         }
         if (payload.pointDown) {
             state.ticketInfo.pointDown = payload.pointDown
+        }
+
+        if (typeof payload.vnPayUrl != 'undefined') {
+            state.ticketInfo.vnPayUrl = payload.vnPayUrl
         }
 
         if (typeof payload.userName != 'undefined') {
@@ -199,8 +205,8 @@ export const mutations = {
         if (typeof payload.overTime != 'undefined') {
             state.ticketInfo.overTime = payload.overTime
         }
-        if (typeof payload.paymentCompleted != 'undefined') {
-            state.ticketInfo.paymentCompleted = payload.paymentCompleted
+        if (typeof payload.bookingCompleted != 'undefined') {
+            state.ticketInfo.bookingCompleted = payload.bookingCompleted
         }
     },
     
