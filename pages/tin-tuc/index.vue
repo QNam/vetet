@@ -91,14 +91,20 @@ export default {
     },
 
     async asyncData (context) {
-        let res = await context.$http.get(`https://anvui.vn/apinews?p=0&limit=10`)
-        let listNews = await res.json()
+        let listNews = [];
+        try {
+            let res = await context.$http.get(`https://anvui.vn/apinews?p=0&limit=10`)
+            listNews = await res.json()
+        } catch (error) {
+            // console.log(e)
+            context.error({ statusCode: 500, message: 'Có lỗi xảy ra vui lòng thử lại sau !' })
+        }
 
-        return listNews
+        return {listNews: listNews}
     },
 
     mounted () {
-        this.getNews()
+        // this.getNews()
     },
 
     methods: {

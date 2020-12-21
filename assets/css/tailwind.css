@@ -12,6 +12,13 @@
     font-family: Cabin;
     /* box-sizing: border-box; */
 }
+
+.__nuxt-error-page .error svg {
+  margin: 0 auto;
+}
+.__nuxt-error-page .description {
+  display: none;
+}
 .el-loading-spinner {
   display: flex;
   justify-content: center;

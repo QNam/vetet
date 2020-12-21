@@ -132,15 +132,19 @@ export default {
         title: "Đặt vé tết"
     },
 
-    async asyncData({ query, store, $http, $helper }) {
+    async asyncData({ query, store, $http, $helper, error }) {
         const tripId = query.tripId
 
         if(!store.state.trip.tripSelected) {
-            $http.setHeader('DOBODY6969', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkIjp7InVpZCI6IkFETTBKWTF1Y3FkM0JZTWoxIiwiZnVsbE5hbWUiOiJBZG1pbiBWZSBUZXQifSwidiI6MCwiaWF0IjoxNjA1ODU4NDc5fQ.k5r8MbJZGNQSyNe42ZNa3cCoMblWXSUyLpHgNMkTXXY')
-            let res = await $http.get(`https://ticket-new-dot-dobody-anvui.appspot.com/trip/view?id=${tripId}`)
-            let trip = await res.json()
-            trip =  $helper.tripDTO(trip.results.trip)
-            store.commit('trip/SET_TRIP_SELECTED', trip)
+            try {
+                $http.setHeader('DOBODY6969', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkIjp7InVpZCI6IkFETTBKWTF1Y3FkM0JZTWoxIiwiZnVsbE5hbWUiOiJBZG1pbiBWZSBUZXQifSwidiI6MCwiaWF0IjoxNjA1ODU4NDc5fQ.k5r8MbJZGNQSyNe42ZNa3cCoMblWXSUyLpHgNMkTXXY')
+                let res = await $http.geta(`https://ticket-new-dot-dobody-anvui.appspot.com/trip/view?id=${tripId}`)
+                let trip = await res.json()
+                trip =  $helper.tripDTO(trip.results.trip)
+                store.commit('trip/SET_TRIP_SELECTED', trip)
+            } catch (e) {
+                error({ statusCode: 500, message: 'Có lỗi xảy ra vui lòng thử lại sau !' })
+            }
         }
     },
 

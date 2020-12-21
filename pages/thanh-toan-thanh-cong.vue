@@ -71,16 +71,21 @@ export default {
         title: "Thanh toán thành công"
     },
 
-    async asyncData({ query, store, $http, $helper }) {
+    async asyncData({ query, store, $http, $helper, error }) {
         let params = {
             'phoneNumber': query.phoneNumber,
             'ticketCode': query.ticketCode
         }
 
-        let res = await $http.post('https://ticket-new-dot-dobody-anvui.appspot.com/ticket/check', params)
-        let ticketInfo = await res.json()
+        let ticketInfo = null
+        try {
+            let res = await $http.post('https://ticket-new-dot-dobody-anvui.appspot.com/ticket/check', params)
+            let ticketInfo = await res.json()
+        } catch (e) {
+            error({ statusCode: 500, message: 'Có lỗi xảy ra vui lòng thử lại sau !' })
+        }
 
-        if( ticketInfo.results.data.length  > 0 ) {
+        if( ticketInfo && ticketInfo.results.data.length  > 0 ) {
             let totalMoney = 0
             ticketInfo.results.data.forEach(ticket => {
                 totalMoney += ticket.agencyPrice

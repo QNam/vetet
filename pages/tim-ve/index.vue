@@ -28,7 +28,7 @@ export default {
         }
     },
 
-    async fetch ({ query, store, route, $http, $helper }) {
+    async fetch ({ query, store, route, $http, $helper, error }) {
         if(!store.state.trip.filterTrip.pointUp && query.pointUp) {
             store.commit('trip/SET_FILTER_TRIP', {pointUp: query.pointUp})
         }
@@ -41,7 +41,12 @@ export default {
         if(!store.state.trip.filterTrip.date && query.date) {
             store.commit('trip/SET_FILTER_TRIP', {date: query.date})
         }
-        await store.dispatch('trip/getTrip')
+        try {
+          await store.dispatch('trip/getTrip')
+        } catch (e) {
+          error({ statusCode: 500, message: 'Có lỗi xảy ra vui lòng thử lại sau !' })
+        }
+        
     },
 
     destroyed() {

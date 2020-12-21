@@ -89,6 +89,19 @@
             <h6>{{ pickAndDrop.pointDown == 2 ? ticketInfo.pointDownAddress :  tripSelected.pointDown.name }}</h6>
         </template>
     </div>
+
+    <div class="tripInfo__point" v-if="ticketInfo.userName">
+        <h3>THÔNG TIN KHÁCH HÀNG</h3>
+        <p class=" mb-2">{{ ticketInfo.userName }}</p>
+        <div class="flex">
+            <div class="w-1/2 mr-2" v-if="ticketInfo.userPhone != ''">
+                <p>{{ ticketInfo.userPhone }}</p>
+            </div>
+            <div class="w-1/2" v-if="ticketInfo.userEmail != ''">
+                <p>{{ ticketInfo.userEmail }}</p>
+            </div>
+        </div>
+    </div>
   </div>
 </template>
 
