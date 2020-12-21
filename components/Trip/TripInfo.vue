@@ -12,7 +12,7 @@
     </div>
     <div class="tripInfo__point">
         <h3>ĐIỂM LÊN XE</h3>
-        <template v-if="!ticketInfo.paymentCompleted"> 
+        <template v-if="!ticketInfo.bookingCompleted"> 
             <el-select v-if="allowPADAtWayPointUp" 
                         :value="pickAndDrop.pointUp" 
                         @change="$store.commit('trip/SET_PICK_DROP_TYPE', { pointUp: $event })"
@@ -51,7 +51,7 @@
 
     <div class="tripInfo__point">
         <h3>ĐIỂM XUỐNG XE</h3>
-        <template v-if="!ticketInfo.paymentCompleted">
+        <template v-if="!ticketInfo.bookingCompleted">
             <el-select v-if="allowPADAtWayPointDown" 
                     :value="pickAndDrop.pointDown" 
                     @change="$store.commit('trip/SET_PICK_DROP_TYPE', { pointDown: $event })"
