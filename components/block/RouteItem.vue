@@ -48,6 +48,8 @@ export default {
       searchTripByRoute() {
         let query = {
           date: this.date,
+          pointUp: this.route.start_point_name,
+          pointDown: this.route.end_point_name,
           // route_id: this.route.route_id
         }
         this.$store.commit('trip/SET_FILTER_TRIP', {pointUp: this.route.start_point_name})

@@ -80,11 +80,11 @@ export default {
         let ticketInfo = null
         try {
             let res = await $http.post('https://ticket-new-dot-dobody-anvui.appspot.com/ticket/check', params)
-            let ticketInfo = await res.json()
+            ticketInfo = await res.json()
         } catch (e) {
             error({ statusCode: 500, message: 'Có lỗi xảy ra vui lòng thử lại sau !' })
         }
-
+        
         if( ticketInfo && ticketInfo.results.data.length  > 0 ) {
             let totalMoney = 0
             ticketInfo.results.data.forEach(ticket => {
