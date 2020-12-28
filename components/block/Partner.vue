@@ -2,7 +2,7 @@
 <section class="blockPartner">
     <div class="container mx-auto">
         <div class="block__header">
-            <h2>Chính sách mua vé cho khách hàng</h2>
+            <h2>Các nhà xe tham gia chương trình</h2>
         </div>
         <div>
             <client-only>

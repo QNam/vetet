@@ -230,7 +230,6 @@ export default {
 
         countDown (time) {
             setInterval(() => {
-                if (time == 0) return 
                 let minute = Math.floor(time / 60000)
                 minute = minute > 9 ? minute.toString() : '0' + minute
 
@@ -246,6 +245,7 @@ export default {
 
                 if(time == 0) {
                     clearInterval()
+                    return
                 }
             }, 1000);
 
