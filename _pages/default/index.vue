@@ -4,6 +4,39 @@
     <div class="promotion__wrap">
         <promotion />
     </div>
+    <div class="bannerStep">
+      <div class="container mx-auto">
+        <div class="bannerStep__wrap">
+          <div class="bannerStep__item">
+            <div class="bannerStep__item__content">
+              <img src="~/assets/imgs/banner/banner2__icon.png" alt="">
+              <div>
+                <h3>TÌM KIẾM</h3>
+                <p>Chọn chuyến đi phù hợp</p>
+              </div>
+            </div>
+          </div>
+          <div class="bannerStep__item">
+            <div class="bannerStep__item__content">
+              <img src="~/assets/imgs/banner/banner2__icon1.png" alt="">
+              <div>
+                <h3>ĐẶT VÉ</h3>
+                <p>Chọn chỗ & thanh toán</p>
+              </div>
+            </div>
+          </div>
+          <div class="bannerStep__item">
+            <div class="bannerStep__item__content">
+              <img src="~/assets/imgs/banner/banner2__icon2.png" alt="">
+              <div>
+                <h3>ĐI AN VỀ VUI</h3>
+                <p>Trải nghiệm hành trình</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="routeHot__wrap">
       <route-hot />
     </div>
@@ -90,6 +123,50 @@ export default {
 }
 </style>
 <style scoped>
+.bannerStep {
+  margin: 80px 0px;
+}
+.bannerStep__wrap {
+  padding-top: 130px;
+  background-image: url('~@/assets/imgs/banner/banner2.png');
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.bannerStep__item {
+  height: 182px;
+  border-left: 4px solid #FF4868;
+}
+
+.bannerStep__item img {
+  margin-right: 8px;
+}
+
+.bannerStep__item h3 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #383F47;
+}
+
+.bannerStep__item p {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 29px;
+  color: #757d91;
+}
+.bannerStep__item__content {
+
+}
+.bannerStep__item__content {
+  margin-left: -54px;
+  display: flex;
+  align-items: center;
+}
+
 .promotion__wrap {
   margin-top: -58px;
 }
