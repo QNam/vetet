@@ -8,26 +8,26 @@
           <h3>Mã vé: {{ ticketInfo['data'][0]['ticketCode'] }}</h3>
           <div class="ticketInfo__content__item">
               <h3>THÔNG TIN CHUYẾN ĐI</h3>
-              <!-- <p>17:00 - 12/11/2020</p> -->
+              <p>{{ ticketInfo.startTime }} - {{ ticketInfo.startDate }}</p>
               <div class="flex flex-wrap overflex-hidden mb-2" style="margin-right: -15px; margin-left: -15px;">
                   <div class="w-1/2" style="padding-right: 15px; padding-left: 15px; ">
                     <div class="flex items-center fex-wrap mb-2">
-                        <span class="w-1/5">Điểm đi</span>
-                        <b class="w-4/5">{{ ticketInfo['data'][0]['pointUp']['name'] }}</b>
+                        <span class="w-1/4 whitespace-nowrap">Điểm đi</span>
+                        <b class="w-3/4">{{ ticketInfo['data'][0]['pointUp']['name'] }}</b>
                     </div>
                     <div class="flex items-center fex-wrap mb-2">
-                        <span class="w-1/5">Địa chỉ</span>
-                        <b class="w-4/5">{{ ticketInfo['data'][0]['pointUp']['address'] }}</b>
+                        <span class="w-1/4 whitespace-nowrap">Địa chỉ</span>
+                        <b class="w-3/4">{{ ticketInfo['data'][0]['pointUp']['address'] }}</b>
                     </div>
                   </div>
                   <div class="w-1/2" style="padding-right: 15px; padding-left: 15px; ">
                     <div class="flex items-center fex-wrap mb-2">
-                        <span class="w-1/5">Điểm đến</span>
-                        <b class="w-4/5">{{ ticketInfo['data'][0]['pointDown']['name'] }}</b>
+                        <span class="w-1/4 whitespace-nowrap">Điểm đến</span>
+                        <b class="w-3/4">{{ ticketInfo['data'][0]['pointDown']['name'] }}</b>
                     </div>
                     <div class="flex items-center fex-wrap mb-2">
-                        <span class="w-1/5">Địa chỉ</span>
-                        <b class="w-4/5">{{ ticketInfo['data'][0]['pointDown']['address'] }}</b>
+                        <span class="w-1/4 whitespace-nowrap">Địa chỉ</span>
+                        <b class="w-3/4">{{ ticketInfo['data'][0]['pointDown']['address'] }}</b>
                     </div>
                   </div>
               </div>
@@ -36,28 +36,28 @@
           <div class="ticketInfo__content__item">
               <h3>THÔNG TIN KHÁCH HÀNG</h3>
               <div class="flex items-center fex-wrap mb-2">
-                  <span class="w-1/5">Họ tên</span>
-                  <b class="w-4/5">{{ ticketInfo['data'][0]['fullName'] }}</b>
+                  <span class="w-1/4 whitespace-nowrap">Họ tên</span>
+                  <b class="w-3/4">{{ ticketInfo['data'][0]['fullName'] }}</b>
               </div>
               <div class="flex items-center fex-wrap mb-2">
-                  <span class="w-1/5">Số điện thoại</span>
-                  <b class="w-4/5">{{ ticketInfo['data'][0]['phoneNumber'] }}</b>
+                  <span class="w-1/4 whitespace-nowrap">Số điện thoại</span>
+                  <b class="w-3/4">{{ ticketInfo['data'][0]['phoneNumber'] }}</b>
               </div>
               <div class="flex items-center fex-wrap mb-2">
-                  <span class="w-1/5">Email</span>
-                  <b class="w-4/5">{{ ticketInfo['data'][0]['email'] }}</b>
+                  <span class="w-1/4 whitespace-nowrap">Email</span>
+                  <b class="w-3/4">{{ ticketInfo['data'][0]['email'] }}</b>
               </div>
           </div>
 
           <div class="ticketInfo__content__item">
               <h3>THÔNG TIN THANH TOÁN</h3>
               <div class="flex items-center fex-wrap">
-                  <span class="w-1/5">Số tiền</span>
-                  <b class="w-4/5">{{ ticketInfo['totalMoney'] | number }} đ</b>
+                  <span class="w-1/4 whitespace-nowrap">Số tiền</span>
+                  <b class="w-3/4">{{ ticketInfo['totalMoney'] | number }} đ</b>
               </div>
               <div class="flex items-center fex-wrap">
-                  <span class="w-1/5">Hình thức thanh toán</span>
-                  <b class="w-4/5">VNPAY</b>
+                  <span class="w-1/4">Hình thức thanh toán</span>
+                  <b class="w-3/4">VNPAY</b>
               </div>
           </div>
       </div>
@@ -91,9 +91,26 @@ export default {
                 totalMoney += ticket.agencyPrice
             });
 
+            let startDate = "";
+            let startTime = "";
+
+            if(ticketInfo.results.data[0]['getInTimePlan']) {
+                let startDT = new Date(ticketInfo.results.data[0]['getInTimePlan'] - 7 * 3600 * 1000)
+                let date = startDT.getDate() < 10 ? "0" + startDT.getDate() : "" + startDT.getDate()
+                let month = (startDT.getMonth() + 1) < 10 ? "0" + (startDT.getMonth() + 1) : "" + (startDT.getMonth() + 1)
+                let year = startDT.getFullYear()
+                let hour = startDT.getHours() < 10 ? "0" + startDT.getHours() : "" + startDT.getHours()
+                let minute = startDT.getMinutes() < 10 ? "0" + startDT.getMinutes() : "" + startDT.getMinutes()
+                
+                startDate = date + "/" + month + "/" + year
+                startTime = hour + ":" + minute
+            }
+            
             let result = {
                 data: ticketInfo.results.data,
-                totalMoney
+                totalMoney,
+                startDate,
+                startTime
             }
             return { ticketInfo: result }
         } else {

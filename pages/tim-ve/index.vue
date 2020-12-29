@@ -17,15 +17,21 @@ export default {
   },
   beforeCreate() {
     this.component = SearTripIndexDefault
-    if (this.$device.isMobile) {
-      this.component = SearTripIndexMobile
-    }
+    // if (this.$device.isMobile) {
+    //   this.component = SearTripIndexMobile
+    // }
   },
 
     head() {
-        return {
-            title: `Vé xe từ ${this.$route.query.pointUp} đi ${this.$route.query.pointDown}`
-        }
+      let head = {
+        title: `Vé xe từ ${this.$route.query.pointUp} đi ${this.$route.query.pointDown}`,
+        meta: []
+      }
+
+      // if(this.$device.isMobile) {
+        head.meta.push({ name: 'viewport', content: 'width=device-width, initial-scale=0' })
+      // }
+      return head
     },
 
     async fetch ({ query, store, route, $http, $helper, error }) {

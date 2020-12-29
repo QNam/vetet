@@ -138,7 +138,7 @@ export default {
         if(!store.state.trip.tripSelected) {
             try {
                 $http.setHeader('DOBODY6969', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkIjp7InVpZCI6IkFETTBKWTF1Y3FkM0JZTWoxIiwiZnVsbE5hbWUiOiJBZG1pbiBWZSBUZXQifSwidiI6MCwiaWF0IjoxNjA1ODU4NDc5fQ.k5r8MbJZGNQSyNe42ZNa3cCoMblWXSUyLpHgNMkTXXY')
-                let res = await $http.geta(`https://ticket-new-dot-dobody-anvui.appspot.com/trip/view?id=${tripId}`)
+                let res = await $http.get(`https://ticket-new-dot-dobody-anvui.appspot.com/trip/view?id=${tripId}`)
                 let trip = await res.json()
                 trip =  $helper.tripDTO(trip.results.trip)
                 store.commit('trip/SET_TRIP_SELECTED', trip)
