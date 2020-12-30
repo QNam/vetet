@@ -96,37 +96,42 @@ export default {
     },
     methods: {
         switchPoint () {
-        let pointUp = this.filterTrip.pointUp
-        let pointDown = this.filterTrip.pointDown
+            let pointUp = this.filterTrip.pointUp
+            let pointDown = this.filterTrip.pointDown
 
-        this.$store.commit('trip/SET_FILTER_TRIP', {pointDown: pointUp})
-        this.$store.commit('trip/SET_FILTER_TRIP', {pointUp: pointDown})
+            this.$store.commit('trip/SET_FILTER_TRIP', {pointDown: pointUp})
+            this.$store.commit('trip/SET_FILTER_TRIP', {pointUp: pointDown})
         },
 
         validate () {
-        if(!this.filterTrip.pointUp) {
-            this.$notify.warning({
-            message: 'Vui lòng chọn điểm lên !'
-            })
+            if(!this.filterTrip.pointUp) {
+                this.$notify.warning({
+                message: 'Vui lòng chọn điểm lên !'
+                })
 
-            return false
-        }
+                return false
+            }
 
-        if(!this.filterTrip.pointDown) {
-            this.$notify.warning({
-            message: 'Vui lòng chọn điểm xuống !'
-            })
+            if(!this.filterTrip.pointDown) {
+                this.$notify.warning({
+                message: 'Vui lòng chọn điểm xuống !'
+                })
 
-            return false
-        }
+                return false
+            }
 
-        return true
+            return true
         },
 
         setFilterTrip () {
+            if(!this.validate()) return
+            let query = {
+                pointUp: this.filterTrip.pointUp,
+                pointDown: this.filterTrip.pointDown,
+                date: this.filterTrip.date,
+            }
 
-        if(!this.validate()) return 
-        this.$router.push({path: "/tim-ve", query: this.filterTrip})
+            this.$router.push({path: "/tim-ve", query}) 
         }
     }
 }

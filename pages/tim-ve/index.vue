@@ -15,11 +15,12 @@ export default {
     SearTripIndexMobile,
     SearTripIndexDefault
   },
+
   beforeCreate() {
     this.component = SearTripIndexDefault
-    // if (this.$device.isMobile) {
-    //   this.component = SearTripIndexMobile
-    // }
+    if (this.$device.isMobile) {
+      this.component = SearTripIndexMobile
+    }
   },
 
     head() {
@@ -28,9 +29,9 @@ export default {
         meta: []
       }
 
-      // if(this.$device.isMobile) {
-        head.meta.push({ name: 'viewport', content: 'width=device-width, initial-scale=0' })
-      // }
+      if(this.$device.isMobile) {
+        head.meta.push({ name: 'viewport', content: 'width=device-width, initial-scale=1' })
+      }
       return head
     },
 

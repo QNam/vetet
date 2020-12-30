@@ -28,8 +28,8 @@
             <br>
             <p><b>4. Địa chỉ đơn vị thu thập và quản lý thông tin cá nhân</b></p>
             <p>Công ty Cổ phần Công nghệ AN VUI</p>
-            <p>• Địa chỉ:</p>
-            <p>• Điện thoại:</p>
+            <p>• Địa chỉ: Lô A2, Toà A2, Ecolife Capitol, 58 Tố Hữu, Nam Từ Liêm, Hà Nội</p>
+            <p>• Điện thoại: 0387764444</p>
             <p>• Email: info@anvui.vn</p>
             <br>
             <p><b>5. Cam kết bảo mật thông tin của Khách hàng</b></p>
