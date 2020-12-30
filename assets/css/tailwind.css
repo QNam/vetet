@@ -431,6 +431,16 @@ top: 70%!important;
   height: 16px!important;
 }
 
+.mTrip__payment .payment__header {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.mTrip__payment .payment__header h3 {
+  margin-bottom: 8px;
+}
+
 .payment__type .el-radio-group span.el-radio__inner {
   width: 21px;
   height: 21px;
@@ -485,8 +495,7 @@ top: 70%!important;
 .trip__userInfo__input  .el-checkbox.is-checked .el-checkbox__inner::after {
   border-color: #FF4868!important;
 }
-</style>
-<style scoped>
+
 .tripDetail button.disabled {
   background: #ECEDF1!important;
   color: #B0B5C1!important;
@@ -655,7 +664,7 @@ top: 70%!important;
   content: "";
 }
 
-.trip__userInfo {
+.trip_userInfo__wrap {
   padding: 24px;
   background: #FFFFFF;
   box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);

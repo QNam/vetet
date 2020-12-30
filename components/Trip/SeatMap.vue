@@ -2,7 +2,7 @@
   <div class="seatMap w-full" v-loading="loading">
     <!-- <h3>Tầng 1</h3> -->
     <div class="seatMap__content flex flex-wrap overflow-hidden justify-center" v-if="seatMapData">
-        <div class="w-1/2 seatMap__item" v-for="(floor, fkey) in seatMapData" :key="fkey">
+        <div class="seatMap__item mb-4" :class="{'w-1/2': seatMapData.length > 1}" v-for="(floor, fkey) in seatMapData" :key="fkey">
             <h3>Tầng {{ fkey }}</h3>
             <table>
                 <tr v-for="(row, rkey) in floor" :key="rkey">
@@ -119,7 +119,7 @@ export default {
     margin-right: -15px;
 }
 
-.seatMap__item {
+. mb-4 {
     padding-right: 15px;
     padding-left: 15px;
 }

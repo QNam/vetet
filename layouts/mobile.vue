@@ -2,7 +2,7 @@
   <div>
     <navbar />
     <Nuxt />
-    <Footer />
+    <Footer v-if="$route.name != 'dat-ve-slug'" />
   </div>  
 </template>
 
