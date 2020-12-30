@@ -5,6 +5,7 @@
         <div class="seatMap__item mb-4" :class="{'w-1/2': seatMapData.length > 1}" v-for="(floor, fkey) in seatMapData" :key="fkey">
             <h3>Tầng {{ fkey }}</h3>
             <table>
+                <tbody>
                 <tr v-for="(row, rkey) in floor" :key="rkey">
                     <td v-for="(seat, ckey) in row" :key="ckey">
                         <template v-if="seat">
@@ -13,6 +14,7 @@
                         <span v-else class="opacity-0 invisible pointer-events-none" v-html="icons.seat"></span>
                     </td>
                 </tr>
+                </tbody>
             </table>
         </div>
     </div>
