@@ -1,5 +1,6 @@
 <template>
     <div class="navbar">
+      <client-only>
         <SlideMenu :closeOnNavigation="true" noOverlay>
             <NuxtLink to="/" class="block">Trang chủ</NuxtLink>
             <NuxtLink to="/" class="block">Tin tức</NuxtLink>
@@ -7,7 +8,6 @@
         <!-- <span v-html="icons.text_justify" @click="openSideBar = !openSideBar" class="cursor-pointer"></span> -->
         <NuxtLink to="/" class="block"><img src="~/assets/imgs/logo.svg" alt=""></NuxtLink>
         <span v-html="icons.user_r"></span>
-        <client-only>
         </client-only>
     </div>
 </template>

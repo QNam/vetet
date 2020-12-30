@@ -76,8 +76,10 @@ export default {
           disabledDate (date) {
               let today = new Date()
               let yesterday = new Date()
+              let tomorrow = new Date()
               yesterday.setDate( today.getDate() - 1 ) 
-              return date < yesterday
+              tomorrow.setDate( today.getDate() + 1 ) 
+              return date < today || date > tomorrow
           }
       },
     }
@@ -91,7 +93,7 @@ export default {
 
   mounted () {
     const dateObj = new Date()
-    const date = dateObj.getDate() < 10 ? "0" + dateObj.getDate() : "" + dateObj.getDate()
+    const date = dateObj.getDate() + 1 < 10 ? "0" + (dateObj.getDate() - -1) : "" + (dateObj.getDate() - -1)
     const month = (dateObj.getMonth() + 1) < 10 ? "0" + (dateObj.getMonth() + 1) : "" + (dateObj.getMonth() + 1)
 
     this.$store.commit('trip/SET_FILTER_TRIP', {date: `${dateObj.getFullYear()}${month}${date}`})

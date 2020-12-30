@@ -74,8 +74,10 @@ export default {
                 disabledDate (date) {
                     let today = new Date()
                     let yesterday = new Date()
+                    let tomorrow = new Date()
                     yesterday.setDate( today.getDate() - 1 ) 
-                    return date < yesterday
+                    tomorrow.setDate( today.getDate() + 1 ) 
+                    return date < today || date > tomorrow
                 }
             },
         }

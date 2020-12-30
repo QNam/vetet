@@ -6,13 +6,13 @@
     </div>
 
     <div class="mrouteHot__wrap">
-      <div class="mrouteHot__item" v-for="item in 6" :key="item">
+      <div class="mrouteHot__item" v-for="(route, index) in listRoute" :key="index">
         <div class="mrouteHot__item__name">
-          <h4 class="w-2/5">Hà Nội</h4>
-          <h5 class="w-1/5" v-html="icons.arrowr"></h5>
-          <h4 class="w-2/5">Nghệ An</h4>
+          <h4>{{ route.route_name }}</h4>
+          <!-- <h5 class="w-1/5" v-html="icons.arrowr"></h5>
+          <h4 class="w-2/5">Nghệ An</h4> -->
         </div>
-        <h3>180.000đ</h3>
+        <h3>{{ route.display_price | number }}đ</h3>
         <button v-html="icons.calendar1"></button>
       </div>
     </div>
@@ -24,10 +24,19 @@ import icons from '../../icon'
 
 export default {
   data () {
-    return {
-      icons
-    }
-  }
+      return {
+        icons,
+        listRoute: []
+      }
+  },
+
+  async fetch() {
+      let res = await this.$http.get(encodeURI('https://apiv2.sanve.com.vn/api/route/list?api_token=quynv.test&count=12&name=Hà Nội') )
+      let listRouteAsJson = await res.json()
+      let listRoute = listRouteAsJson.data.data
+
+      this.listRoute = listRoute
+  },
 }
 </script>
 
