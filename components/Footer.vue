@@ -28,8 +28,8 @@
         <h3>Đối tác</h3>
         <div class="flex">
           <img src="~assets/imgs/pn/vnpayqr.svg" alt="">
-          <img src="~assets/imgs/pn/zalopay.svg" alt="">
-          <img src="~assets/imgs/pn/vinid.svg" alt="">
+          <!-- <img src="~assets/imgs/pn/zalopay.svg" alt="">
+          <img src="~assets/imgs/pn/vinid.svg" alt=""> -->
         </div>
       </div>
     </div>

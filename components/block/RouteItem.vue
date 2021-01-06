@@ -1,7 +1,7 @@
 <template>
   <div class="routeItem flex justify-between items-center flex-wrap overflow-hidden">
       <div class="w-2/3 overflow-hidden flex flex-wrap justify-between items-center pr-2">
-        <h4>{{ route.route_name }}</h4>
+        <h4 class="cursor-pointer" @click="searchTripByRoute">{{ route.route_name }}</h4>
       </div>
       <div class="w-1/3 overflow-hidden cursor-pointer flex justify-between items-center">
         <p class="routeItem__price mr-2" v-if="route.display_price != null">{{ route.display_price | number }}đ</p>
@@ -31,29 +31,33 @@ import icons from '../icon'
 export default {
     props: ["route"],
     data () {
-        return {
-            icons: icons,
-            date: null,
-            datePickerOptions: {
-                disabledDate (date) {
-                    let today = new Date()
-                    let yesterday = new Date()
-                    let tomorrow = new Date()
-                    yesterday.setDate( today.getDate() - 1 ) 
-                    tomorrow.setDate( today.getDate() + 1 ) 
-                    return date < today || date > tomorrow
-                }
-            },
-        }
+      return {
+          icons: icons,
+          date: null,
+          datePickerOptions: {
+              disabledDate (date) {
+                  let today = new Date()
+                  let yesterday = new Date()
+                  let tomorrow = new Date()
+                  yesterday.setDate( today.getDate() - 1 ) 
+                  tomorrow.setDate( today.getDate() + 1 ) 
+                  return date < today || date > tomorrow
+              }
+          },
+      }
     },
     methods: {
       searchTripByRoute() {
+       let tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1) 
+
         let query = {
-          date: this.date,
-          pointUp: this.route.start_point_name,
-          pointDown: this.route.end_point_name,
-          // route_id: this.route.route_id
+            date: this.date ? this.date : tomorrow.toAVDateString(),
+            pointUp: this.route.start_point_name,
+            pointDown: this.route.end_point_name,
+            // route_id: this.route.route_id
         }
+        
         this.$store.commit('trip/SET_FILTER_TRIP', {pointUp: this.route.start_point_name})
         this.$store.commit('trip/SET_FILTER_TRIP', {date: this.date})
         this.$store.commit('trip/SET_FILTER_TRIP', {pointDown: this.route.end_point_name})

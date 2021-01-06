@@ -45,15 +45,15 @@
             </div>
         </div>
 
-        <!-- <div class="tripFilter__time">
+        <div class="tripFilter__time">
             <h2>Khởi hành</h2>
             <div>   
-                <el-checkbox class="block">Trước 06:00</el-checkbox>
-                <el-checkbox class="block">Từ 06:00 - 12:00</el-checkbox>
-                <el-checkbox class="block">Từ 12:00 - 18:00</el-checkbox>
-                <el-checkbox class="block">Sau 18:00</el-checkbox>
+                <el-radio v-model="time" class="block" label="0,21600000">Trước 06:00</el-radio>
+                <el-radio v-model="time" class="block" label="21600000,43200000">Từ 06:00 - 12:00</el-radio>
+                <el-radio v-model="time" class="block" label="43200000,64800000">Từ 12:00 - 18:00</el-radio>
+                <el-radio v-model="time" class="block" label="64800000,86400000">Sau 18:00</el-radio>
             </div>
-        </div> -->
+        </div>
 
         <button class="tripFilter__search" @click="searchTrip">VỀ NHÀ ĂN TẾT!</button>
     </div>
@@ -68,6 +68,7 @@ export default {
     data() {
         const dateObj = new Date()
         return {
+            time: "0, 86400000",
             icons: icons,
             provinces: provinces,
             datePickerOptions: {
@@ -111,8 +112,16 @@ export default {
         async searchTrip () {
             if(!this.validate()) return 
 
+            let filterTime = []
+            if (this.time) {
+                let timeAsArray = this.time.split(",")
+                filterTime.startTimeLimit = timeAsArray[0] ? timeAsArray[0] : 0
+                filterTime.endTimeLimit = timeAsArray[1] ? timeAsArray[1] : 86400000
+            }
+
             this.$store.commit('trip/SET_FILTER_TRIP', {loadingTrip: true})
             this.$store.commit('trip/SET_FILTER_TRIP', {page: 0})
+            this.$store.commit('trip/SET_FILTER_TRIP', {time: filterTime})
             this.$store.commit('trip/SET_EMPTY_LIST_TRIP')
             await this.$store.dispatch('trip/getTrip')
             this.$store.commit('trip/SET_FILTER_TRIP', {loadingTrip: false})

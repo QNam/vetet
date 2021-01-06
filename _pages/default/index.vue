@@ -159,7 +159,7 @@ export default {
   color: #757d91;
 }
 .bannerStep__item__content {
-
+  min-height: 97px;
 }
 .bannerStep__item__content {
   margin-left: -54px;

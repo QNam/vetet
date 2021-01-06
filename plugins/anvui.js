@@ -1,6 +1,14 @@
 import enums from '../ulti/enum'
 // import http from '@nuxt/http'
 
+Date.prototype.toAVDateString = function() {
+    var target = this;
+    let date = this.getDate() < 10 ? "0" + this.getDate() : "" + this.getDate()
+    let month = this.getMonth() + 1 < 10 ? "0" + (this.getMonth() + 1) : "" + (this.getMonth() + 1)
+    let year = this.getFullYear()
+    return `${year}${month}${date}`
+};
+
 function msToTime(ms) {
     let time = ms / 3600000
     let hour = Number(Math.floor( time ))

@@ -138,20 +138,22 @@ export default {
 
         countDown (time) {
             setInterval(() => {
-                let minute = Math.floor(time / 60000)
-                minute = minute > 9 ? minute.toString() : '0' + minute
+                if(time >= 0) {
+                    let minute = Math.floor(time / 60000)
+                    minute = minute > 9 ? minute.toString() : '0' + minute
 
-                let second = Math.floor( ((time / 60000) - minute ) * 60 )
-                second = second > 9 ? second.toString() : '0' + second
-                time = time - 1000
+                    let second = Math.floor( ((time / 60000) - minute ) * 60 )
+                    second = second > 9 ? second.toString() : '0' + second
+                    time = time - 1000
 
-                this.$store.commit('trip/SET_TICKET_INFO', { overTime: {
-                    minute,
-                    second,
-                    mns: time
-                }})
+                    this.$store.commit('trip/SET_TICKET_INFO', { overTime: {
+                        minute,
+                        second,
+                        mns: time
+                    }})
+                }
 
-                if(time == 0) {
+                if(time <= 0) {
                     clearInterval()
                     return
                 }

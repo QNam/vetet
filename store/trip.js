@@ -7,7 +7,11 @@ export const state = () => ({
         count: 30,
         loadingTrip: false,
         loadingMore: false,
-        routeId: null
+        routeId: null,
+        time: {
+            startTimeLimit: 0,
+            endTimeLimit: 86400000
+        }
     },
     listTrip: [],
     ticketViewed: {
@@ -132,6 +136,10 @@ export const mutations = {
         if(typeof payload.loadingMore != 'undefined') {
             state.filterTrip.loadingMore = payload.loadingMore
         }
+
+        if(typeof payload.time != 'undefined') {
+            state.filterTrip.time = payload.time
+        }
         
     },
 
@@ -226,7 +234,7 @@ export const actions = {
         let listTrip = []
         // $http.setHeader('DOBODY6969', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ2IjowLCJkIjp7InVpZCI6IkFETTExMDk3Nzg4NTI0MTQ2MjIiLCJmdWxsTmFtZSI6IkFkbWluIHdlYiIsImF2YXRhciI6Imh0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9kb2JvZHktZ29ub3cuYXBwc3BvdC5jb20vZGVmYXVsdC9pbWdwc2hfZnVsbHNpemUucG5nIn0sImlhdCI6MTQ5MjQ5MjA3NX0.PLipjLQLBZ-vfIWOFw1QAcGLPAXxAjpy4pRTPUozBpw')
         // let url = encodeURI(`https://apiv2.sanve.com.vn/api/trip/getTrips?api_token=quynv.test&page=${state.filterTrip.page}&count=${state.filterTrip.count}&start_point=${state.filterTrip.pointUp}&end_point=${state.filterTrip.pointDown}&date=${state.filterTrip.date}`)
-        let url = `https://apiv2.sanve.com.vn/api/trip/getTrips?api_token=quynv.test&page=${state.filterTrip.page}&count=${state.filterTrip.count}`
+        let url = `https://apiv2.sanve.com.vn/api/trip/getTrips?api_token=vetet.5.jDlMLiTVVPlGivId4M9Xi1WUlsrkz7W3&page=${state.filterTrip.page}&count=${state.filterTrip.count}`
         if(state.filterTrip.pointUp) {
             url += `&start_point=${state.filterTrip.pointUp}`
         }
@@ -241,6 +249,14 @@ export const actions = {
 
         if(state.filterTrip.routeId) {
             url += `&route_id=${state.filterTrip.routeId}`    
+        }
+
+        if(state.filterTrip.time.startTimeLimit !== null) {
+            url += `&start_time_to=${state.filterTrip.time.startTimeLimit}`    
+        }
+
+        if(state.filterTrip.time.endTimeLimit) {
+            url += `&end_time_to=${state.filterTrip.time.endTimeLimit}`    
         }
         
 
