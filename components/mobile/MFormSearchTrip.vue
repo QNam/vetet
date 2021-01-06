@@ -57,7 +57,7 @@
         <div class="searchTripDrawer__content">
             <div class="searchTripDrawer__header">
                 <span @click="pointDownDrawer = false" class="cursor-pointer"><i class="el-icon-back"></i></span>
-                <h3>Điểm lên</h3>
+                <h3>Điểm xuống</h3>
                 <span class="invisible">aaa</span>
             </div>
 
