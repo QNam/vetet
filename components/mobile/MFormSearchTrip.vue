@@ -2,12 +2,12 @@
 <div class="mformSearTrip">
     <div class="msearchTrip__input" @click="pointUpDrawer = true">
         <span class="block searchTrip__icon cursor-pointer mr-12px" v-html="icons.bus"></span>
-        <el-input ref="pointUp" :value="filterTrip.pointUp" placeholder="Nơi đi"></el-input>
+        <el-input :value="filterTrip.pointUp" class="pointer-events-none" placeholder="Nơi đi"></el-input>
     </div>
 
     <div class="msearchTrip__input contents-betwwen" @click="pointDownDrawer = true">
         <span class="block searchTrip__icon cursor-pointer mr-12px" v-html="icons.location"></span>
-        <el-input ref="pointUp" :value="filterTrip.pointDown" placeholder="Nơi đến"></el-input>
+        <el-input :value="filterTrip.pointDown" class="pointer-events-none" placeholder="Nơi đến"></el-input>
         <span class="block searchTrip__icon ml-20px cursor-pointer" @click.stop="switchPoint" v-html="icons.switch"></span>
     </div>
 
