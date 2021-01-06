@@ -41,7 +41,7 @@ export default {
                   let tomorrow = new Date()
                   yesterday.setDate( today.getDate() - 1 ) 
                   tomorrow.setDate( today.getDate() + 1 ) 
-                  return date < today || date > tomorrow
+                  return date < today
               }
           },
       }

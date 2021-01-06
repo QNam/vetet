@@ -1,7 +1,7 @@
 <template>
 <div class="blockPromotion">
       <client-only>
-        <el-carousel :interval="4000" type="card" height="200px">
+        <el-carousel :interval="4000" height="200px">
             <el-carousel-item>
                 <img src="~/assets/imgs/promotion/prom1.png" />
             </el-carousel-item>
@@ -38,6 +38,8 @@ export default {
 <style scoped>
 .blockPromotion {
   background-color: transparent;
+  margin-top: 24px;
+  margin-bottom: 24px;
 }
 
 .blockPromotion .VueCarousel-inner .VueCarousel-slide {
@@ -50,8 +52,6 @@ export default {
 }
 
 .blockPromotion img {
-  height: 160px;
-  width: auto;
-
+  margin: 0 auto;
 }
 </style>
