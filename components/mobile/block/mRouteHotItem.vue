@@ -65,9 +65,9 @@ export default {
                 pointDown: this.route.end_point_name,
                 // route_id: this.route.route_id
             }
-            this.$store.commit('trip/SET_FILTER_TRIP', {pointUp: this.route.start_point_name})
+            this.$store.commit('trip/SET_FILTER_TRIP', {pointUp: this.route.start_province})
             this.$store.commit('trip/SET_FILTER_TRIP', {date: this.date})
-            this.$store.commit('trip/SET_FILTER_TRIP', {pointDown: this.route.end_point_name})
+            this.$store.commit('trip/SET_FILTER_TRIP', {pointDown: this.route.end_province})
 
             this.$router.push({path: "/tim-ve", query})
         }
