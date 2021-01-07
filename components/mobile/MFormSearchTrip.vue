@@ -11,9 +11,10 @@
         <span class="block searchTrip__icon ml-20px cursor-pointer" @click.stop="switchPoint" v-html="icons.switch"></span>
     </div>
 
-    <div class="msearchTrip__input">
+    <div class="msearchTrip__input" @click="dateDrawer = true">
         <span class="block searchTrip__icon cursor-pointer mr-12px" v-html="icons.calendar"></span>
-        <el-date-picker
+        <el-input :value="filterTrip.date | toDateString('-')" class="pointer-events-none" placeholder="Chọn ngày"></el-input>
+        <!-- <el-date-picker
             ref="date"
             :picker-options="datePickerOptions"
             :value="filterTrip.date" 
@@ -22,7 +23,7 @@
             format="dd-MM-yyyy"
             value-format="yyyyMMdd"
             placeholder="Chọn ngày">
-        </el-date-picker>
+        </el-date-picker> -->
     </div>
     <div class="msearchTrip__submit">
         <button @click="setFilterTrip">VỀ NHÀ ĂN TẾT!</button>
@@ -77,6 +78,34 @@
             </div>
         </div>
     </el-drawer>
+
+    <el-drawer class="searchTripDrawer" size="100%" :visible.sync="dateDrawer" :with-header="false">
+        <div class="searchTripDrawer__content">
+            <div class="searchTripDrawer__header">
+                <span @click="dateDrawer = false" class="cursor-pointer"><i class="el-icon-back"></i></span>
+                <h3>Ngày đi</h3>
+                <span class="invisible">aaa</span>
+            </div>
+
+            <div class="searchTripDrawer__body">
+                <div class="searchTripDrawer__input">
+                    <span class="block" v-html="icons.calendar"></span>
+                    <p>{{ dateString }}</p>
+                </div>
+                
+                <el-calendar ref="date" v-model="date" @input="onChangeDate">
+                    <template
+                        slot="dateCell"
+                        slot-scope="{data}">
+                        <p :class="{disabled: Number(data.day.replaceAll('-','')) < Number(defaultDate)}" class="h-full w-full">
+                        {{ data.day.split("-")[2] }}
+                        </p>
+                    </template>
+                </el-calendar>
+                <!-- <h3>{{ $refs.date.curMonthDatePrefix }}</h3> -->
+            </div>
+        </div>
+    </el-drawer>
 </div>
 </template>
 
@@ -87,11 +116,18 @@ import { mapState } from 'vuex'
 
 export default {
     data () {
+        let dateObj = new Date()
+        let tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
         return {
             pointDownDrawer: false,
             pointUpDrawer: false,
+            dateDrawer: false,
             mentionsProvinces: [],
             icons,
+            defaultDate: tomorrow.toAVDateString(),
+            date: tomorrow,
+            
             provinces,
             filterTripHistory: {},
             datePickerOptions: {
@@ -109,12 +145,19 @@ export default {
 
     computed: {
         ...mapState({
-        filterTrip: state => state.trip.filterTrip
-        })
+            filterTrip: state => state.trip.filterTrip
+        }),
+
+        dateString() {
+            let dateString = ( new Date(this.date) ).toAVDateString("-")
+            let dateAsArray = dateString.split("-")
+            return `Ngày ${dateAsArray[2]} tháng ${dateAsArray[1]} năm ${dateAsArray[0]}`
+        }
     },
 
     mounted () {
         this.mentionsProvinces = this.provinces
+
         const dateObj = new Date()
         const date = dateObj.getDate() + 1 < 10 ? "0" + (dateObj.getDate() - -1) : "" + (dateObj.getDate() - -1)
         const month = (dateObj.getMonth() + 1) < 10 ? "0" + (dateObj.getMonth() + 1) : "" + (dateObj.getMonth() + 1)
@@ -140,6 +183,11 @@ export default {
         }
     },
     methods: {
+        onChangeDate () {
+            this.$store.commit('trip/SET_FILTER_TRIP', {date: this.date.toAVDateString()})
+            this.dateDrawer = false
+        },
+
         onOpenPointUpDrawer () {
             this.mentionsProvinces = this.getMention(this.filterTrip.pointUp)
         },
@@ -227,6 +275,18 @@ export default {
 .searchTripDrawer .el-drawer__body {
     overflow-y: auto;
 }
+
+.searchTripDrawer .el-calendar-day {
+    height: 50px;
+    padding: 8px;
+}
+.searchTripDrawer .el-calendar-day p.disabled {
+    color: #C0C4CC;
+    pointer-events: none;
+}
+.searchTripDrawer .el-calendar__header {
+    display: none;
+}
 </style>
 
 <style scoped>
@@ -242,8 +302,8 @@ export default {
     align-items: center;
     justify-content: space-between;
 }
-.searchTripDrawer__header span {
-    font-size: 18px;
+.searchTripDrawer__header span {    
+    font-size: 24px;
 }
 .searchTripDrawer__header h3 {
     font-style: normal;
@@ -265,13 +325,19 @@ export default {
 .searchTripDrawer__input>span{
 
 }
+.searchTripDrawer__input>p{
+    padding: 8px 16px;
+    font-size: 20px;
+    outline: none;
+    font-weight: 400;
+}
 .searchTripDrawer__input>input {
     border: none;
     padding: 8px 16px;
     width: 100%;
-    font-size: 22px;
+    font-size: 20px;
     outline: none;
-    font-weight: 500;
+    font-weight: 400;
 }
 .searchTripDrawer_mention {
     padding: 16px;

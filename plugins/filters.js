@@ -29,9 +29,11 @@ Vue.filter('msToTime', function (ms, separator = ":") {
 })
 
 Vue.filter('toDateString', function (str, separator = "/") {
-    if(typeof str==='undefined' || str.toString().length!==8||str===''||str===null){
+    if( typeof str === 'undefined' || str == null ){
         return str;
     }
+
+    if(str.toString().length !== 8) { return str }
 
     str = str.toString();
     var str1 = str.substr(0, 4);
