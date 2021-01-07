@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="footer_partner">
-        <h3>Đối tác</h3>
+        <h3>Đối tác hỗ trợ thanh toán</h3>
         <div class="flex">
           <img src="~assets/imgs/pn/vnpayqr.svg" alt="">
           <!-- <img src="~assets/imgs/pn/zalopay.svg" alt="">

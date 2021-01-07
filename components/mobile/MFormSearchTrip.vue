@@ -13,8 +13,8 @@
 
     <div class="msearchTrip__input" @click="dateDrawer = true">
         <span class="block searchTrip__icon cursor-pointer mr-12px" v-html="icons.calendar"></span>
-        <!-- <el-input :value="filterTrip.date | toDateString('-')" class="pointer-events-none" placeholder="Chọn ngày"></el-input> -->
-        <el-date-picker
+        <el-input :value="filterTrip.date | toDateString('-')" class="pointer-events-none" placeholder="Chọn ngày"></el-input>
+        <!-- <el-date-picker
             ref="date"
             :picker-options="datePickerOptions"
             :value="filterTrip.date" 
@@ -23,7 +23,7 @@
             format="dd-MM-yyyy"
             value-format="yyyyMMdd"
             placeholder="Chọn ngày">
-        </el-date-picker>
+        </el-date-picker> -->
     </div>
     <div class="msearchTrip__submit">
         <button @click="setFilterTrip">VỀ NHÀ ĂN TẾT!</button>
@@ -79,7 +79,7 @@
         </div>
     </el-drawer>
 
-    <!-- <el-drawer class="searchTripDrawer" size="100%" :visible.sync="dateDrawer" :with-header="false">
+    <el-drawer class="searchTripDrawer" size="100%" :visible.sync="dateDrawer" :with-header="false">
         <div class="searchTripDrawer__content">
             <div class="searchTripDrawer__header">
                 <span @click="dateDrawer = false" class="cursor-pointer"><i class="el-icon-back"></i></span>
@@ -92,29 +92,24 @@
                     <span class="block" v-html="icons.calendar"></span>
                     <p>{{ dateString }}</p>
                 </div>
-                
-                <el-calendar ref="date" v-model="date" @input="onChangeDate">
-                    <template
-                        slot="dateCell"
-                        slot-scope="{data}">
-                        <p :class="{disabled: Number(data.day.replaceAll('-','')) < Number(defaultDate)}" class="h-full w-full">
-                        {{ data.day.split("-")[2] }}
-                        </p>
-                    </template>
-                </el-calendar>
-                <h3>{{ $refs.date.curMonthDatePrefix }}</h3>
+                <v-date-picker locale="vi" :rows="2" v-model="date" :min-date='minDate' @input="onChangeDate"/>  
             </div>
         </div>
-    </el-drawer> -->
+    </el-drawer>
 </div>
 </template>
 
 <script>
 import icons from '../icon.js'
 import provinces from '../province.js'
+import AVMSelect from './template/AVMSelect'
 import { mapState } from 'vuex'
 
 export default {
+    components: {
+        'av-mselect' :AVMSelect
+    },
+
     data () {
         let dateObj = new Date()
         let tomorrow = new Date()
@@ -127,7 +122,8 @@ export default {
             icons,
             defaultDate: tomorrow.toAVDateString(),
             date: tomorrow,
-            
+            minDate:  tomorrow,
+
             provinces,
             filterTripHistory: {},
             datePickerOptions: {
@@ -276,7 +272,14 @@ export default {
     overflow-y: auto;
 }
 
-.searchTripDrawer .el-calendar-day {
+.searchTripDrawer .vc-container {
+    width: 100%;
+}
+
+.searchTripDrawer .vc-day-content.is-disabled {
+    pointer-events: none;
+}
+/* .searchTripDrawer .el-calendar-day {
     height: 50px;
     padding: 8px;
 }
@@ -286,7 +289,7 @@ export default {
 }
 .searchTripDrawer .el-calendar__header {
     display: none;
-}
+} */
 </style>
 
 <style scoped>

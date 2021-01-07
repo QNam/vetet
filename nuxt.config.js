@@ -31,6 +31,7 @@ export default {
   plugins: [
     '@/plugins/element-ui.js',
     { src: '@/plugins/vue-carousel.js', mode: 'client' },
+    { src: '@/plugins/v-calendar.js', mode: 'client' },
     { src: '@/plugins/vue-burger-menu', ssr: false },
     '@/plugins/anvui.js',
     // '@/plugins/firebase.js',
