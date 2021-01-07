@@ -270,6 +270,12 @@
 
 .msearchTrip__input .el-input input{
   padding-left: 0px;
+  border-color: transparent!important;
+  padding: 0px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
 }
 .msearchTrip__submit {
   margin-top: 16px;
