@@ -206,15 +206,6 @@ export default {
 
                     return false
                 }
-
-                if( !this.ticketInfo.pointDownAddress || 
-                (this.ticketInfo.pointDownAddress && this.ticketInfo.pointDownAddress.trim() == "") ) {
-                    this.$notify.warning({
-                        message: 'Vui  lòng nhập địa chỉ điểm xuống !'
-                    })
-
-                    return false
-                }
             } else {
                 if( this.ticketInfo.pointUp == "" || this.ticketInfo.pointUp == null ) {
                     this.$notify.warning({
@@ -223,7 +214,18 @@ export default {
 
                     return false
                 }
+            }
 
+            if(this.pickAndDrop.pointDown != this.transportType.STATION) {
+                 if( !this.ticketInfo.pointDownAddress || 
+                    (this.ticketInfo.pointDownAddress && this.ticketInfo.pointDownAddress.trim() == "") ) {
+                    this.$notify.warning({
+                        message: 'Vui  lòng nhập địa chỉ điểm xuống !'
+                    })
+
+                    return false
+                }
+            } else {
                 if( this.ticketInfo.pointDown == "" || this.ticketInfo.pointDown == null  ) {
                     this.$notify.warning({
                         message: 'Vui lòng chọn điểm xuống !'
@@ -277,7 +279,7 @@ export default {
             let PUtransshipmentPrice = 0
             
             if(this.ticketInfo.pointUp) {
-                if ( this.pickAndDrop.pointUp == this.enums.transportType.STATION 
+                if ( this.pickAndDrop.pointUp == this.transportType.STATION 
                 && typeof this.ticketInfo.pointUp.listTransshipmentPoint == 'undefined' ) {
                     PUtransshipmentId = this.ticketInfo.pointUp.id
                     PUtransshipmentPrice = this.ticketInfo.pointUp.transshipmentPrice
@@ -287,7 +289,7 @@ export default {
             let PDtransshipmentId = null
             let PDtransshipmentPrice = 0
             if(this.ticketInfo.pointDown) {
-                if ( this.pickAndDrop.pointDown == this.enums.transportType.STATION 
+                if ( this.pickAndDrop.pointDown == this.transportType.STATION 
                 && typeof this.ticketInfo.pointDown.listTransshipmentPoint == 'undefined' ) {
                     PDtransshipmentId = this.ticketInfo.pointDown.id
                     PDtransshipmentPrice = this.ticketInfo.pointDown.transshipmentPrice
