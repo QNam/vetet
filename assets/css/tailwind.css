@@ -150,6 +150,11 @@
 .searchTrip__input input.el-input__inner{
   border-color: transparent!important;
   padding: 0px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  /* color: #B0B5C1; */
 }
 
 .searchTrip__input input.el-input__inner::placeholder {

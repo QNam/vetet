@@ -41,7 +41,7 @@ export default {
         let res = await this.$http.get(encodeURI('https://apiv2.sanve.com.vn/api/route-of-partner/list?api_token=vetet.5.jDlMLiTVVPlGivId4M9Xi1WUlsrkz7W3&page=0&count=12&keyword=Hà Nội&is_hot=1') )
         let listRouteAsJson = await res.json()
         let listRoute = listRouteAsJson.data.data
-        console.log(listRoute)
+        
         this.listRoute = listRoute
     },
 
