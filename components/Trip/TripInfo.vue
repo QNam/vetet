@@ -13,21 +13,22 @@
     <div class="tripInfo__point">
         <h3>ĐIỂM LÊN XE</h3>
         <template v-if="!ticketInfo.bookingCompleted"> 
-            <el-select v-if="allowPADAtWayPointUp" 
-                        :value="pickAndDrop.pointUp" 
-                        @change="$store.commit('trip/SET_PICK_DROP_TYPE', { pointUp: $event })"
+            <el-select :value="pickAndDrop.pointUp" 
+                        @change="changePickMethod($event)"
                         class="block w-full" 
                         placeholder="Điểm đón">
-                <el-option label="Tại bến" :value="1"></el-option>
-                <el-option label="Dọc đường" :value="2"></el-option>
+                <el-option label="Tại bến" :value="transportType.STATION"></el-option>
+                <el-option label="Dọc đường" v-if="allowPADAtWayPointUp" :value="transportType.ROAD"></el-option>
+                <el-option label="Tại nhà" v-if="allowPADAtHomePointUp" :value="transportType.HOME"></el-option>
             </el-select>
-            <el-input v-if="pickAndDrop.pointUp == 2" 
+            <el-input v-if="pickAndDrop.pointUp == transportType.ROAD || pickAndDrop.pointUp == transportType.HOME" 
                     :value="ticketInfo.pointUpAddress" 
-                    @change="$store.commit('trip/SET_TICKET_INFO', { pointUpAddress: $event })" 
+                    @input="$store.commit('trip/SET_TICKET_INFO', { pointUpAddress: $event })" 
                     class="mb-3" 
-                    type="textarea" :rows="2" placeholder="Địa chỉ"> </el-input>
+                    type="textarea" :rows="2" placeholder="Địa chỉ"> 
+            </el-input>
 
-            <el-select v-if="pickAndDrop.pointUp == 1" 
+            <el-select v-if="pickAndDrop.pointUp == transportType.STATION" 
                     class="block w-full" 
                     :value="ticketInfo.pointUp" 
                     @change="changePointUp($event)" 
@@ -45,30 +46,31 @@
             </el-select>
         </template>
         <template v-else>
-            <h6>{{ pickAndDrop.pointUp == 2 ? ticketInfo.pointUpAddress :  tripSelected.pointUp.name }}</h6>
+            <h6>{{ (pickAndDrop.pointUp == transportType.ROAD || pickAndDrop.pointUp == transportType.HOME) ? ticketInfo.pointUpAddress :  tripSelected.pointUp.name }}</h6>
         </template>
     </div>
 
     <div class="tripInfo__point">
         <h3>ĐIỂM XUỐNG XE</h3>
         <template v-if="!ticketInfo.bookingCompleted">
-            <el-select v-if="allowPADAtWayPointDown" 
-                    :value="pickAndDrop.pointDown" 
-                    @change="$store.commit('trip/SET_PICK_DROP_TYPE', { pointDown: $event })"
+            <el-select :value="pickAndDrop.pointDown" 
+                    @change="changeDropMethod($event)"
                     class="block w-full" 
-                    placeholder="Điểm đón">
-                <el-option label="Tại bến" :value="1"></el-option>
-                <el-option label="Dọc đường" :value="2"></el-option>
+                    placeholder="Điểm trả">
+                <el-option label="Tại bến" :value="transportType.STATION"></el-option>
+                <el-option label="Dọc đường" v-if="allowPADAtWayPointDown" :value="transportType.ROAD"></el-option>
+                <el-option label="Tại nhà" v-if="allowPADAtHomePointDown" :value="transportType.HOME"></el-option>
             </el-select>
 
-            <el-input v-if="pickAndDrop.pointDown == 2" 
+            <el-input v-if="pickAndDrop.pointDown == transportType.ROAD || pickAndDrop.pointDown == transportType.HOME" 
                     :value="ticketInfo.pointDownAddress" 
-                    @change="$store.commit('trip/SET_TICKET_INFO', { pointDownAddress: $event })"  
+                    @input="$store.commit('trip/SET_TICKET_INFO', { pointDownAddress: $event })"  
                     type="textarea" 
                     :rows="2"
-                    placeholder="Địa chỉ"></el-input>
+                    placeholder="Địa chỉ">
+            </el-input>
 
-            <el-select v-if="pickAndDrop.pointDown == 1" 
+            <el-select v-if="pickAndDrop.pointDown == transportType.STATION" 
                     class="block w-full" 
                     :value="ticketInfo.pointDown"
                     @change="changePointDown($event)"
@@ -86,7 +88,7 @@
             </el-select>
         </template>
         <template v-else>
-            <h6>{{ pickAndDrop.pointDown == 2 ? ticketInfo.pointDownAddress :  tripSelected.pointDown.name }}</h6>
+            <h6>{{ (pickAndDrop.pointUp == transportType.ROAD || pickAndDrop.pointUp == transportType.HOME) ? ticketInfo.pointDownAddress :  tripSelected.pointDown.name }}</h6>
         </template>
     </div>
 
@@ -107,14 +109,14 @@
 
 <script>
 import icons from '../icon'
+import enums from '../../ulti/enum'
 import { mapState } from 'vuex'
 
 export default {
     data () {
         return {
+            transportType: enums.transportType,
             icons: icons,
-            PADPointUpType: 1,
-            PADPointDownType: 1,
         }
     },
 
@@ -141,10 +143,22 @@ export default {
             return this.tripSelected.pointUp.allowPickingAndDroppingAtWayByPlatform.indexOf(2) >= 0
         },
 
+        allowPADAtHomePointUp () {
+            // return true
+            if(!this.tripSelected.pointUp.allowPickingAnddropingAtHomeByPlatform) return false
+            return this.tripSelected.pointUp.allowPickingAnddropingAtHomeByPlatform.indexOf(2) >= 0
+        },
+
         allowPADAtWayPointDown () {
             // return true
             if(!this.tripSelected.pointDown.allowPickingAndDroppingAtWayByPlatform) return false
             return this.tripSelected.pointDown.allowPickingAndDroppingAtWayByPlatform.indexOf(2) >= 0
+        },
+
+        allowPADAtHomePointDown () {
+            // return true
+            if(!this.tripSelected.pointDown.allowPickingAnddropingAtHomeByPlatform) return false
+            return this.tripSelected.pointDown.allowPickingAnddropingAtHomeByPlatform.indexOf(2) >= 0
         }
     },
 
@@ -157,6 +171,20 @@ export default {
         changePointDown(point) {
             this.$store.commit('trip/SET_TICKET_INFO', { pointDown: point })
             this.$store.dispatch('trip/calcPrice')
+        },
+
+        async changePickMethod(type) {
+            this.$store.commit('trip/SET_PICK_DROP_TYPE', { pointUp: type }); 
+            this.$store.commit('trip/SET_TICKET_INFO', {loadingCalcPrice: true})
+            await this.$store.dispatch('trip/calcPrice')
+            this.$store.commit('trip/SET_TICKET_INFO', {loadingCalcPrice: false})
+        },
+
+        async changeDropMethod(type) {
+            this.$store.commit('trip/SET_PICK_DROP_TYPE', { pointDown: type }); 
+            this.$store.commit('trip/SET_TICKET_INFO', {loadingCalcPrice: true})
+            await this.$store.dispatch('trip/calcPrice')
+            this.$store.commit('trip/SET_TICKET_INFO', {loadingCalcPrice: false})
         }
     }
 }

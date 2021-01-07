@@ -40,7 +40,10 @@
         <div class="mtrip__price" :class="{'z-0': loading}">
             <div class="mtrip__price__content">
                 <h4><b>Ghế đã chọn: </b> <span v-for="(seat, key) in seatSelected" :key="key">{{ seat.seatId }}</span></h4>
-                <h4><b>Tổng tiền: </b> <span>{{ ticketInfo.totalPrice | number }}đ</span></h4>
+                <h4><b>Tổng tiền: </b> 
+                    <span v-if="!ticketInfo.loadingCalcPrice">{{  ticketInfo.totalPrice | number }}đ</span>
+                    <span v-else><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
+                </h4>
             </div>
             <div class="mtrip__price__action">
                 <div v-if="tabs.seatMap">
@@ -93,6 +96,7 @@ import TripUserInfo from '../../../components/Trip/TripUserInfo'
 import TripPolicy from '../../../components/Trip/TripPolicy'
 import TripPayment from '../../../components/Trip/TripPayment'
 import icons from '../../../components/icon'
+import enums from '../../../ulti/enum'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -109,6 +113,7 @@ export default {
     data () {
         return {
             icons: icons,
+            transportType: enums.transportType,
             loading: false,
             tabs: {
                 seatMap: true,
@@ -192,20 +197,40 @@ export default {
                 return false
             }
 
-            if( this.ticketInfo.pointUp == "" || this.ticketInfo.pointUp == null ) {
-                this.$notify.warning({
-                    message: 'Vui lòng chọn điểm lên !'
-                })
+            if(this.pickAndDrop.pointUp != this.transportType.STATION) {
+                if( !this.ticketInfo.pointUpAddress || 
+                (this.ticketInfo.pointUpAddress && this.ticketInfo.pointUpAddress.trim() == "") ) {
+                    this.$notify.warning({
+                        message: 'Vui  lòng nhập địa chỉ điểm lên !'
+                    })
 
-                return false
-            }
+                    return false
+                }
 
-            if( this.ticketInfo.pointDown == "" || this.ticketInfo.pointDown == null  ) {
-                this.$notify.warning({
-                    message: 'Vui lòng chọn điểm xuống !'
-                })
+                if( !this.ticketInfo.pointDownAddress || 
+                (this.ticketInfo.pointDownAddress && this.ticketInfo.pointDownAddress.trim() == "") ) {
+                    this.$notify.warning({
+                        message: 'Vui  lòng nhập địa chỉ điểm xuống !'
+                    })
 
-                return false
+                    return false
+                }
+            } else {
+                if( this.ticketInfo.pointUp == "" || this.ticketInfo.pointUp == null ) {
+                    this.$notify.warning({
+                        message: 'Vui lòng chọn điểm lên !'
+                    })
+
+                    return false
+                }
+
+                if( this.ticketInfo.pointDown == "" || this.ticketInfo.pointDown == null  ) {
+                    this.$notify.warning({
+                        message: 'Vui lòng chọn điểm xuống !'
+                    })
+
+                    return false
+                }
             }
 
             if( this.ticketInfo.userName == "" ) {
@@ -250,16 +275,23 @@ export default {
 
             let PUtransshipmentId = null
             let PUtransshipmentPrice = 0
-            if ( typeof this.ticketInfo.pointUp.listTransshipmentPoint == 'undefined' ) {
-                PUtransshipmentId = this.ticketInfo.pointUp.id
-                PUtransshipmentPrice = this.ticketInfo.pointUp.transshipmentPrice
+            
+            if(this.ticketInfo.pointUp) {
+                if ( this.pickAndDrop.pointUp == this.enums.transportType.STATION 
+                && typeof this.ticketInfo.pointUp.listTransshipmentPoint == 'undefined' ) {
+                    PUtransshipmentId = this.ticketInfo.pointUp.id
+                    PUtransshipmentPrice = this.ticketInfo.pointUp.transshipmentPrice
+                }
             }
 
             let PDtransshipmentId = null
             let PDtransshipmentPrice = 0
-            if ( typeof this.ticketInfo.pointDown.listTransshipmentPoint == 'undefined' ) {
-                PDtransshipmentId = this.ticketInfo.pointDown.id
-                PDtransshipmentPrice = this.ticketInfo.pointDown.transshipmentPrice
+            if(this.ticketInfo.pointDown) {
+                if ( this.pickAndDrop.pointDown == this.enums.transportType.STATION 
+                && typeof this.ticketInfo.pointDown.listTransshipmentPoint == 'undefined' ) {
+                    PDtransshipmentId = this.ticketInfo.pointDown.id
+                    PDtransshipmentPrice = this.ticketInfo.pointDown.transshipmentPrice
+                }
             }
 
             body.informationsBySeats = this.ticketInfo.seatSelected.map(value => {
@@ -285,7 +317,8 @@ export default {
                         'longitude': this.tripSelected.pointUp.longitude,
                         'latitude': this.tripSelected.pointUp.latitude,
                         'transshipmentPrice': PUtransshipmentPrice,
-                        'completedTransshipment': false
+                        'completedTransshipment': false,
+                        'pointType': this.pickAndDrop.pointUp
                     },
                     'pointDown': {
                         'id': this.tripSelected.pointDown.id,
@@ -297,7 +330,8 @@ export default {
                         'longitude': this.tripSelected.pointDown.longitude,
                         'latitude': this.tripSelected.pointDown.latitude,
                         'transshipmentPrice': PDtransshipmentPrice,
-                        'completedTransshipment': false
+                        'completedTransshipment': false,
+                        'pointType': this.pickAndDrop.pointDown
                     }
                 }
             });

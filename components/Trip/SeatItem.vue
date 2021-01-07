@@ -25,9 +25,11 @@ export default {
         ...mapActions ({
             'calcPrice': 'trip/calcPrice'
         }),
-        selectSeat (seat) {
+        async selectSeat (seat) {            
             this.$store.commit('trip/TOGGLE_SEAT_SELECTED', seat)
-            this.calcPrice()
+            this.$store.commit('trip/SET_TICKET_INFO', {loadingCalcPrice: true})
+            await this.calcPrice()
+            this.$store.commit('trip/SET_TICKET_INFO', {loadingCalcPrice: false})
         }
     },
     computed: {

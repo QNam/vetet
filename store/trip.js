@@ -1,3 +1,5 @@
+import enums from '../ulti/enum'
+
 export const state = () => ({
     filterTrip: {
         pointUp: null,
@@ -24,8 +26,8 @@ export const state = () => ({
     tripSelected: null,
     mapTicketInSeat: {},
     pickAndDrop: {
-        pointUp: 1,
-        pointDown: 1,
+        pointUp: enums.transportType.STATION,
+        pointDown: enums.transportType.STATION,
     },
     ticketInfo: {
         pointUp: null,
@@ -47,7 +49,8 @@ export const state = () => ({
             mns: 8 * 60 * 10000
         },
         bookingCompleted: false,
-        vnPayUrl: null
+        vnPayUrl: null,
+        loadingCalcPrice: false
     }
 })
 
@@ -168,6 +171,9 @@ export const mutations = {
         }
         state.ticketInfo.bookingCompleted = false
         state.ticketInfo.vnPayUrl = null
+        state.ticketInfo.loadingCalcPrice = false
+        state.pickAndDrop.pointUp = enums.transportType.STATION
+        state.pickAndDrop.pointDown = enums.transportType.STATION
     },
 
     SET_TICKET_INFO (state, payload) {
@@ -215,6 +221,9 @@ export const mutations = {
         }
         if (typeof payload.bookingCompleted != 'undefined') {
             state.ticketInfo.bookingCompleted = payload.bookingCompleted
+        }
+        if (typeof payload.loadingCalcPrice != 'undefined') {
+            state.ticketInfo.loadingCalcPrice = payload.loadingCalcPrice
         }
     },
     
@@ -267,18 +276,18 @@ export const actions = {
         listTrip = listTrip.map(trip => {
             return this.$helper.tripDTO(trip)
         })
-
+        
         commit('SET_LIST_TRIP', listTrip)
     },
 
     validateCalcPrice ({state}) {
-        if( state.ticketInfo.pointUp == "" || state.ticketInfo.pointUp == null ) {
-            return false
-        }
+        // if( state.ticketInfo.pointUp == "" || state.ticketInfo.pointUp == null ) {
+        //     return false
+        // }
 
-        if( state.ticketInfo.pointDown == "" || state.ticketInfo.pointDown == null  ) {
-            return false
-        }
+        // if( state.ticketInfo.pointDown == "" || state.ticketInfo.pointDown == null  ) {
+        //     return false
+        // }
 
         if( state.ticketInfo.seatSelected.length <= 0  ) {
             return false
@@ -296,16 +305,21 @@ export const actions = {
 
         let PUtransshipmentId = null
         let PUtransshipmentPrice = 0
-        if ( typeof state.ticketInfo.pointUp.listTransshipmentPoint == 'undefined' ) {
-            PUtransshipmentId = state.ticketInfo.pointUp.id
-            PUtransshipmentPrice = state.ticketInfo.pointUp.transshipmentPrice
+        
+        if(state.ticketInfo.pointUp) {
+            if ( state.pickAndDrop.pointUp == enums.transportType.STATION && typeof state.ticketInfo.pointUp.listTransshipmentPoint == 'undefined' ) {
+                PUtransshipmentId = state.ticketInfo.pointUp.id
+                PUtransshipmentPrice = state.ticketInfo.pointUp.transshipmentPrice
+            }
         }
 
         let PDtransshipmentId = null
         let PDtransshipmentPrice = 0
-        if ( typeof state.ticketInfo.pointDown.listTransshipmentPoint == 'undefined' ) {
-            PDtransshipmentId = state.ticketInfo.pointDown.id
-            PDtransshipmentPrice = state.ticketInfo.pointDown.transshipmentPrice
+        if(state.ticketInfo.pointDown) {
+            if ( state.pickAndDrop.pointDown == enums.transportType.STATION && typeof state.ticketInfo.pointDown.listTransshipmentPoint == 'undefined' ) {
+                PDtransshipmentId = state.ticketInfo.pointDown.id
+                PDtransshipmentPrice = state.ticketInfo.pointDown.transshipmentPrice
+            }
         }
 
         let body = {

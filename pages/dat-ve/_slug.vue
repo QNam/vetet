@@ -58,6 +58,7 @@ export default {
                 let res = await $http.get(`https://ticket-new-dot-dobody-anvui.appspot.com/trip/view?id=${tripId}`)
                 let trip = await res.json()
                 trip =  $helper.tripDTO(trip.results.trip)
+                
                 store.commit('trip/SET_TRIP_SELECTED', trip)
             } catch (e) {
                 error({ statusCode: 500, message: 'Có lỗi xảy ra vui lòng thử lại sau !' })

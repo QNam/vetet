@@ -1,5 +1,5 @@
 <template>
-  <div class="mtripItem">
+  <div class="mtripItem"  @click="goToTrip">
       <div class="flex flex-wrap justify-between">
           <div class="w-1/3 pr-1">
             <h3> {{ trip.pointUp.name }} </h3> <h3> <span v-html="icons.arrowr"></span>  {{ trip.pointDown.name }}</h3>

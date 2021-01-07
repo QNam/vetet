@@ -65,11 +65,17 @@ import icons from '../../components/icon'
 
 export default {
     transition: 'slide-bottom',
-    
+    layout: (ctx) => ctx.isMobile ? 'mobile' : 'default',
     head() {
-        return {
-            title: 'Tin tức'
+        let head = {
+            title: `Tin tức`,
+            meta: []
         }
+
+        if(this.$device.isMobile) {
+            head.meta.push({ name: 'viewport', content: 'width=device-width, minimum-scale=1, initial-scale=1' })
+        }
+        return head
     },
 
     data () {

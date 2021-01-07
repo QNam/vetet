@@ -3,7 +3,7 @@
       <client-only>
         <SlideMenu :closeOnNavigation="true" noOverlay>
             <NuxtLink to="/" class="block">Trang chủ</NuxtLink>
-            <NuxtLink to="/" class="block">Tin tức</NuxtLink>
+            <!-- <NuxtLink to="/tin-tuc" class="block">Tin tức</NuxtLink> -->
         </SlideMenu>
         <!-- <span v-html="icons.text_justify" @click="openSideBar = !openSideBar" class="cursor-pointer"></span> -->
         <NuxtLink to="/" class="block"><img src="~/assets/imgs/logo.svg" alt=""></NuxtLink>
