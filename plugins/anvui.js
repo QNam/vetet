@@ -59,7 +59,7 @@ function toDateString (str, split = "-", type) {
 function tripDTO (trip) {
     let startTime = msToTime(trip.startTimeReality)
     trip.startTimeText = `${startTime.hourString}:${startTime.minuteString}`
-    trip.vehicleTypeText = toVehicleTypeText(trip.vehicleType)
+    trip.vehicleTypeText = toVehicleTypeText(trip.vehicle.vehicleType)
     if(trip.startDateReality) {
         trip.startDateText = toDateString(trip.startDateReality, "/")
     } else {

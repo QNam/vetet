@@ -121,9 +121,13 @@ export default {
     margin-right: -15px;
 }
 
-. mb-4 {
+/* . mb-4 {
     padding-right: 15px;
     padding-left: 15px;
+} */
+
+.seatMap__item {
+    overflow: auto;
 }
 
 </style>

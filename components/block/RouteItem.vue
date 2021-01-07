@@ -1,7 +1,7 @@
 <template>
   <div class="routeItem flex justify-between items-center flex-wrap overflow-hidden">
       <div class="w-2/3 overflow-hidden flex flex-wrap justify-between items-center pr-2">
-        <h4 class="cursor-pointer" @click="searchTripByRoute">{{ route.route_name }}</h4>
+        <h4 class="cursor-pointer" @click="searchTripByRoute">{{ route.name }}</h4>
       </div>
       <div class="w-1/3 overflow-hidden cursor-pointer flex justify-between items-center">
         <p class="routeItem__price mr-2" v-if="route.display_price != null">{{ route.display_price | number }}đ</p>

@@ -1,7 +1,7 @@
 <template>
   <div class="mrouteHot__item">
     <div class="mrouteHot__item__name">
-        <h4 @click="searchTripByRoute">{{ route.route_name }}</h4>
+        <h4 @click="searchTripByRoute">{{ route.name }}</h4>
         <!-- <h5 class="w-1/5" v-html="icons.arrowr"></h5>
         <h4 class="w-2/5">Nghệ An</h4> -->
     </div>

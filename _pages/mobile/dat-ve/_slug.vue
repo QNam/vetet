@@ -1,5 +1,5 @@
 <template>
-    <div class="mtripDetail">
+    <div class="mtripDetail" v-loading="loading">
         <trip-info class="mb-2" />
 
         <div class="mticket__main">
@@ -37,7 +37,7 @@
                 <trip-payment />
             </div>
         </div>
-        <div class="mtrip__price">
+        <div class="mtrip__price" :class="{'z-0': loading}">
             <div class="mtrip__price__content">
                 <h4><b>Ghế đã chọn: </b> <span v-for="(seat, key) in seatSelected" :key="key">{{ seat.seatId }}</span></h4>
                 <h4><b>Tổng tiền: </b> <span>{{ ticketInfo.totalPrice | number }}đ</span></h4>
@@ -52,7 +52,7 @@
                 </div>
                 <div v-if="tabs.payment" class="flex">
                     <template v-if="ticketInfo.vnPayUrl"> 
-                        <a :href="ticketInfo.vnPayUrl" target="_BLANK" class="block  ml-0"><button>Tiến hành thanh toán</button></a>
+                        <a :href="ticketInfo.vnPayUrl" target="_BLANK" class="block w-full  ml-0"><button class="w-full ml-0">Tiến hành thanh toán</button></a>
                     </template>
                     <template v-else> 
                         <button class="switchBack flex-grow ml-0" @click="switchTab('userInfo')">Quay lại</button>
@@ -364,6 +364,12 @@ export default {
 .mtrip__price__action {
     padding: 0px 16px;
 }
+.mtrip__price__action button.disabled {
+    background: #ECEDF1!important;
+    color: #B0B5C1!important;
+    pointer-events: none;
+} 
+
 .mtrip__price button {
   background: #FF4868;
   border-radius: 4px;
