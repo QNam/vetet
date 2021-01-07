@@ -13,8 +13,8 @@
 
     <div class="msearchTrip__input" @click="dateDrawer = true">
         <span class="block searchTrip__icon cursor-pointer mr-12px" v-html="icons.calendar"></span>
-        <el-input :value="filterTrip.date | toDateString('-')" class="pointer-events-none" placeholder="Chọn ngày"></el-input>
-        <!-- <el-date-picker
+        <!-- <el-input :value="filterTrip.date | toDateString('-')" class="pointer-events-none" placeholder="Chọn ngày"></el-input> -->
+        <el-date-picker
             ref="date"
             :picker-options="datePickerOptions"
             :value="filterTrip.date" 
@@ -23,7 +23,7 @@
             format="dd-MM-yyyy"
             value-format="yyyyMMdd"
             placeholder="Chọn ngày">
-        </el-date-picker> -->
+        </el-date-picker>
     </div>
     <div class="msearchTrip__submit">
         <button @click="setFilterTrip">VỀ NHÀ ĂN TẾT!</button>
@@ -79,7 +79,7 @@
         </div>
     </el-drawer>
 
-    <el-drawer class="searchTripDrawer" size="100%" :visible.sync="dateDrawer" :with-header="false">
+    <!-- <el-drawer class="searchTripDrawer" size="100%" :visible.sync="dateDrawer" :with-header="false">
         <div class="searchTripDrawer__content">
             <div class="searchTripDrawer__header">
                 <span @click="dateDrawer = false" class="cursor-pointer"><i class="el-icon-back"></i></span>
@@ -102,10 +102,10 @@
                         </p>
                     </template>
                 </el-calendar>
-                <!-- <h3>{{ $refs.date.curMonthDatePrefix }}</h3> -->
+                <h3>{{ $refs.date.curMonthDatePrefix }}</h3>
             </div>
         </div>
-    </el-drawer>
+    </el-drawer> -->
 </div>
 </template>
 
