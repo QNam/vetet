@@ -53,8 +53,8 @@ export default {
 
         let query = {
             date: this.date ? this.date : tomorrow.toAVDateString(),
-            pointUp: this.route.start_point_name,
-            pointDown: this.route.end_point_name,
+            pointUp: this.route.start_province,
+            pointDown: this.route.end_province,
             // route_id: this.route.route_id
         }
         

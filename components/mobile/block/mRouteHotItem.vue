@@ -6,8 +6,14 @@
         <h4 class="w-2/5">Nghệ An</h4> -->
     </div>
     <h3>{{ route.display_price | number }}đ</h3>
-    <button @click="toggleFocus()" v-html="icons.calendar1"></button>
-    <el-date-picker
+    <button @click="toggleDatePicker()" v-html="icons.calendar1"></button>
+
+    
+      <div class="w-full mt-4" v-if="this.dateIsShow">
+        <v-date-picker locale="vi" @input="searchTripByRoute" :value="date" :rows="1" class="w-full" :key="route.id" :min-date="minDate"/>  
+      </div>
+    
+    <!-- <el-date-picker
         class="absolute pointer-events-none"
         ref="date"
         type="date"
@@ -17,7 +23,7 @@
         format="dd-MM-yyyy"
         value-format="yyyyMMdd"
         placeholder="Chọn ngày">
-    </el-date-picker>
+    </el-date-picker> -->
  </div>
 </template>
 
@@ -27,47 +33,37 @@ import icons from '../../icon'
 export default {
     props: ['route'],
     data () {
+        let tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
         return {
-            dateIsFocus: false,
+            dateIsShow: false,
             icons,
-            date: null,
-            datePickerOptions: {
-                disabledDate (date) {
-                    let today = new Date()
-                    let yesterday = new Date()
-                    let tomorrow = new Date()
-                    yesterday.setDate( today.getDate() - 1 ) 
-                    tomorrow.setDate( today.getDate() + 1 ) 
-                    return date < today
-                }
-            },
+            date: tomorrow,
+            minDate: tomorrow
         }
     },
 
     methods: {
-        toggleFocus () {
-            if(this.dateIsFocus) {
-                this.dateIsFocus = false
-                this.$refs.date.blur()
-            } else {
-                this.dateIsFocus = true
-                this.$refs.date.focus()
-            }
+        toggleDatePicker () {
+          this.dateIsShow = !this.dateIsShow
         },
 
         searchTripByRoute () {
+          
             let tomorrow = new Date()
             tomorrow.setDate(tomorrow.getDate() + 1) 
 
             let query = {
-                date: this.date ? this.date : tomorrow.toAVDateString(),
-                pointUp: this.route.start_point_name,
-                pointDown: this.route.end_point_name,
+                date: this.date ? this.date.toAVDateString() : tomorrow.toAVDateString(),
+                pointUp: this.route.start_province,
+                pointDown: this.route.end_province,
                 // route_id: this.route.route_id
             }
-            this.$store.commit('trip/SET_FILTER_TRIP', {pointUp: this.route.start_province})
-            this.$store.commit('trip/SET_FILTER_TRIP', {date: this.date})
-            this.$store.commit('trip/SET_FILTER_TRIP', {pointDown: this.route.end_province})
+
+            console.log(query)
+            this.$store.commit('trip/SET_FILTER_TRIP', {pointUp: query.pointUp})
+            this.$store.commit('trip/SET_FILTER_TRIP', {date: query.date})
+            this.$store.commit('trip/SET_FILTER_TRIP', {pointDown: query.pointDown})
 
             this.$router.push({path: "/tim-ve", query})
         }
