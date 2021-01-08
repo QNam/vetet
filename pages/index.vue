@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// import BusLoading from '../components/loading/BusLoading'
 import IndexMobile from '../_pages/mobile/index'
 import IndexDefault from '../_pages/default/index'
 
@@ -32,6 +33,7 @@ export default {
     // Index: () => {
     //   return import('../_pages/' + 'mobile' + '/index')
     // },
+    // BusLoading,
     IndexMobile,
     IndexDefault
   },
