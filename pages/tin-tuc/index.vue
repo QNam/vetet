@@ -73,7 +73,7 @@ export default {
         }
 
         if(this.$device.isMobile) {
-            head.meta.push({ name: 'viewport', content: 'width=device-width, minimum-scale=1, initial-scale=1' })
+            head.meta.push({ name: 'viewport', content: 'width=device-width, maximum-scale=1, initial-scale=1' })
         }
         return head
     },
