@@ -213,7 +213,7 @@ export default {
         },
 
         getMention (query) {
-            if(query.length == 0) {
+            if(query == null || query.length == 0) {
                 return this.provinces
             }
             query = this.$helper.removeVietnameseTones(query.toLowerCase())

@@ -10,7 +10,7 @@
 
     
       <div class="w-full mt-4" v-if="this.dateIsShow">
-        <v-date-picker locale="vi" @input="searchTripByRoute" :value="date" :rows="1" class="w-full" :key="route.id" :min-date="minDate"/>  
+        <v-date-picker locale="vi" @input="searchTripByRoute" v-model="date" :rows="1" class="w-full" :key="route.id" :min-date="minDate"/>  
       </div>
     
     <!-- <el-date-picker
@@ -54,7 +54,7 @@ export default {
             tomorrow.setDate(tomorrow.getDate() + 1) 
 
             let query = {
-                date: this.date ? this.date.toAVDateString() : tomorrow.toAVDateString(),
+                date: this.date.toAVDateString(),
                 pointUp: this.route.start_province,
                 pointDown: this.route.end_province,
                 // route_id: this.route.route_id
