@@ -37,7 +37,7 @@
                 <trip-payment />
             </div>
         </div>
-        <div class="mtrip__price" :class="{'z-0': loading}">
+        <div class="mtrip__price" :class="{'z-0': loading, 'min-h-0': timeBookingOut}">
             <div class="mtrip__price__content">
                 <h4><b>Ghế đã chọn: </b> <span v-for="(seat, key) in seatSelected" :key="key">{{ seat.seatId }}</span></h4>
                 <h4><b>Tổng tiền: </b> 
@@ -53,7 +53,7 @@
                     <button class="switchBack flex-grow ml-0" @click="switchTab('seatMap')">Quay lại</button>
                     <button class="flex-grow" :class='{"disabled": validateUserInfo}' @click="switchTab('payment')">Tiếp tục</button> 
                 </div>
-                <div v-if="tabs.payment" class="flex">
+                <div v-if="tabs.payment && !timeBookingOut" class="flex">
                     <template v-if="ticketInfo.vnPayUrl"> 
                         <a :href="ticketInfo.vnPayUrl" target="_BLANK" class="block w-full  ml-0"><button class="w-full ml-0">Tiến hành thanh toán</button></a>
                     </template>
@@ -115,6 +115,7 @@ export default {
             icons: icons,
             transportType: enums.transportType,
             loading: false,
+            timeBookingOut: false,
             tabs: {
                 seatMap: true,
                 userInfo: false,
@@ -151,25 +152,30 @@ export default {
 
         countDown (time) {
             setInterval(() => {
-                let minute = Math.floor(time / 60000)
-                minute = minute > 9 ? minute.toString() : '0' + minute
+                if(time >= 1000) {
+                    let minute = Math.floor(time / 60000)
+                    minute = minute > 9 ? minute.toString() : '0' + minute
 
-                let second = Math.floor( ((time / 60000) - minute ) * 60 )
-                second = second > 9 ? second.toString() : '0' + second
-                time = time - 1000
+                    let second = Math.floor( ((time / 60000) - minute ) * 60 )
+                    second = second > 9 ? second.toString() : '0' + second
 
-                this.$store.commit('trip/SET_TICKET_INFO', { overTime: {
-                    minute,
-                    second,
-                    mns: time
-                }})
-
-                if(time == 0) {
+                    this.$store.commit('trip/SET_TICKET_INFO', { overTime: {
+                        minute,
+                        second,
+                        mns: time
+                    }})
+                    time = time - 1000
+                } else {
+                    this.$store.commit('trip/SET_TICKET_INFO', { overTime: {
+                        minute: '00',
+                        second: '00',
+                        mns: 0
+                    }})
+                    this.timeBookingOut = true
                     clearInterval()
                     return
                 }
             }, 1000);
-
         },
 
         listenTicketBooked (ticketId) {
@@ -346,7 +352,7 @@ export default {
                 let tickets = await res.json()
                 tickets = tickets.results.listTicket
                 
-                this.countDown(480000)
+                this.countDown(1 * 60000)
 
                 if(this.ticketInfo.paymentType == 'vnpay') {
                     const ticketIds = tickets.map(value => {

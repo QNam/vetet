@@ -1,13 +1,20 @@
 <template>
     <div class="navbar">
-      <client-only>
+      <!-- <client-only>
         <SlideMenu :closeOnNavigation="true" noOverlay>
             <NuxtLink to="/" class="block">Trang chủ</NuxtLink>
-            <!-- <NuxtLink to="/tin-tuc" class="block">Tin tức</NuxtLink> -->
-        </SlideMenu>
-        <!-- <span v-html="icons.text_justify" @click="openSideBar = !openSideBar" class="cursor-pointer"></span> -->
+            <NuxtLink to="/tin-tuc" class="block">Tin tức</NuxtLink>
+        </SlideMenu> -->
+        <el-drawer class="navbar__sidebar" size="50%" direction="ltr" :visible.sync="openSideBar" :with-header="false">
+          <div class="navbar__sidebar__item">
+            <span v-html="icons.home"></span>
+            <NuxtLink to="/" class="block">Trang chủ</NuxtLink>
+          </div>
+          
+        </el-drawer>
+        <span v-html="icons.text_justify" @click="openSideBar = !openSideBar" class="cursor-pointer"></span>
         <NuxtLink to="/" class="block"><img src="~/assets/imgs/logo.svg" alt=""></NuxtLink>
-        <span v-html="icons.user_r"></span>
+        <span v-html="icons.user_r" class="invisible"></span>
         </client-only>
     </div>
 </template>
@@ -23,7 +30,7 @@ export default {
   data () {
     return {
       icons,
-      // openSideBar: false
+      openSideBar: false
     }
   }
 }
@@ -40,5 +47,26 @@ export default {
     justify-content: space-between;
     height: 64px;
     padding: 16px;
+}
+
+.navbar__sidebar {
+  max-width: 500px;
+}
+.navbar__sidebar a {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #383f47;
+}
+
+.navbar__sidebar__item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+}
+
+.navbar__sidebar__item span {
+  display: block;
+  margin-right: 12px;
 }
 </style>

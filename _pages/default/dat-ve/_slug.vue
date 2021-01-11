@@ -64,7 +64,7 @@
                                     <button class="switchBack" @click="switchTab('seatMap')">Quay lại</button>
                                     <button :class='{"disabled": validateUserInfo}' @click="switchTab('payment')">Tiếp tục</button> 
                                 </div>
-                                <div v-if="tabs.payment" class="flex">
+                                <div v-if="tabs.payment && !timeBookingOut" class="flex">
                                     <template v-if="ticketInfo.vnPayUrl"> 
                                         <a :href="ticketInfo.vnPayUrl" target="_BLANK" class="block"><button>Tiến hành thanh toán</button></a>
                                     </template>
@@ -108,6 +108,7 @@ export default {
             icons: icons,
             loading: false,
             transportType: enums.transportType,
+            timeBookingOut: false,
             tabs: {
                 seatMap: true,
                 userInfo: false,
@@ -144,27 +145,30 @@ export default {
 
         countDown (time) {
             setInterval(() => {
-                if(time >= 0) {
+                if(time >= 1000) {
                     let minute = Math.floor(time / 60000)
                     minute = minute > 9 ? minute.toString() : '0' + minute
 
                     let second = Math.floor( ((time / 60000) - minute ) * 60 )
                     second = second > 9 ? second.toString() : '0' + second
-                    time = time - 1000
 
                     this.$store.commit('trip/SET_TICKET_INFO', { overTime: {
                         minute,
                         second,
                         mns: time
                     }})
-                }
-
-                if(time <= 0) {
+                    time = time - 1000
+                } else {
+                    this.$store.commit('trip/SET_TICKET_INFO', { overTime: {
+                        minute: '00',
+                        second: '00',
+                        mns: 0
+                    }})
+                    this.timeBookingOut = true
                     clearInterval()
                     return
                 }
             }, 1000);
-
         },
 
         listenTicketBooked (ticketId) {
@@ -342,7 +346,7 @@ export default {
                 let tickets = await res.json()
                 tickets = tickets.results.listTicket
                 
-                this.countDown(480000)
+                this.countDown(8 * 60000)
 
                 if(this.ticketInfo.paymentType == 'vnpay') {
                     const ticketIds = tickets.map(value => {

@@ -163,14 +163,18 @@ export default {
     },
 
     methods: {
-        changePointUp(point) {
+        async changePointUp(point) {
             this.$store.commit('trip/SET_TICKET_INFO', { pointUp: point })
-            this.$store.dispatch('trip/calcPrice')
+            this.$store.commit('trip/SET_TICKET_INFO', {loadingCalcPrice: true})
+            await this.$store.dispatch('trip/calcPrice')
+            this.$store.commit('trip/SET_TICKET_INFO', {loadingCalcPrice: false})
         },
 
-        changePointDown(point) {
+        async changePointDown(point) {
+            this.$store.commit('trip/SET_TICKET_INFO', {loadingCalcPrice: true})
             this.$store.commit('trip/SET_TICKET_INFO', { pointDown: point })
-            this.$store.dispatch('trip/calcPrice')
+            await this.$store.dispatch('trip/calcPrice')
+            this.$store.commit('trip/SET_TICKET_INFO', {loadingCalcPrice: false})
         },
 
         async changePickMethod(type) {

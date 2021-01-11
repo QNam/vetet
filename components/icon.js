@@ -1,5 +1,9 @@
 export default {
-    bus: ` <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    home: `<svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 17V11H12V17H17V9H20L10 0L0 9H3V17H8Z" fill="#464D5D"/>
+    </svg>
+    `,
+    bus: `<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M27 11H29V15H27V11Z" fill="#646D84"/>
     <path d="M3 11H5V15H3V11Z" fill="#646D84"/>
     <path d="M20 20H22V22H20V20Z" fill="#646D84"/>
