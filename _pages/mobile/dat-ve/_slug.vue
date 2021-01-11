@@ -352,7 +352,7 @@ export default {
                 let tickets = await res.json()
                 tickets = tickets.results.listTicket
                 
-                this.countDown(1 * 60000)
+                this.countDown(8 * 60000)
 
                 if(this.ticketInfo.paymentType == 'vnpay') {
                     const ticketIds = tickets.map(value => {
