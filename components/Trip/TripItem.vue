@@ -4,7 +4,7 @@
             <h3>{{ trip.pointUp.name }}</h3>
             <span v-html="icons.arrowr"></span>
             <h3>{{ trip.pointDown.name }}</h3>
-            <h4 class="w-full  mt-2">{{ trip.companyInfo.companyName }}</h4>
+            <h4 class="w-full mt-2">{{ trip.companyInfo.companyName }}</h4>
         </div>
         <div class="w-7/12 flex items-center flex-wrap overflow-hidden">
             <div class="tripItem__time w-1/3">

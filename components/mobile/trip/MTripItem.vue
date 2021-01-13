@@ -9,7 +9,7 @@
             <p>{{ trip.startDateText }}</p>
           </div>  
           <div class="w-1/3 text-right">
-            <h5>{{ trip.routeInfo.displayPrice | number }}đ</h5>
+            <h5>{{ routePrice | number }}đ</h5>
             <button  @click="goToTrip">Đặt vé</button>
           </div>  
       </div>
@@ -27,6 +27,21 @@ export default {
         }
     },
 
+    computed: {
+        routePrice () {
+            let price = this.trip.routeInfo.displayPrice
+            try {
+                let orderPointDown = this.trip.pointDown.order
+
+                price = this.trip.pointUp.listPrice[orderPointDown]
+            } catch (e) {
+
+            }
+
+            return price
+        }
+    },
+    
     methods: {
         goToTrip () {
             this.$store.commit('trip/SET_TRIP_SELECTED', this.trip)
