@@ -265,7 +265,7 @@ export const actions = {
         }
 
         if(state.filterTrip.time.endTimeLimit) {
-            url += `&end_time_to=${state.filterTrip.time.endTimeLimit}`    
+            url += `&start_time_to=${state.filterTrip.time.endTimeLimit}`    
         }
         
 
