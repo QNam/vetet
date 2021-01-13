@@ -561,6 +561,8 @@ top: 70%!important;
 }
 
 .tripDetail {
+  padding-right: 15px;
+  padding-left: 15px;
   padding-top: 24px;
   padding-bottom: 80px;
 }

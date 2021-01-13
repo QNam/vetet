@@ -89,7 +89,7 @@ export default {
             let mapTicketInSeat = {}
             let now = new Date()
             listTicket.results.tickets.forEach(value => {
-                if(value.overTime < now.getTime()) {
+                if(value.overTime > now.getTime()) {
                     mapTicketInSeat[`${value.seat.floor}${value.seat.row}${value.seat.column}`] = value
                 }
             }) 

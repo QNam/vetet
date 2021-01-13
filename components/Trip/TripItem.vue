@@ -1,9 +1,10 @@
 <template>
     <div class="tripItem">
-        <div class="tripItem__name w-5/12">
+        <div class="tripItem__name flex-wrap w-5/12">
             <h3>{{ trip.pointUp.name }}</h3>
             <span v-html="icons.arrowr"></span>
             <h3>{{ trip.pointDown.name }}</h3>
+            <h4 class="w-full  mt-2">{{ trip.companyInfo.companyName }}</h4>
         </div>
         <div class="w-7/12 flex items-center flex-wrap overflow-hidden">
             <div class="tripItem__time w-1/3">
@@ -11,7 +12,7 @@
                 <span>{{ trip.startDateText }}</span>
             </div>
             <div class="tripItem__price w-1/3">
-                <h3>{{ trip.routeInfo.displayPrice | number }}đ</h3>
+                <h3>{{ routePrice | number }}đ</h3>
             </div>
             <div class="tripItem__book w-1/3 flex justify-end">
                 <button @click="goToTrip">Đặt vé</button>
@@ -28,6 +29,21 @@ export default {
     data () {
         return {
             icons: icons
+        }
+    },
+
+    computed: {
+        routePrice () {
+            let price = this.trip.routeInfo.displayPrice
+            try {
+                let orderPointDown = this.trip.pointDown.order
+
+                price = this.trip.pointUp.listPrice[orderPointDown]
+            } catch (e) {
+
+            }
+
+            return price
         }
     },
 

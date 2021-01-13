@@ -35,7 +35,7 @@
                     ref="date"
                     :value="filterTrip.date"
                     :picker-options="datePickerOptions"
-                    @input="$store.commit('trip/SET_FILTER_TRIP', {date: $event})"
+                    @input="$store.commit('trip/SET_FILTER_TRIP', {date: $event}); searchTrip()"
                     type="date"
                     format="dd-MM-yyyy"
                     value-format="yyyyMMdd"
@@ -48,10 +48,10 @@
         <div class="tripFilter__time">
             <h2>Khởi hành</h2>
             <div>   
-                <el-radio v-model="time" class="block" label="0,21600000">Trước 06:00</el-radio>
-                <el-radio v-model="time" class="block" label="21600000,43200000">Từ 06:00 - 12:00</el-radio>
-                <el-radio v-model="time" class="block" label="43200000,64800000">Từ 12:00 - 18:00</el-radio>
-                <el-radio v-model="time" class="block" label="64800000,86400000">Sau 18:00</el-radio>
+                <el-radio v-model="time" class="block" @change="searchTrip()" label="0,21600000">Trước 06:00</el-radio>
+                <el-radio v-model="time" class="block" @change="searchTrip()" label="21600000,43200000">Từ 06:00 - 12:00</el-radio>
+                <el-radio v-model="time" class="block" @change="searchTrip()" label="43200000,64800000">Từ 12:00 - 18:00</el-radio>
+                <el-radio v-model="time" class="block" @change="searchTrip()" label="64800000,86400000">Sau 18:00</el-radio>
             </div>
         </div>
 
