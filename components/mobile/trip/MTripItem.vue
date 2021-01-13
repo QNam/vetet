@@ -35,13 +35,13 @@ export default {
 
                 price = this.trip.pointUp.listPrice[orderPointDown]
             } catch (e) {
-
+                console.log(e)
             }
 
             return price
         }
     },
-    
+
     methods: {
         goToTrip () {
             this.$store.commit('trip/SET_TRIP_SELECTED', this.trip)
