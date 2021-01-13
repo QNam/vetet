@@ -261,7 +261,7 @@ export const actions = {
         }
 
         if(state.filterTrip.time.startTimeLimit !== null) {
-            url += `&start_time_to=${state.filterTrip.time.startTimeLimit}`    
+            url += `&start_time_from=${state.filterTrip.time.startTimeLimit}`    
         }
 
         if(state.filterTrip.time.endTimeLimit) {
