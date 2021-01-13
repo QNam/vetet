@@ -87,8 +87,11 @@ export default {
             let listTicket = await res.json()
 
             let mapTicketInSeat = {}
+            let now = new Date()
             listTicket.results.tickets.forEach(value => {
-                mapTicketInSeat[`${value.seat.floor}${value.seat.row}${value.seat.column}`] = value
+                if(value.overTime < now.getTime()) {
+                    mapTicketInSeat[`${value.seat.floor}${value.seat.row}${value.seat.column}`] = value
+                }
             }) 
 
             this.$store.commit('trip/SET_MAP_TICKET_IN_SEAT', mapTicketInSeat)
