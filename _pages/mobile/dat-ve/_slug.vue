@@ -351,13 +351,12 @@ export default {
 
                 let tickets = await res.json()
                 tickets = tickets.results.listTicket
-                
+                const ticketIds = tickets.map(value => {
+                    return value.ticketId
+                })
                 this.countDown(8 * 60000)
 
                 if(this.ticketInfo.paymentType == 'vnpay') {
-                    const ticketIds = tickets.map(value => {
-                        return value.ticketId
-                    })
                     let res = await this.$http.get(`https://ticket-dot-dobody-anvui.appspot.com/vnp/pay?vnp_OrderInfo=${ticketIds.join('-')}&packageName=web&companyId=TC08Z1qHHZBxlNLt`)
                     let vnpayPaymentInfo = await res.json()
                     this.loading = false
@@ -374,6 +373,17 @@ export default {
                     this.listenTicketBooked(ticketIds[0])
                 }
 
+                if(this.ticketInfo.paymentType == 'vnpayqr') {
+                    let qrParams = {
+                        'companyId': tickets[0]['company']['id'],
+                        'ticketIds': ticketIds
+                    }
+
+                    let qrImage = await this.genQRCode(qrParams);
+                    this.loading = false
+                    this.$store.commit('trip/SET_TICKET_INFO', {vnpayQRImg: qrImage})
+                }
+
             } catch (e) {
                 this.loading = false
                 this.$notify.error({
@@ -384,10 +394,30 @@ export default {
             }
             
         },
+
+        async genQRCode (params) {
+            let body = {
+                'companyId': 'TC08Z1qHHZBxlNLt',
+                'packageName': 'web',
+                'ticketIds': params['ticketIds'].join('-'),
+            }
+
+            const url = 'https://ticket-dot-dobody-anvui.appspot.com/vnpay/qr/pay';
+            let res = await this.$http.post(url, body)
+            let payment = await res.json()
+
+            return `https://chart.googleapis.com/chart?cht=qr&chl=${payment.results.data.qrString}&choe=UTF-8&chs=250x250`
+        }
     }
 }
 </script>
 
+<style>
+.mTrip__payment .payment__qrcode img{
+    /* text-align: center; */
+    margin: 0 auto;
+}
+</style>
 <style scoped>
 .mtrip__price {
     position: fixed;

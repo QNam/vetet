@@ -9,8 +9,13 @@
     <div class="payment__type mt-6">
         <el-radio-group :value="ticketInfo.paymentType">
             <el-radio label="vnpay" @change="$store.commit('trip/SET_TICKET_INFO', {paymentType: 'vnpay'})">VNPAY</el-radio>
+            <el-radio label="vnpayqr" @change="$store.commit('trip/SET_TICKET_INFO', {paymentType: 'vnpayqr'})">VNPAY QR</el-radio>
             <!-- <el-radio label="vnpayqr" @change="$store.commit('trip/SET_TICKET_INFO', {paymentType: 'vnpayqr'})">VNPAY QR</el-radio> -->
         </el-radio-group>
+    </div>
+
+    <div v-if="ticketInfo.vnpayQRImg" class="mt-3 payment__qrcode">
+        <img :src="ticketInfo.vnpayQRImg" alt="">
     </div>
 </div>
 </template>

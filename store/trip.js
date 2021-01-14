@@ -50,6 +50,7 @@ export const state = () => ({
         },
         bookingCompleted: false,
         vnPayUrl: null,
+        vnpayQRImg: null,
         loadingCalcPrice: false
     }
 })
@@ -174,6 +175,7 @@ export const mutations = {
         state.ticketInfo.loadingCalcPrice = false
         state.pickAndDrop.pointUp = enums.transportType.STATION
         state.pickAndDrop.pointDown = enums.transportType.STATION
+        state.ticketInfo.vnpayQRImg = null
     },
 
     SET_TICKET_INFO (state, payload) {
@@ -224,6 +226,9 @@ export const mutations = {
         }
         if (typeof payload.loadingCalcPrice != 'undefined') {
             state.ticketInfo.loadingCalcPrice = payload.loadingCalcPrice
+        }
+        if (typeof payload.vnpayQRImg != 'undefined') {
+            state.ticketInfo.vnpayQRImg = payload.vnpayQRImg
         }
     },
     
@@ -360,5 +365,5 @@ export const actions = {
         } catch (e) {
             console.log(e)
         }
-    }
+    },
 }
