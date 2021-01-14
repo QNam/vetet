@@ -399,7 +399,7 @@ export default {
                 'ticketIds': params['ticketIds'].join('-'),
             }
 
-            const url = 'https://ticket-dot-dobody-anvui.appspot.com/vnpay/qr/pay';
+            const url = 'https://ticket-new-dot-dobody-anvui.appspot.com/vnpay/qr/pay';
             let res = await this.$http.post(url, body)
             let payment = await res.json()
 
