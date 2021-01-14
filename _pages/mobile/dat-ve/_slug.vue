@@ -381,7 +381,9 @@ export default {
 
                     let qrImage = await this.genQRCode(qrParams);
                     this.loading = false
+                    this.$store.commit('trip/SET_TICKET_INFO', {bookingCompleted: true})
                     this.$store.commit('trip/SET_TICKET_INFO', {vnpayQRImg: qrImage})
+                    this.listenTicketBooked(ticketIds[0])
                 }
 
             } catch (e) {
