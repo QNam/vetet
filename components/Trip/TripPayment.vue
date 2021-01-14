@@ -16,8 +16,8 @@
 
     <div v-if="ticketInfo.vnpayQRImg" class="mt-3 payment__qrcode">
         <img :src="ticketInfo.vnpayQRImg" alt="">
+        <p class="mt-2"><i>* Quý khách hãy dùng App Ngân hàng để quét mã QR code này để hoàn thành thanh toán</i></p>
     </div>
-    <p class="mt-2"><i>* Quý khách hãy dùng App Ngân hàng để quét mã QR code này để hoàn thành thanh toán</i></p>
 </div>
 </template>
 
