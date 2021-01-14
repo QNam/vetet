@@ -419,6 +419,12 @@ export default {
     /* text-align: center; */
     margin: 0 auto;
 }
+.payment__banner {
+    display: none;
+}
+.mTrip__payment .payment__banner {
+    display: block;
+}
 </style>
 <style scoped>
 .mtrip__price {

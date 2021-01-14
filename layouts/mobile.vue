@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div id="fb-root"></div>  
     <navbar />
     <Nuxt />
     <Footer v-if="$route.name != 'dat-ve-slug'" />
@@ -18,6 +19,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+#fb-root {
+  display: none;
+}
 </style>

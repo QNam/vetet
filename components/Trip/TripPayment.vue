@@ -13,10 +13,12 @@
             <!-- <el-radio label="vnpayqr" @change="$store.commit('trip/SET_TICKET_INFO', {paymentType: 'vnpayqr'})">VNPAY QR</el-radio> -->
         </el-radio-group>
     </div>
-
     <div v-if="ticketInfo.vnpayQRImg" class="mt-3 payment__qrcode">
         <img :src="ticketInfo.vnpayQRImg" alt="">
         <p class="mt-2"><i>* Quý khách hãy dùng App Ngân hàng để quét mã QR code này để hoàn thành thanh toán</i></p>
+    </div>
+    <div class="mt-3 payment__banner">
+        <img src="@/assets/imgs/payment_bank.jpg" class="max-w-full" alt="">
     </div>
 </div>
 </template>

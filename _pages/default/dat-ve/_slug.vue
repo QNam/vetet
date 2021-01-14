@@ -54,7 +54,6 @@
                                     <h4><b>Tổng tiền:</b> 
                                         <span v-if="!ticketInfo.loadingCalcPrice">{{  ticketInfo.totalPrice | number }}đ</span>
                                         <span v-else><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
-                                    
                                     </h4>
                                 </div>
                                 <div v-if="tabs.seatMap">
@@ -74,6 +73,9 @@
                                         <button @click="doPayment()">Tiến hành thanh toán</button>
                                     </template>
                                 </div>
+                            </div>
+                            <div class="mt-4" v-if="tabs.payment">
+                                <img src="@/assets/imgs/payment_bank.jpg" class="max-w-full" alt="">
                             </div>
                         </div>
                     </div>
