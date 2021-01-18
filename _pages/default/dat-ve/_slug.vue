@@ -65,12 +65,14 @@
                                     <button :class='{"disabled": validateUserInfo}' @click="switchTab('payment')">Tiếp tục</button> 
                                 </div>
                                 <div v-if="tabs.payment && !timeBookingOut" class="flex">
-                                    <template v-if="ticketInfo.vnPayUrl"> 
-                                        <a :href="ticketInfo.vnPayUrl" target="_BLANK" class="block"><button>Tiến hành thanh toán</button></a>
+                                    <template v-if="ticketInfo.bookingCompleted">
+                                        <template v-if="ticketInfo.vnPayUrl"> 
+                                            <a :href="ticketInfo.vnPayUrl" target="_BLANK" class="block w-full  ml-0"><button class="w-full ml-0">Tiến hành thanh toán</button></a>
+                                        </template>
                                     </template>
-                                    <template v-else> 
-                                        <button class="switchBack" @click="switchTab('userInfo')">Quay lại</button>
-                                        <button @click="doPayment()">Tiến hành thanh toán</button>
+                                    <template v-else>
+                                        <button class="switchBack flex-grow ml-0" @click="switchTab('userInfo')">Quay lại</button>
+                                        <button class=" flex-grow" @click="doPayment()">Tiến hành thanh toán</button>
                                     </template>
                                 </div>
                             </div>
