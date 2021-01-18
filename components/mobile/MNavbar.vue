@@ -9,6 +9,7 @@
           <div class="navbar__sidebar__item">
             <span v-html="icons.home"></span>
             <NuxtLink to="/" class="block">Trang chủ</NuxtLink>
+            <NuxtLink to="/huong-dan-dat-ve">Hướng dẫn đặt vé</NuxtLink>
           </div>
           
         </el-drawer>

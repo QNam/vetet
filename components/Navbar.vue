@@ -7,6 +7,7 @@
               <li class="navbar__logo"><a href="/"><img src="~/assets/imgs/logo.svg" alt=""></a></li>
               <li><NuxtLink to="/">Trang chủ</NuxtLink></li>
               <li><NuxtLink to="/tin-tuc">Tin tức</NuxtLink></li>
+              <li><NuxtLink to="/huong-dan-dat-ve">Hướng dẫn đặt vé</NuxtLink></li>
             </ul>
           </div>
           <div class="navbar_right">
