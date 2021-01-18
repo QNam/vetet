@@ -78,6 +78,10 @@ export default {
     color: #383F47;
 }
 
+.tripItem__name h4 {
+    color: #FF4868;
+}
+
 .tripItem__name span {
     margin: 0px 10px;
 }

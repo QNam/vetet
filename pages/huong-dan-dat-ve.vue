@@ -11,7 +11,8 @@
 
 <script>
 export default {
-
+    layout: (ctx) => ctx.isMobile ? 'mobile' : 'default',
+    transition: 'slide-bottom',
 }
 </script>
 

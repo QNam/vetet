@@ -9,14 +9,16 @@
           <div class="navbar__sidebar__item">
             <span v-html="icons.home"></span>
             <NuxtLink to="/" class="block">Trang chủ</NuxtLink>
+          </div>
+          <div class="navbar__sidebar__item">
+            <span v-html="icons.guide"></span>
             <NuxtLink to="/huong-dan-dat-ve">Hướng dẫn đặt vé</NuxtLink>
           </div>
-          
         </el-drawer>
         <span v-html="icons.text_justify" @click="openSideBar = !openSideBar" class="cursor-pointer"></span>
         <NuxtLink to="/" class="block"><img src="~/assets/imgs/logo.svg" alt=""></NuxtLink>
         <span v-html="icons.user_r" class="invisible"></span>
-        </client-only>
+        <!-- </client-only> -->
     </div>
 </template>
 
